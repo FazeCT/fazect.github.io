@@ -194,7 +194,7 @@ mov     eax, [ebp+arg_0]
 Instead of calling **sub_401110**, we should patch the program to directly calculates **ecx + edx** then assigns it into **eax**. We find out that the opcode of **"call sub_401110"** is **E8 77 FC FF FF**.
 
 {{< admonition tip "View instructions opcode in IDA Pro" >}}
-* Using **IDA Pro** integrated settings, which can be found at **Options > Generals > Number of Opcode bytes (non-graph) set to a large enough number**, we can view each instruction's opcode.
+Using **IDA Pro** integrated settings, which can be found at **Options > Generals > Number of Opcode bytes (non-graph) set to a large enough number**, we can view each instruction's opcode.
 {{< /admonition >}}
 
 With [pwntools](https://github.com/Gallopsled/pwntools) library, we also find out the opcode for **add ecx, edx** and **move eax, ecx** is **01 D1** and **89 C8** using this script written in **Python** below.
@@ -209,7 +209,7 @@ print(asm('mov eax, ecx'))
 It is now time to patch the binary. Use any hex editor of your choice to patch the binary, here I use **IDA Pro**'s integrated **hex view** to patch the binary.
 
 {{< admonition tip "Our goal" >}}
-* Change **E8 77 FC FF FF** to **01 D1 89 C8 90** using any hex editor of your choice (here **90** corresponds to the **NOP** instruction).
+Change **E8 77 FC FF FF** to **01 D1 89 C8 90** using any hex editor of your choice (here **90** corresponds to the **NOP** instruction).
 {{< /admonition >}}
 
 ## Result
