@@ -1,8 +1,8 @@
 ---
 weight: 1
 title: "ISITDTU 2022 Finals - Slow"
-date: 2023-01-02T15:09:01+07:00
-lastmod: 2023-01-02T15:09:01+07:00
+date: 2023-01-02T15:09:01
+lastmod: 2023-01-02T15:09:01
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
