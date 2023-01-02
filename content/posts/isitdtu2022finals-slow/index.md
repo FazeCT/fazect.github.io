@@ -23,8 +23,6 @@ An in-depth writeup on ISITDTU CTF 2022 Finals - Slow.
 
 ## Introduction
 
-Description goes here!
-
 {{< admonition note "Challenge Information" >}}
 * **Given binary:** [Get it here!](https://drive.google.com/file/d/1K2NjzRQadtL9CkbTINYDvrH7HRgSfDc1/view?usp=share_link)
 * **Description:** If you can make the binary runs faster, you'll get the flag!
