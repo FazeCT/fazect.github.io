@@ -20,10 +20,10 @@ I am also looking forward to learn more about **Pwnable** in the future.
 
 ## Noticeable Achievements
 
-**Qualified for [ISITDTU CTF 2022](https://ctftime.org/ctf/258) Finals** 
+**Qualified** for [ISITDTU CTF 2022](https://ctftime.org/ctf/258) Finals
 
-**Ranked 57<sup>th</sup> in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest** 
+Ranked **57<sup>th</sup>** in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest
 
 ## Contact Me
 
-**You can contact me via [Email](mailto:ctffazect@gmail.com) or [Github](https://github.com/FazeCT).** 
+You can contact me via [Email](mailto:ctffazect@gmail.com) or [Github](https://github.com/FazeCT).
