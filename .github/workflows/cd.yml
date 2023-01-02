@@ -1,6 +1,4 @@
-ctually happens. Python, Markdown, YAML all depend on whitespace to understand what the developer means.
-
-name: Build and Deploy Site
+name: BuildSite
 
 on:
   push:
