@@ -53,7 +53,7 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-The function [sub_401AC0(v5, 38, 0)] allocates dynamic memory using [malloc] based on **v5** then assigns it into variable **Block**. That variable is then being passed into function [sub_4013B0(Block)], which will produce our flag once we have fixed it.
+The function **sub_401AC0(v5, 38, 0)** allocates dynamic memory using **malloc** based on **v5** then assigns it into variable **Block**. That variable is then being passed into function **sub_4013B0(Block)**, which will produce our flag once we have fixed it.
 
 ```IDA Decompiled Pseudocode
 int __cdecl sub_4013B0(_DWORD *a1)
@@ -123,12 +123,12 @@ int __cdecl sub_4013B0(_DWORD *a1)
 
 {{< admonition tip "Why didn't I snip case 1 and case 14 in the above pseudocode?" >}}
 * It is easy to observe that only these two cases involve calling other functions. 
-* To be more precise, if the program reaches **case 1**, the function [sub_401110(v26, v22)] will be called, and on the other hand, if the program reaches **case 14**, the function [sub_401260(v38)] will be called. We will talk more about these two functions in the next parts of this blog.
+* To be more precise, if the program reaches **case 1**, the function **sub_401110(v26, v22)** will be called, and on the other hand, if the program reaches **case 14**, the function **sub_401260(v38)** will be called. We will talk more about these two functions in the next parts of this blog.
 {{< /admonition >}}
 
 ## Reaching case 14
 
-As stated earlier, the function [sub_401260(v38)] will be called if the program reaches **case 14**, which will be the last part of our code flow. 
+As stated earlier, the function **sub_401260(v38)** will be called if the program reaches **case 14**, which will be the last part of our code flow. 
 
 ```IDA Decompiled Pseudocode
 int __cdecl sub_401260(char a1)
@@ -154,7 +154,7 @@ The function receives our modified variable **Block**, then uses it to produce o
 
 ## Reaching case 1
 
-Here is where things get interesting. Take a look at the function [sub_401110(v26, v22)], we can conclude that this is why our program runs slowly. The fact that it makes our program sleeps plus it is possibly called many times throughout the process makes our executable runs without any output for a very long time.
+Here is where things get interesting. Take a look at the function **sub_401110(v26, v22)**, we can conclude that this is why our program runs slowly. The fact that it makes our program sleeps plus it is possibly called many times throughout the process makes our executable runs without any output for a very long time.
 
 ```IDA Decompiled Pseudocode
 int __cdecl sub_401110(int a1, int a2)
