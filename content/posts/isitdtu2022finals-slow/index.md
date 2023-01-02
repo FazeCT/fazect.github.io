@@ -17,7 +17,7 @@ toc:
   auto: true
 ---
 
-Description goes here!
+An in-depth writeup on ISITDTU CTF 2022 Finals - Slow
 
 <!--more-->
 
@@ -25,14 +25,12 @@ Description goes here!
 
 Description goes here!
 
-{{< admonition note "Note name goes here" >}}
-Description goes here!
-{{< /admonition >}}
-
-{{< admonition tip "Note name goes here" >}}
-Description goes here!
+{{< admonition note "Challenge Information" >}}
+* Given binary: [Get it here!](https://drive.google.com/file/d/1K2NjzRQadtL9CkbTINYDvrH7HRgSfDc1/view?usp=share_link)
+* Description: If you can make the binary runs faster, you'll get the flag!
+* Category: Reverse Engineering
 {{< /admonition >}}
 
 ## Static Analysis
 
-Description goes here!
+The challenge provides us with a single binary, named **slow.exe**. By using **IDA Pro** or **Ghidra** or any other kinds of decompiler, we will get the decompiled code.
