@@ -121,7 +121,9 @@ int __cdecl sub_4013B0(_DWORD *a1)
 }
 ```
 
-So why didn't I snip **case 1** and **case 14** in the above pseudocode? It is easy to observe that only these two cases involve calling other functions. To be more precise, if the program reaches **case 1**, the function [sub_401110(v26, v22)] will be called, and on the other hand, if the program reaches **case 14**, the function [sub_401260(v38)] will be called. We will talk more about these two functions in the next parts of this blog.
+{{< admonition tip "Why didn't I snip **case 1** and **case 14** in the above pseudocode?" >}}
+It is easy to observe that only these two cases involve calling other functions. To be more precise, if the program reaches **case 1**, the function [sub_401110(v26, v22)] will be called, and on the other hand, if the program reaches **case 14**, the function [sub_401260(v38)] will be called. We will talk more about these two functions in the next parts of this blog.
+{{< /admonition >}}
 
 ## Case 14 reached
 
@@ -164,7 +166,10 @@ int __cdecl sub_401110(int a1, int a2)
   return sub_4010F0(0) - v3;
 }
 ```
+
+{{< admonition tip "About the intended algorithm flow" >}}
 The algorithm here is very simple, however this is author's idea to let the program sleeps for a total of **(a1 + a2) seconds** each time this function is called. The intended result of this function is to **return a1 + a2**. We will have to patch the binary to get our flag.
+{{< /admonition >}}
 
 ## Patch the binary
 
@@ -198,7 +203,7 @@ print(asm('mov eax, ecx'))
 
 It is now time to patch the binary. Use any hex editor of your choice to patch the binary, here I use **IDA Pro**'s integrated **hex view** to patch the binary.
 
-{{< admonition tip "Our Goal" >}}
+{{< admonition tip "Our goal" >}}
 * Change **E8 77 FC FF FF** to **01 D1 89 C8 90** using any hex editor of your choice (here **90** corresponds to the **NOP** instruction).
 {{< /admonition >}}
 
