@@ -90,9 +90,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # LoveIt NEW | 0.2.0 Header title config
     [params.header.title]
       # URL of the LOGO
-      logo = "https://github.com/FazeCT.png"
+      logo = ""
       # title name
-      name = "Blogs"
+      name = " Blogs"
       # you can add extra information before the name (HTML format is supported), such as icons
       pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
@@ -283,16 +283,16 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       Whatsapp = false
       Pinterest = false
       Tumblr = false
-      HackerNews = true
-      Reddit = false
+      HackerNews = false
+      Reddit = true
       VK = false
       Buffer = false
       Xing = false
-      Line = true
+      Line = false
       Instapaper = false
       Pocket = false
       Flipboard = false
-      Weibo = true
+      Weibo = false
       Blogger = false
       Baidu = false
       Odnoklassniki = false
