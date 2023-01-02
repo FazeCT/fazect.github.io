@@ -125,7 +125,7 @@ int __cdecl sub_4013B0(_DWORD *a1)
 It is easy to observe that only these two cases involve calling other functions. To be more precise, if the program reaches **case 1**, the function [sub_401110(v26, v22)] will be called, and on the other hand, if the program reaches **case 14**, the function [sub_401260(v38)] will be called. We will talk more about these two functions in the next parts of this blog.
 {{< /admonition >}}
 
-## Case 14 reached
+## Reaching case 14
 
 As stated earlier, the function [sub_401260(v38)] will be called if the program reaches **case 14**, which will be the last part of our code flow. 
 
@@ -151,7 +151,7 @@ int __cdecl sub_401260(char a1)
 ```
 The function receives our modified variable **Block**, then uses it to produce our flag.
 
-## Case 1 reached
+## Reaching case 1
 
 Here is where things get interesting. Take a look at the function [sub_401110(v26, v22)], we can conclude that this is why our program runs slowly. The fact that it makes our program sleeps plus it is possibly called many times throughout the process makes our executable runs without any output for a very long time.
 
