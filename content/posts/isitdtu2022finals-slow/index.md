@@ -213,8 +213,7 @@ It is now time to patch the binary. Use any hex editor of your choice to patch t
 After patching the binary, run it again to get our flag.
 
 ```Terminal
-fazect@LAPTOP-CQA118DI:~$ cd /mnt/d/Downloads
 fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$ ./slow.exe
 RESULT: 75025
-fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$
+flag is: Pr4ct1c3_VMc0d3_w1th_F1b0n4cc1
 ```
