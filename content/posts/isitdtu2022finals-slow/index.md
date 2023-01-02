@@ -17,7 +17,7 @@ toc:
   auto: true
 ---
 
-An in-depth writeup on ISITDTU CTF 2022 Finals - Slow
+An in-depth writeup on ISITDTU CTF 2022 Finals - Slow.
 
 <!--more-->
 
