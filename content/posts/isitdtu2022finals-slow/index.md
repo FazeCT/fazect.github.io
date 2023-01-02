@@ -14,7 +14,7 @@ categories: ["Writeups"]
 lightgallery: true
 
 toc:
-  auto: true
+  auto: false
 ---
 
 An in-depth writeup on ISITDTU CTF 2022 Finals - Slow.
