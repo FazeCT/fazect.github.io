@@ -193,7 +193,7 @@ mov     eax, [ebp+arg_0]
 ```
 Instead of calling **sub_401110**, we should patch the program to directly calculates **ecx + edx** then assigns it into **eax**. We find out that the opcode of **"call sub_401110"** is **E8 77 FC FF FF** using **IDA Pro** integrated settings, which can be found at **Options > Generals > Number of Opcode bytes (non-graph) set to 5+**.
 
-Using **pwntool** library, we also find out the opcode for **add ecx, edx** and **move eax, ecx** is **01 D1** and **89 C8** using this script written in **Python** below.
+With **pwntool** library, we also find out the opcode for **add ecx, edx** and **move eax, ecx** is **01 D1** and **89 C8** using this script written in **Python** below.
 
 ```Script.py
 from pwn import *
