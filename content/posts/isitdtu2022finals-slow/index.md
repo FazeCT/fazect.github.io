@@ -1,12 +1,12 @@
 ---
 weight: 1
-title: "ISITDTU 2022 Finals - Slow"
+title: "ISITDTU CTF 2022 Finals - Slow"
 date: 2023-01-02T15:09:01+07:00
 lastmod: 2023-01-02T15:09:01+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
-description: "An in-depth writeup on ISITDTU 2022 Finals - Slow"
+description: "An in-depth writeup on ISITDTU CTF 2022 Finals - Slow"
 
 tags: ["RE", "isitdtu"]
 categories: ["Writeups"]
@@ -14,7 +14,7 @@ categories: ["Writeups"]
 lightgallery: true
 
 toc:
-  auto: false
+  auto: true
 ---
 
 Description goes here!
