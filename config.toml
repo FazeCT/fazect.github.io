@@ -46,7 +46,6 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     post = ""
     name = "Posts"
     url = "/posts/"
-    # title will be shown when you hover on this menu link
     title = ""
   [[menu.main]]
     weight = 2
@@ -93,9 +92,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
       # URL of the LOGO
       logo = ""
       # title name
-      name = "FazeCT's Blogs"
+      name = "Blogs"
       # you can add extra information before the name (HTML format is supported), such as icons
-      pre = ""
+      pre = "/static/favicon.ico"
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
       # LoveIt NEW | 0.2.5 whether to use typeit animation for title name
