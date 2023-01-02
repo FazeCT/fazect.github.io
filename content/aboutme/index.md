@@ -18,7 +18,7 @@ math:
 
 **Qualified for [ISITDTU CTF 2022](https://ctftime.org/ctf/258) Finals** 
 
-**Ranked 57th in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest** 
+**Ranked 57<sup>th</sup> in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest** 
 
 ## Contact Me
 
