@@ -1,8 +1,8 @@
 ---
 weight: 1
 title: "ISITDTU CTF 2022 Finals - Slow"
-date: 2023-01-02T20:09:01+00:00
-lastmod: 2023-01-02T20:09:01+00:00
+date: {{ dateFormat "02 Jan 06 15:04 MST" .Date.Local }}
+lastmod: {{ dateFormat "02 Jan 06 15:04 MST" .Date.Local }}
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
