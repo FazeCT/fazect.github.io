@@ -221,3 +221,5 @@ fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$ ./slow.exe
 RESULT: 75025
 flag is: Pr4ct1c3_VMc0d3_w1th_F1b0n4cc1
 ```
+
+Wrap the flag with **ISITDTU{}**, we have our flag for the challenge: **ISITDTU{Pr4ct1c3_VMc0d3_w1th_F1b0n4cc1}**.
