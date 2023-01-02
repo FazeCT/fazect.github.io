@@ -73,7 +73,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # ["sha256", "sha384", "sha512", "md5"]
   fingerprint = ""
   # LoveIt NEW | 0.2.0 date format
-  dateFormat = "2023-01-01"
+  dateFormat = "Mon January 3, 2006"
   # website title for Open Graph and Twitter Cards
   title = "FazeCT's Blogs"
   # website description for RSS, SEO, Open Graph and Twitter Cards
@@ -123,7 +123,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # special amount of posts in each section page
     paginate = 20
     # date format (month and day)
-    dateFormat = "01-02"
+    dateFormat = "01-03"
     # amount of RSS pages
     rss = 10
 
@@ -132,7 +132,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # special amount of posts in each list page
     paginate = 20
     # date format (month and day)
-    dateFormat = "01-02"
+    dateFormat = "01-03"
     # amount of RSS pages
     rss = 10
 
