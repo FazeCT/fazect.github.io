@@ -199,7 +199,7 @@ Using **IDA Pro** integrated settings, which can be found at **Options > General
 
 With [pwntools](https://github.com/Gallopsled/pwntools) library, we also find out the opcode for **add ecx, edx** and **move eax, ecx** is **01 D1** and **89 C8** using this script written in **Python** below.
 
-```python
+```Script
 from pwn import *
 context.arch = 'amd64'
 print(asm('add ecx, edx'))
