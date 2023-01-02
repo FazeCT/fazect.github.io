@@ -90,11 +90,11 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # LoveIt NEW | 0.2.0 Header title config
     [params.header.title]
       # URL of the LOGO
-      logo = ""
+      logo = "/static/favicon.ico"
       # title name
       name = "Blogs"
       # you can add extra information before the name (HTML format is supported), such as icons
-      pre = "/static/favicon.ico"
+      pre = ""
       # you can add extra information after the name (HTML format is supported), such as icons
       post = ""
       # LoveIt NEW | 0.2.5 whether to use typeit animation for title name
