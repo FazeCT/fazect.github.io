@@ -7,10 +7,6 @@ draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
 description: "An in-depth writeup on ISITDTU 2022 Finals - Slow"
-images: []
-resources:
-- name: "featured-image"
-  src: "featured-image.jpg"
 
 tags: ["RE", "isitdtu"]
 categories: ["Writeups"]
