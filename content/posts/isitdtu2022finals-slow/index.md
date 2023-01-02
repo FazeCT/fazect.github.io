@@ -164,4 +164,51 @@ int __cdecl sub_401110(int a1, int a2)
   return sub_4010F0(0) - v3;
 }
 ```
-The algorithm here is very simple, however this is author's idea to let the program sleeps for a total of **(a1 + a2) seconds** each time this function is called. The intended result of this function is to **return a1 + a2**.
+The algorithm here is very simple, however this is author's idea to let the program sleeps for a total of **(a1 + a2) seconds** each time this function is called. The intended result of this function is to **return a1 + a2**. We will have to patch the binary to get our flag.
+
+## Patch the binary
+
+So we know what makes our program runs slowly, it is time to fix that. Below is the decompiled assembly code of that part.
+
+```IDA Decompiled Assembly Code
+mov     ecx, [ebp+arg_0]
+mov     edx, [ecx+10h]
+sub     edx, 1
+mov     eax, [ebp+arg_0]
+mov     [eax+10h], edx
+mov     ecx, [ebp+var_10]
+push    ecx
+mov     edx, [ebp+var_C]
+push    edx
+call    sub_401110
+add     esp, 8
+mov     [ebp+var_58], eax
+mov     eax, [ebp+arg_0]
+```
+Instead of calling **sub_401110**, we should patch the program to directly calculates **ecx + edx** then assigns it into **eax**. We find out that the opcode of **"call sub_401110"** is **E8 77 FC FF FF** using **IDA Pro** integrated settings, which can be found at **Options > Generals > Number of Opcode bytes (non-graph) set to 5+**.
+
+Using **pwntool** library, we also find out the opcode for **add ecx, edx** and **move eax, ecx** is **01 D1** and **89 C8** using this script written in **Python** below.
+
+```Script.py
+from pwn import *
+context.arch = 'amd64'
+print(asm('add ecx, edx'))
+print(asm('mov eax, ecx'))
+```
+
+It is now time to patch the binary. Use any hex editor of your choice to patch the binary, here I use **IDA Pro**'s integrated **hex view** to patch the binary.
+
+{{< admonition tip "Our Goal" >}}
+* Change **E8 77 FC FF FF** to **01 D1 89 C8 90** using any hex editor of your choice (here **90** corresponds to the **NOP** instruction).
+{{< /admonition >}}
+
+## Result
+
+After patching the binary, run it again to get our flag.
+
+```Terminal
+fazect@LAPTOP-CQA118DI:~$ cd /mnt/d/Downloads
+fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$ ./slow.exe
+RESULT: 75025
+fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$
+```
