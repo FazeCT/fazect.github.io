@@ -33,7 +33,7 @@ An in-depth writeup on ISITDTU CTF 2022 Finals - Slow.
 
 The challenge provides us with a single binary, named **slow.exe**. By using **IDA Pro** or **Ghidra** or any other kinds of decompiler, we will get the decompiled code.
 
-Analyze the **main** function, we claim that the program initiates an array whose size is 45, then modifies it through some more functions, as shown below.
+Analyze the **main** function, we claim that the program initiates an array whose size is **45**, then modifies it through some more functions, as shown below.
 
 ```IDA Decompiled Pseudocode
 int __cdecl main(int argc, const char **argv, const char **envp)
