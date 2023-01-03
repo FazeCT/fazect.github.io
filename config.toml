@@ -90,7 +90,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     # LoveIt NEW | 0.2.0 Header title config
     [params.header.title]
       # URL of the LOGO
-      logo = ""
+      logo = "https://ibb.co/jTtHd5T"
       # title name
       name = " Blogs"
       # you can add extra information before the name (HTML format is supported), such as icons
