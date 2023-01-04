@@ -191,7 +191,7 @@ add     esp, 8
 mov     [ebp+var_58], eax
 mov     eax, [ebp+arg_0]
 ```
-Instead of calling **sub_401110**, we should patch the program to directly calculates **ecx + edx** then assigns it into **eax**. We find out that the opcode of **"call sub_401110"** is **E8 77 FC FF FF**.
+Instead of calling **sub_401110**, we should patch the program to directly calculates **ecx + edx** then assigns it into **eax**. We find out that the opcode of **call sub_401110** is **E8 77 FC FF FF**.
 
 {{< admonition tip "View instructions opcode in IDA Pro" >}}
 Using **IDA Pro** integrated settings, which can be found at **Options > Generals > Number of Opcode bytes (non-graph) set to a large enough number**, we can view each instruction's opcode.
