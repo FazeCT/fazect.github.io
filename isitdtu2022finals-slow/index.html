@@ -1,0 +1,265 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>ISITDTU CTF 2022 Finals - Slow - FazeCT's Blogs</title><meta name=Description content="An in-depth writeup on ISITDTU CTF 2022 Finals - Slow"><meta property="og:title" content="ISITDTU CTF 2022 Finals - Slow"><meta property="og:description" content="An in-depth writeup on ISITDTU CTF 2022 Finals - Slow"><meta property="og:type" content="article"><meta property="og:url" content="https://fazect.github.io/isitdtu2022finals-slow/"><meta property="og:image" content="https://fazect.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-01-02T18:21:54+07:00"><meta property="article:modified_time" content="2023-01-02T18:21:54+07:00"><meta property="og:site_name" content="FazeCT's blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://fazect.github.io/logo.png"><meta name=twitter:title content="ISITDTU CTF 2022 Finals - Slow"><meta name=twitter:description content="An in-depth writeup on ISITDTU CTF 2022 Finals - Slow"><meta name=application-name content="CTF Blogs"><meta name=apple-mobile-web-app-title content="CTF Blogs"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://fazect.github.io/isitdtu2022finals-slow/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"ISITDTU CTF 2022 Finals - Slow","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/fazect.github.io\/isitdtu2022finals-slow\/"},"genre":"posts","keywords":"RE, isitdtu, english","wordcount":1068,"url":"https:\/\/fazect.github.io\/isitdtu2022finals-slow\/","datePublished":"2023-01-02T18:21:54+07:00","dateModified":"2023-01-02T18:21:54+07:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"FazeCT"},"description":"An in-depth writeup on ISITDTU CTF 2022 Finals - Slow"}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="FazeCT's Blogs">Blogs</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/aboutme/>About Me </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="FazeCT's Blogs">Blogs</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/aboutme/ title>About Me</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">ISITDTU CTF 2022 Finals - Slow</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://fazect.github.io title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>FazeCT</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/writeups/><i class="far fa-folder fa-fw" aria-hidden=true></i>Writeups</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-01-02>2023-01-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1068 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#static-analysis>Static Analysis</a></li><li><a href=#reaching-case-14>Reaching case 14</a></li><li><a href=#reaching-case-1>Reaching case 1</a></li><li><a href=#patch-the-binary>Patch the binary</a></li><li><a href=#result>Result</a></li></ul></nav></div></div><div class=content id=content><p>An in-depth writeup on ISITDTU CTF 2022 Finals - Slow.</p><h2 id=introduction>Introduction</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given binary:</strong> <a href="https://drive.google.com/file/d/1K2NjzRQadtL9CkbTINYDvrH7HRgSfDc1/view?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> If you can make the binary runs faster, you&rsquo;ll get the flag!</li><li><strong>Category:</strong> Reverse Engineering</li></ul></div></div></div><h2 id=static-analysis>Static Analysis</h2><p>The challenge provides us with a single binary, named <strong>slow.exe</strong>. By using <strong>IDA Pro</strong> or <strong>Ghidra</strong> or any other kinds of decompiler, we will get the decompiled code.</p><p>Analyze the <strong>main</strong> function, we claim that the program initiates an array whose size is <strong>45</strong>, then modifies it through some more functions, as shown below.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl main(int argc, const char **argv, const char **envp)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>  void *Block; // [esp+4h] [ebp-BCh]
+</span></span><span class=line><span class=cl>  int v5[45]; // [esp+8h] [ebp-B8h] BYREF
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  v5[0] = 10;
+</span></span><span class=line><span class=cl>  v5[1] = -3;
+</span></span><span class=line><span class=cl>  ... snip
+</span></span><span class=line><span class=cl>  v5[43] = 14;
+</span></span><span class=line><span class=cl>  v5[44] = 16;
+</span></span><span class=line><span class=cl>  Block = (void *)sub_401AC0(v5, 38, 0);
+</span></span><span class=line><span class=cl>  sub_4013B0(Block);
+</span></span><span class=line><span class=cl>  sub_401B40(Block);
+</span></span><span class=line><span class=cl>  return 0;
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>The function <strong>sub_401AC0(v5, 38, 0)</strong> allocates dynamic memory using <strong>malloc</strong> based on <strong>v5</strong> then assigns it into variable <strong>Block</strong>. That variable is then being passed into function <strong>sub_4013B0(Block)</strong>, which will produce our flag once we have fixed it.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_4013B0(_DWORD *a1)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>  int result; // eax
+</span></span><span class=line><span class=cl>  int v2; // eax
+</span></span><span class=line><span class=cl>  int v3; // [esp+4h] [ebp-64h]
+</span></span><span class=line><span class=cl>  ... snip
+</span></span><span class=line><span class=cl>  int v37; // [esp+64h] [ebp-4h]
+</span></span><span class=line><span class=cl>  int v38; // [esp+64h] [ebp-4h]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  while ( 1 )
+</span></span><span class=line><span class=cl>  {
+</span></span><span class=line><span class=cl>    v6 = *(_DWORD *)(a1[1] + 4 * a1[3]++);
+</span></span><span class=line><span class=cl>    result = v6 - 1;
+</span></span><span class=line><span class=cl>    switch ( v6 )
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>      case 1:
+</span></span><span class=line><span class=cl>        v22 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
+</span></span><span class=line><span class=cl>        v26 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
+</span></span><span class=line><span class=cl>        v2 = sub_401110(v26, v22);
+</span></span><span class=line><span class=cl>        v16 = a1[4] + 1;
+</span></span><span class=line><span class=cl>        a1[4] = v16;
+</span></span><span class=line><span class=cl>        *(_DWORD *)(a1[2] + 4 * v16) = v2;
+</span></span><span class=line><span class=cl>        break;
+</span></span><span class=line><span class=cl>      case 2:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 4:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 5:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 6:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 7:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 8:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 9:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 10:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 11:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 12:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 13:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 14:
+</span></span><span class=line><span class=cl>        v38 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
+</span></span><span class=line><span class=cl>        sub_401040(&#34;RESULT: %d\n&#34;, v38);
+</span></span><span class=line><span class=cl>        sub_401260(v38);
+</span></span><span class=line><span class=cl>        break;
+</span></span><span class=line><span class=cl>      case 15:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 16:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 17:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      case 18:
+</span></span><span class=line><span class=cl>        ... snip
+</span></span><span class=line><span class=cl>      default:
+</span></span><span class=line><span class=cl>        continue;
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>  }
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Why didn't I snip case 1 and case 14 in the above pseudocode?<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li>It is easy to observe that only these two cases involve calling other functions.</li><li>To be more precise, if the program reaches <strong>case 1</strong>, the function <strong>sub_401110(v26, v22)</strong> will be called, and on the other hand, if the program reaches <strong>case 14</strong>, the function <strong>sub_401260(v38)</strong> will be called. We will talk more about these two functions in the next parts of this blog.</li></ul></div></div></div><h2 id=reaching-case-14>Reaching case 14</h2><p>As stated earlier, the function <strong>sub_401260(v38)</strong> will be called if the program reaches <strong>case 14</strong>, which will be the last part of our code flow.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_401260(char a1)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>  char v2[256]; // [esp+10h] [ebp-224h] BYREF
+</span></span><span class=line><span class=cl>  char Buffer; // [esp+110h] [ebp-124h] BYREF
+</span></span><span class=line><span class=cl>  _BYTE v4[3]; // [esp+111h] [ebp-123h] BYREF
+</span></span><span class=line><span class=cl>  char v5[32]; // [esp+210h] [ebp-24h] BYREF
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  qmemcpy(v5, &#34;Áõ&#34;, 2);
+</span></span><span class=line><span class=cl>  v5[2] = -77;
+</span></span><span class=line><span class=cl>  v5[3] = 26;
+</span></span><span class=line><span class=cl>  ... snip
+</span></span><span class=line><span class=cl>  v5[28] = -66;
+</span></span><span class=line><span class=cl>  v5[29] = 63;
+</span></span><span class=line><span class=cl>  memset(v2, 0, sizeof(v2));
+</span></span><span class=line><span class=cl>  sub_401D50(&amp;Buffer, &#34;%d&#34;, 55 * a1);
+</span></span><span class=line><span class=cl>  sub_401160(v5, v2, 30, &amp;Buffer, &amp;v4[strlen(&amp;Buffer)] - v4);
+</span></span><span class=line><span class=cl>  return sub_401040(&#34;flag is: %s&#34;, (char)v2);
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>The function receives our modified variable <strong>Block</strong>, then uses it to produce our flag.</p><h2 id=reaching-case-1>Reaching case 1</h2><p>Here is where things get interesting. Take a look at the function <strong>sub_401110(v26, v22)</strong>, we can conclude that this is why our program runs slowly. The fact that it makes our program sleeps plus it is possibly called many times throughout the process makes our executable runs without any output for a very long time.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_401110(int a1, int a2)
+</span></span><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>  int v3; // [esp+0h] [ebp-4h]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  v3 = sub_4010F0(0);
+</span></span><span class=line><span class=cl>  Sleep(1000 * a1);
+</span></span><span class=line><span class=cl>  Sleep(1000 * a2);
+</span></span><span class=line><span class=cl>  return sub_4010F0(0) - v3;
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>About the intended algorithm flow<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>The algorithm here is very simple, however this is author&rsquo;s idea to let the program sleeps for a total of <strong>(a1 + a2) seconds</strong> each time this function is called. The intended result of this function is to <strong>return a1 + a2</strong>. We will have to patch the binary to get our flag.</div></div></div><h2 id=patch-the-binary>Patch the binary</h2><p>So we know what makes our program runs slowly, it is time to fix that. Below is the decompiled assembly code of that part.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>mov     ecx, [ebp+arg_0]
+</span></span><span class=line><span class=cl>mov     edx, [ecx+10h]
+</span></span><span class=line><span class=cl>sub     edx, 1
+</span></span><span class=line><span class=cl>mov     eax, [ebp+arg_0]
+</span></span><span class=line><span class=cl>mov     [eax+10h], edx
+</span></span><span class=line><span class=cl>mov     ecx, [ebp+var_10]
+</span></span><span class=line><span class=cl>push    ecx
+</span></span><span class=line><span class=cl>mov     edx, [ebp+var_C]
+</span></span><span class=line><span class=cl>push    edx
+</span></span><span class=line><span class=cl>call    sub_401110
+</span></span><span class=line><span class=cl>add     esp, 8
+</span></span><span class=line><span class=cl>mov     [ebp+var_58], eax
+</span></span><span class=line><span class=cl>mov     eax, [ebp+arg_0]
+</span></span></code></pre></td></tr></table></div></div><p>Instead of calling <strong>sub_401110</strong>, we should patch the program to directly calculates <strong>ecx + edx</strong> then assigns it into <strong>eax</strong>. We find out that the opcode of <strong>call sub_401110</strong> is <strong>E8 77 FC FF FF</strong>.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>View instructions opcode in IDA Pro<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>Using <strong>IDA Pro</strong> integrated settings, which can be found at <strong>Options > Generals > Number of Opcode bytes (non-graph) set to a large enough number</strong>, we can view each instruction&rsquo;s opcode.</div></div></div><p>With <a href=https://github.com/Gallopsled/pwntools target=_blank rel="noopener noreffer">pwntools</a>
+library, we also find out the opcode for <strong>add ecx, edx</strong> and <strong>move eax, ecx</strong> is <strong>01 D1</strong> and <strong>89 C8</strong> using this script written in <strong>Python</strong> below.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>from pwn import *
+</span></span><span class=line><span class=cl>context.arch = &#39;amd64&#39;
+</span></span><span class=line><span class=cl>print(asm(&#39;add ecx, edx&#39;))
+</span></span><span class=line><span class=cl>print(asm(&#39;mov eax, ecx&#39;))
+</span></span></code></pre></td></tr></table></div></div><p>It is now time to patch the binary. Use any hex editor of your choice to patch the binary, here I use <strong>IDA Pro</strong>&rsquo;s integrated <strong>hex view</strong> to patch the binary.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Our goal<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>Change <strong>E8 77 FC FF FF</strong> to <strong>01 D1 89 C8 90</strong> using any hex editor of your choice (here <strong>90</strong> corresponds to the <strong>NOP</strong> instruction).</div></div></div><h2 id=result>Result</h2><p>After patching the binary, run it again to get our flag.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>fazect@LAPTOP-CQA118DI:/mnt/d/Downloads$ ./slow.exe
+</span></span><span class=line><span class=cl>RESULT: 75025
+</span></span><span class=line><span class=cl>flag is: Pr4ct1c3_VMc0d3_w1th_F1b0n4cc1
+</span></span></code></pre></td></tr></table></div></div><p>Wrap the flag with <strong>ISITDTU{}</strong>, we have our flag for the challenge: <strong>ISITDTU{Pr4ct1c3_VMc0d3_w1th_F1b0n4cc1}</strong>.</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2023-01-02</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/isitdtu2022finals-slow/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://fazect.github.io/isitdtu2022finals-slow/ data-title="ISITDTU CTF 2022 Finals - Slow" data-hashtags=RE,isitdtu,english><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://fazect.github.io/isitdtu2022finals-slow/ data-hashtag=RE><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://fazect.github.io/isitdtu2022finals-slow/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/re/>RE</a>,&nbsp;<a href=/tags/isitdtu/>isitdtu</a>,&nbsp;<a href=/tags/english/>english</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.109.0">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://fazect.github.io/ target=_blank>FazeCT</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{},cookieconsent:{content:{dismiss:"Got it!",link:"Learn more",message:"This website uses Cookies to improve your experience."},enable:!0,palette:{button:{background:"#f0f0f0"},popup:{background:"#1aa3ff"}},theme:"edgeless"},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
