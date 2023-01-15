@@ -17,7 +17,7 @@ An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Wh
  
 From the given image, I managed to have found the location on **Google Maps** at **41.154248, -8.682320**. 
 
-![Location](map.png)
+<img src="map.png" alt="Location" width="200"/>
 
 Then in the comment section of the location, I got the mentioned secret email, labeled **noodlesareramhackers@gmail.com**.
 
@@ -36,7 +36,7 @@ Good Luck!
 
 In the first challenge of the **Osint Crime Confusion set (W is for Where)**, I found the instagram of a person named [Heather James](https://www.instagram.com/hjthepainteng/).
 
-![Instagram](ins.png)
+<img src="ins.png" alt="Instagram" width="200"/>
 
 Then from this person's informations, I found the twitter account of [University of Dutch ThE of Topics in Science](https://twitter.com/UThE_TS).
 
@@ -50,7 +50,7 @@ https://twitter.com/UThE_TS/status/1612383535549059076
 
 We successfully gained access to the deleted tweet!
 
-![Tweet](tweet.png)
+<img src="tweet.png" alt="Tweet" width="200"/>
 
 ## Exploring the killer's GitHub
 
