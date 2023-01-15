@@ -1,7 +1,7 @@
-# IDEK CTF 2022 - Osint/Osint Crime Confusion 1: W as in Where
+# IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who
 
 
-An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who
+An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who.
 
 <!--more-->
 
@@ -17,7 +17,11 @@ An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Wh
  
 From the given image, I managed to have found the location on **Google Maps** at **41.154248, -8.682320**. 
 
+![Location](map.png)
+
 Then in the comment section of the location, I got the mentioned secret email, labeled **noodlesareramhackers@gmail.com**.
+
+![Comment](comment.png)
 
 ## Getting further informations
 
@@ -32,7 +36,11 @@ Good Luck!
 
 In the first challenge of the **Osint Crime Confusion set (W is for Where)**, I found the instagram of a person named [Heather James](https://www.instagram.com/hjthepainteng/).
 
+![Instagram](ins.png)
+
 Then from this person's informations, I found the twitter account of [University of Dutch ThE of Topics in Science](https://twitter.com/UThE_TS).
+
+![Twitter](uni.png)
 
 I then immediately knew we have to bring the account to the [Wayback Machine](https://web.archive.org) to gain access to the deleted tweet. The email did mention about the tweet's id **(1612383535549059076)**, so we can paste the below **URL** into the **Wayback Machine**.
 
@@ -42,11 +50,18 @@ https://twitter.com/UThE_TS/status/1612383535549059076
 
 We successfully gained access to the deleted tweet!
 
+![Tweet](tweet.png)
+
 ## Exploring the killer's GitHub
 
 From the email, we also know that we should continue searching in **GitHub**. Frankly enough, when I tried to search for "potatoes eating camels" in GitHub, this showed up:
 
+![Git](git.png)
+
 The descriptions imply that the person is **"still improving wiki"**. We then head into the **wiki** of this repository to find out the end of our journey.
+
+![Wiki](wiki.png)
+![Result](flag.png)
 
 Concatenate the first letters of the last **7 sentences** of the poem, we have our flag for the challenge: **idek{JULIANA_APOSIDM723489}**.
 
