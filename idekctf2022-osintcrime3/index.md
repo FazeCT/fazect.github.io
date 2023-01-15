@@ -17,7 +17,7 @@ An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Wh
  
 From the given image, I managed to have found the location on **Google Maps** at **41.154248, -8.682320**. 
 
-<img src="map.png" alt="Location" width="200"/>
+<img src="map.png" alt="Location" width="2000"/>
 
 Then in the comment section of the location, I got the mentioned secret email, labeled **noodlesareramhackers@gmail.com**.
 
