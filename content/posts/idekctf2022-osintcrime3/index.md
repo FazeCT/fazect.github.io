@@ -70,7 +70,7 @@ We successfully gained access to the deleted tweet!
 
 ## Exploring the killer's GitHub
 
-From the email, we also know that we should continue searching in **GitHub**. Frankly enough, when I tried to search for "potatoes eating camels" in GitHub, this showed up:
+From the email, we also know that we should continue searching in **GitHub**. Frankly enough, when I tried to search for **"potatoes eating camels"** in GitHub, this showed up:
 
 ![Git](git.png)
 
