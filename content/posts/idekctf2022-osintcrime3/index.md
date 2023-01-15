@@ -1,7 +1,7 @@
 ---
 weight: 1
 title: "IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who"
-date: 2023-01-15T10:21:54+07:00
+date: 2023-01-15T22:05:54+07:00
 lastmod: 2023-01-15T10:21:54+07:00
 draft: false
 author: "FazeCT"
