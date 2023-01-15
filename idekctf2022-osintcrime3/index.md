@@ -8,7 +8,7 @@ An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Wh
 ## Introduction
 
 {{< admonition note "Challenge Information" >}}
-* **Given image:** [Get it here!]()
+* **Given image:** [Get it here!](https://drive.google.com/file/d/1sYKHJvmFAB0yjWCTEdp_ZL9g1Eh0G56x/view?usp=share_link)
 * **Description:** I feel the killer might be dangerous so I have some info to give you but I don't want to disclose my email just like that. So find my review from the image below and send me an email asking for info. Be creative with the signature so I know its you. It is time to find Who is the killer.
 * **Category:** OSINT
 {{< /admonition >}}
