@@ -1,12 +1,12 @@
 ---
 weight: 1
-title: "IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who"
+title: "idekCTF 2022 - Osint/Osint Crime Confusion 3: W as in Who"
 date: 2023-01-15T22:05:54+07:00
 lastmod: 2023-01-15T10:21:54+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
-description: "An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who"
+description: "An in-depth writeup on idekCTF 2022 - Osint/Osint Crime Confusion 3: W as in Who"
 
 tags: ["osint", "idek","english"]
 categories: ["Writeups"]
@@ -17,7 +17,7 @@ toc:
   enable: true
 ---
 
-An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who.
+An in-depth writeup on idekCTF 2022 - Osint/Osint Crime Confusion 3: W as in Who.
 
 <!--more-->
 
