@@ -1,7 +1,7 @@
-# IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who
+# idekCTF 2022 - Osint/Osint Crime Confusion 3: W as in Who
 
 
-An in-depth writeup on IDEK CTF 2022 - Osint/Osint Crime Confusion 3: W as in Who.
+An in-depth writeup on idekCTF 2022 - Osint/Osint Crime Confusion 3: W as in Who.
 
 <!--more-->
 
