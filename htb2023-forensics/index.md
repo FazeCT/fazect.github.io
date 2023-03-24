@@ -3,6 +3,8 @@
 
 Short, descriptive write-ups for Forensics challenges I did from the competition.
 
+For other challenges/categories, check out my other blogs and our team's blogs on [BKISC Blog](https://blog.bkisc.com/blog/)
+
 <!--more-->
 
 ## Plaintext Tleasure
