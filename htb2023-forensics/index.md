@@ -21,7 +21,7 @@ Here we use strings to dump out strings from the pcap file, then use pipe (|) an
 
 <img src="1.png" alt="linux" width="1000"/>
 
-Flag is: HTB{th3s3_4l13ns_st1ll_us3_HTTP}
+Flag is: **HTB{th3s3_4l13ns_st1ll_us3_HTTP}**
 
 ## Alien Cradle
 
@@ -33,7 +33,7 @@ Flag is: HTB{th3s3_4l13ns_st1ll_us3_HTTP}
 
 For this challenge, we are given a Powershell Script file. In the script, the flag is being concatenated using some Powershell ~~magic~~ lines of code.
 
-Flag is: HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}
+Flag is: **HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}**
 
 ## Extraterrestrial Persistence
 
@@ -43,9 +43,13 @@ Flag is: HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}
 * **Category:** Forensics
 {{< /admonition >}}
 
-In this challenge, we are given a shell script to look for the flag. For the sake of understanding the flow of shell scripting, the script checks whether the username is "Pandora" and the hostname is "linux_HQ". If the check is fulfilled, it starts the process to write the base64 decoded message into the file "/usr/lib/systemd/system/service.service". The decoded message turned out to contain the flag for our challenge.
+In this challenge, we are given a shell script to look for the flag. 
 
-Flag is: HTB{th3s3_4l13nS_4r3_s00000_b4s1c}
+For the sake of understanding the flow of shell scripting, the script checks whether the username is "Pandora" and the hostname is "linux_HQ". If the check is fulfilled, it starts the process to write the base64 decoded message into the file **"/usr/lib/systemd/system/service.service"**. 
+
+The decoded message turned out to contain the flag for our challenge.
+
+Flag is: **HTB{th3s3_4l13nS_4r3_s00000_b4s1c}**
 
 ## Relic Maps
 
@@ -494,5 +498,5 @@ Voilà, we get the executable! I used [dnSpy](https://github.com/dnSpy/dnSpy) to
 
 <img src="3.png" alt="dnSpy" width="1000"/>
 
-Flag is: HTB{0neN0Te?_iT'5_4_tr4P!}
+Flag is: **HTB{0neN0Te?_iT'5_4_tr4P!}**
 
