@@ -6,7 +6,7 @@ lastmod: 2023-03-24T00:21:54+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
-description: "Short, descriptive write-ups for Forensics challenges from the competition."
+description: "Short, descriptive write-ups for Forensics challenges I did from the competition."
 
 tags: ["forensics", "htb","english"]
 categories: ["Writeups"]
@@ -17,7 +17,7 @@ toc:
   enable: true
 ---
 
-Short, descriptive write-ups for Forensics challenges from the competition.
+Short, descriptive write-ups for Forensics challenges I did from the competition.
 
 <!--more-->
 
