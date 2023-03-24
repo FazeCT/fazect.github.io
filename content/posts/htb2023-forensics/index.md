@@ -1,8 +1,8 @@
 ---
 weight: 1
 title: "Cyber Apocalypse 2023: The Cursed Mission - Forensics"
-date: 2023-03-24T22:05:54+07:00
-lastmod: 2023-03-24T10:21:54+07:00
+date: 2023-03-24T00:05:54+07:00
+lastmod: 2023-03-24T00:21:54+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
