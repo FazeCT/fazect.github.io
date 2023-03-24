@@ -1,7 +1,7 @@
 # Cyber Apocalypse 2023: The Cursed Mission - Forensics
 
 
-Short, descriptive write-ups for Forensics challenges from the competition.
+Short, descriptive write-ups for Forensics challenges I did from the competition.
 
 <!--more-->
 
