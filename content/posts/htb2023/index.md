@@ -25,11 +25,11 @@ For other challenges/categories, check out my other blogs and our team's blogs o
 
 ## Some Note
 
-Our team, [BKISC](https://bkisc.com/) finished at top **29** of this year **Cyber Apocalypse 2023 - The Cursed Mission**, solved **60/74** challenges, got **18175** points in total. Personally, I really enjoy playing in the competition, and I'm looking forward to other HTB CTFs in the future.
+Our team, [BKISC](https://bkisc.com/) finished at top **29** of this year **Cyber Apocalypse 2023 - The Cursed Mission**, solved **60/74** challenges, got **18175** points in total. Personally, I really enjoy playing in the competition, and I'm looking forward to other **HTB CTFs** in the future.
 
 <img src="feature.png" alt="linux" width="1000"/>
 
-For some challenges like **Somewhat Linear** or **Analogue Signal Processing**, since I collaborated with some other players from my team, the write-ups will be on our blog, [BKISC Blog](https://blog.bkisc.com/blog/)
+For some challenges like **Somewhat Linear** or **Analogue Signal Processing**, since I collaborated with some other players from my team, the write-ups will be on our team's blog, [BKISC Blog](https://blog.bkisc.com/blog/).
 
 ## Shattered Tablet
 
