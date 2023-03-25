@@ -7,6 +7,14 @@ For other challenges/categories, check out my other blogs and our team's blogs o
 
 <!--more-->
 
+## Some Note
+
+Our team, [BKISC](https://bkisc.com/) finished at top **29** of this year **Cyber Apocalypse 2023 - The Cursed Mission**, solved **60/74** challenges, got **18175** points in total. Personally, I really enjoy playing in the competition, and I'm looking forward to other HTB CTFs in the future.
+
+<img src="feature.png" alt="linux" width="1000"/>
+
+For some challenges like **Somewhat Linear** or **Analogue Signal Processing**, since I collaborated with some other players from my team, the write-ups will be on our blog, [BKISC Blog](https://blog.bkisc.com/blog/)
+
 ## Shattered Tablet
 
 {{< admonition note "Challenge Information" >}}
@@ -1542,3 +1550,4 @@ From the source, we also know that the exposed port is 1337. Then, we can use SS
 <img src="misc5.png" alt="dnSpy" width="1000"/>
 
 Flag is: **HTB{r35tr1ct10n5_4r3_p0w3r1355}**
+
