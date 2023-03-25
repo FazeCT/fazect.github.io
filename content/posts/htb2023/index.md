@@ -23,7 +23,7 @@ For other challenges/categories, check out my other blogs and our team's blogs o
 
 <!--more-->
 
-## Some Note
+## Author notes
 
 Our team, [BKISC](https://bkisc.com/) finished at top **29** of this year **Cyber Apocalypse 2023 - The Cursed Mission**, solved **60/74** challenges, got **18175** points in total. Personally, I really enjoy playing in the competition, and I'm looking forward to other **HTB CTFs** in the future.
 
