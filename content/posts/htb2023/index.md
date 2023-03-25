@@ -59,7 +59,7 @@ for i in range(3):
     print(simgr.found[0].posix.dumps(i))
 ```
 
-We have to find the address of **puts("Yes! That's right!");** and avoid the address of "puts("No... not that");". Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
+We have to find the address of **puts("Yes! That's right!");** and avoid the address of **puts("No... not that");**. Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
 
 Flag is: **HTB{br0k3n_4p4rt,n3ver_t0_b3_r3p41r3d}**
 
@@ -208,7 +208,7 @@ for i in range(3):
     print(simgr.found[0].posix.dumps(i))
 ```
 
-We have to find the address of **puts("Freedom at last!");** and avoid the address of "puts("Lost in the darkness, you'll wander for eternity...");". Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
+We have to find the address of **puts("Freedom at last!");** and avoid the address of **puts("Lost in the darkness, you'll wander for eternity...");**. Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
 
 Flag is: **HTB{H0p3_u_d1dn't_g3t_th15_by_h4nd,1t5_4_pr3tty_l0ng_fl4g!!!}**
 
@@ -336,7 +336,7 @@ with open('./bin','rb') as f:
 
 Which gives the below output.
 
-```
+```Output
 000: PUTC '['
 006: PUTC 'M'
 012: PUTC 'a'
@@ -632,11 +632,11 @@ Flag is: **HTB{1n_y0ur_j0urn3y_y0u_wi1l_se3_th15_enc0d1ngs_ev3rywher3}**
 * **Difficulty:** Very Easy
 {{< /admonition >}}
 
-We are given two Python script. The server.py is to setup a server for RSA encryption. It will output n, e, ct upon connecting to the netcat server/run the Python script locally.
+We are given two Python script. The server.py is to setup a server for **RSA encryption**. It will output **n, e, ct** upon connecting to the netcat server/run the Python script locally.
 
 <img src="crypto2.png" alt="linux" width="1000"/>
 
-Since e is always set to 3, we can use [Low public exponent RSA attack](https://crypto.stackexchange.com/questions/6713/low-public-exponent-attack-for-rsa) to recover the initial message. In general, we only have to calculate cube root of ciphertext to get the plaintext. 
+Since **e** is always set to **3**, we can use [Low public exponent RSA attack](https://crypto.stackexchange.com/questions/6713/low-public-exponent-attack-for-rsa) to recover the initial message. In general, we only have to calculate **cube root** of ciphertext to get the plaintext. 
 
 Below is the implementation of the attack in Python.
 
