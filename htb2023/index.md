@@ -885,7 +885,7 @@ And there is our flag!
 
 <img src="pwn12.png" alt="linux" width="1000"/>
 
-Flag is: **HTB{th30ry_bef0r3_4cti0n}""
+Flag is: **HTB{th30ry_bef0r3_4cti0n}**
 
 ## Getting Started
 
