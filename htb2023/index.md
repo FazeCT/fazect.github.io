@@ -980,13 +980,13 @@ After we insert 4 "B"s, (the hex representation of B is 0x42), the stack layout 
 
 From the netcat, we are provided with these informations.
 
-We can answer the question by looking at the informations given, where we have to overwrite the alignment address and the "target's" 0xdeadbeef value. 
+We can answer the question by looking at the informations given, where we have to overwrite the alignment address and the "target's" **0xdeadbeef** value. 
 
-From the stack layout given above, we can see that to fully overwrite, we need at least 40 bytes input (assume that we use Linux terminal because there will be a \x00 overwrite at the right of the "target's" 0xdeadbeef value) which will look like this.
+From the stack layout given above, we can see that to fully overwrite, we need at least 40 bytes input (assume that we use Linux terminal because there will be a **\x00** overwrite at the right of the "target's" **0xdeadbeef** value) which will look like this.
 
 <img src="pwn13.png" alt="linux" width="1000"/>
 
-I don't know why it prints out **"[-] You failed!"** though...
+I don't know why it prints out **[-] You failed!** though...
 
 Flag is: **HTB{b0f_s33m5_3z_r1ght?}** 
 
