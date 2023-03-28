@@ -11,7 +11,9 @@ I am also looking forward to learn more about **Blockchain** in the future.
 
 ## Noticeable Achievements
 
-**Qualified** for [ISITDTU CTF 2022](https://ctftime.org/ctf/258) Finals
+**Qualified** for [ISITDTU CTF 2022](https://ctftime.org/ctf/258) Finals in Da Nang, Vietnam.
+
+**Qualified** for [Hacktheon Sejong](https://ctf.hacktheon.org/) Finals in Sejong, Korea.
 
 Ranked **57<sup>th</sup>** in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest
 
