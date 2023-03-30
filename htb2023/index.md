@@ -209,7 +209,7 @@ We get a binary with a text file with no format. Analyze the binary using [IDA P
 
 <img src="re8.png" alt="linux" width="1000"/>
 
-Each instructions appear to be at every `6<sup>th</sup>` index from 0. From that, I wrote an interpreter for the text file (that runs through the binary).
+Each instructions appear to be at every 6<sup>th</sup> index from 0. From that, I wrote an interpreter for the text file (that runs through the binary).
 
 ```python
 from malduck import xor
