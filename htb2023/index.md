@@ -177,7 +177,7 @@ Flag is: **HTB{l1c3ns3_4cquir3d-hunt1ng_t1m3!}**
 * **Difficulty:** Easy
 {{< /admonition >}}
 
-We are given a binary once again. Using [IDA Pro](https://hex-rays.com/ida-pro/), for this type of challenge, we should consider using [angr](https://angr.io/) or [z3 solver](https://pypi.org/project/z3-solver/). Here I choose to use [angr](https://angr.io/)
+We are given a binary once again. Using [IDA Pro](https://hex-rays.com/ida-pro/), for this type of challenge, we should consider using [angr](https://angr.io/) or [z3 solver](https://pypi.org/project/z3-solver/). Here I choose to use [angr](https://angr.io/).
 
 Here is the Python script.
 
@@ -1041,7 +1041,7 @@ Flag is: **HTB{th3s3_4l13nS_4r3_s00000_b4s1c}**
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://drive.google.com/file/d/1oyfMzfnOM69pQdIVi9j63dkLZ2xvVkgq/view?usp=sharing)
-* **Description:** Pandora received an email with a link claiming to have information about the location of the relic and attached ancient city maps, but something seems off about it. Could it be rivals trying to send her off on a distraction? Or worse, could they be trying to hack her systems to get what she knows?Investigate the given attachment and figure out what's going on and get the flag. The link is to http://relicmaps.htb:/relicmaps.one. The document is still live (relicmaps.htb should resolve to your docker instance).
+* **Description:** Pandora received an email with a link claiming to have information about the location of the relic and attached ancient city maps, but something seems off about it. Could it be rivals trying to send her off on a distraction? Or worse, could they be trying to hack her systems to get what she knows?Investigate the given attachment and figure out what's going on and get the flag. The link is to `http://relicmaps.htb:/relicmaps.one`. The document is still live (relicmaps.htb should resolve to your docker instance).
 * **Note:** This challenge had a docker but it might be closed at the time you are reading this. All needed files will be given in the write-ups.
 * **Category:** Forensics
 * **Difficulty:** Medium
