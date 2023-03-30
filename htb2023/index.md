@@ -43,7 +43,7 @@ for i in range(3):
     print(simgr.found[0].posix.dumps(i))
 ```
 
-We have to find the address of **puts("Yes! That's right!");** and avoid the address of **puts("No... not that");**. Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
+We have to find the address of `puts("Yes! That's right!");` and avoid the address of `puts("No... not that");`. Also, we have to increase each of the address by `0x400000` due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
 
 Flag is: **HTB{br0k3n_4p4rt,n3ver_t0_b3_r3p41r3d}**
 
@@ -75,7 +75,7 @@ Flag is: **HTB{d1v1ng_1nt0_th3_d4tab4nk5}**
 
 We get another binary, and it's time to use [IDA Pro](https://hex-rays.com/ida-pro/) to decompile it.
 
-Load the binary, we notice the function **func_flag**. Let's check that out!
+Load the binary, we notice the function `func_flag`. Let's check that out!
 
 ```c
 fgets(s, 256, stdin);
@@ -89,17 +89,17 @@ printf("Flag: %s\n", s);
 return 0LL;
 ```
 
-This is the main part of the function. Our input string s will be used to **XOR** with two lists, **m1** and **m2**. We can use **export data** in IDA to dump out the contents of **m1** and **m2**, as shown below (do the same for **m2**).
+This is the main part of the function. Our input string s will be used to `XOR` with two lists, `m1` and `m2`. We can use `export data` in IDA to dump out the contents of `m1` and `m2`, as shown below (do the same for `m2`).
 
 <img src="re2.png" alt="linux" width="1000"/>
 
-We also know that after the first **XOR**, **s** needs to be equal to **t** (which we can get from the memory, too). Then we can reverse **XOR** to find **s**, and the algorithm looks like this.
+We also know that after the first `XOR`, `s` needs to be equal to `t` (which we can get from the memory, too). Then we can reverse `XOR` to find `s`, and the algorithm looks like this.
 
 ```python
 t[i] ^ m1[i] = s[i % 8]
 ```
 
-Since after the check, we continue to **XOR** **m2** with the modified **s** (which should be equal to **t** after the memcmp), we get the algorithm to print out our flag.
+Since after the check, we continue to `XOR m2` with the modified `s` (which should be equal to `t` after the memcmp), we get the algorithm to print out our flag.
 
 ```python
 t[i] ^ m2[i] = flag[i]
@@ -141,11 +141,11 @@ By analyzing the binary file using [file](https://www.geeksforgeeks.org/file-com
 
 <img src="re3.png" alt="linux" width="1000"/>
 
-For the next question, we can use ***ldd license*** to get info about libraries of the binary.
+For the next question, we can use `ldd license` command to get some infos about libraries of the binary.
 
 <img src="re4.png" alt="linux" width="1000"/>
 
-For the upcoming question, I used [gdb](https://manpages.ubuntu.com/manpages/trusty/man1/gdb.1.html) together with its **info function** command to get the address of the **main** function.
+For the upcoming question, I used [gdb](https://manpages.ubuntu.com/manpages/trusty/man1/gdb.1.html) together with its `info function` command to get the address of the `main` function.
 
 <img src="re5.png" alt="linux" width="1000"/>
 
@@ -153,7 +153,7 @@ For the upcoming question, I used [gdb](https://manpages.ubuntu.com/manpages/tru
 
 Using [IDA Pro](https://hex-rays.com/ida-pro/), we can answer some more questions correctly.
 
-There will be 3 passwords for us to find, the first one is too obvious, the second one is reversed, and the last one is generated using **XOR** with the key **19**.
+There will be 3 passwords for us to find, the first one is too obvious, the second one is reversed, and the last one is generated using `XOR` with the key `19`.
 
 Here is the script for the last password.
 
@@ -192,7 +192,7 @@ for i in range(3):
     print(simgr.found[0].posix.dumps(i))
 ```
 
-We have to find the address of **puts("Freedom at last!");** and avoid the address of **puts("Lost in the darkness, you'll wander for eternity...");**. Also, we have to increase each of the address by **0x400000** due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
+We have to find the address of `puts("Freedom at last!");` and avoid the address of `puts("Lost in the darkness, you'll wander for eternity...");`. Also, we have to increase each of the address by `0x400000` due to the fact that this binary is [PIE-enabled](https://ir0nstone.gitbook.io/notes/types/stack/pie).
 
 Flag is: **HTB{H0p3_u_d1dn't_g3t_th15_by_h4nd,1t5_4_pr3tty_l0ng_fl4g!!!}**
 
@@ -205,11 +205,11 @@ Flag is: **HTB{H0p3_u_d1dn't_g3t_th15_by_h4nd,1t5_4_pr3tty_l0ng_fl4g!!!}**
 * **Difficulty:** Medium
 {{< /admonition >}}
 
-We get a binary with a text file with no format. Analyze the binary using [IDA Pro](https://hex-rays.com/ida-pro/), from the function "vm_create", the text file is contained in ***(v3 + 18)** and being executed like a normal binary. 
+We get a binary with a text file with no format. Analyze the binary using [IDA Pro](https://hex-rays.com/ida-pro/), from the function `vm_create`, the text file is contained in `*(v3 + 18)` and being executed like a normal binary. 
 
 <img src="re8.png" alt="linux" width="1000"/>
 
-Each instructions appear to be at every **6th** index from 0. From that, I wrote an interpreter for the text file (that runs through the binary).
+Each instructions appear to be at every `6<sup>th</sup>` index from 0. From that, I wrote an interpreter for the text file (that runs through the binary).
 
 ```python
 from malduck import xor
@@ -561,13 +561,13 @@ Which gives the below output.
 1422: UNKNOWN 69
 ```
 
-For the part from **714** onwards, the text is being **XOR-ed** with key **0x69**.
+For the part from `714` onwards, the text is being `XOR-ed` with key `0x69`.
 
-Use debuggers to read the memory at **[30]** then **XOR** with key **169**, we get the first input, which is **c0d3_r3d_5hutd0wn**.
+Use debuggers to read the memory at `[30]` then `XOR` with key `169`, we get the first input, which is `c0d3_r3d_5hutd0wn`.
 
 <img src="re10.png" alt="linux" width="1000"/>
 
-Then we reach the part that it prints out **Enter secret phrase**. For this part, the algorithm is **shuffle and XOR**, which can be solved by using debuggers to read the memory at **[92]**, **[148]** and **[248]**, then by the Python script below, we get the flag.
+Then we reach the part that it prints out `Enter secret phrase`. For this part, the algorithm is `shuffle and XOR`, which can be solved by using debuggers to read the memory at `[92]`, `[148]` and `[248]`, then by the Python script below, we get the flag.
 
 ```python
 from malduck import unhex
@@ -598,7 +598,7 @@ Flag is: **HTB{5w1rl_4r0und_7h3_4l13n_l4ngu4g3}**
 * **Difficulty:** Very Easy
 {{< /admonition >}}
 
-We are given a Python script and a text file. Analyze the script, we get to know how the string is being encoded, which is Base 64 encode > Conversion to long from bytes > Hex.
+We are given a Python script and a text file. Analyze the script, we get to know how the string is being encoded, which is `Base 64 encode > Conversion to long from bytes > Hex`.
 
 To get the original string, we simply reverse the process, using [CyberChef](https://gchq.github.io/CyberChef) with the hex given in the text file.
 
@@ -616,11 +616,11 @@ Flag is: **HTB{1n_y0ur_j0urn3y_y0u_wi1l_se3_th15_enc0d1ngs_ev3rywher3}**
 * **Difficulty:** Very Easy
 {{< /admonition >}}
 
-We are given two Python script. The server.py is to setup a server for **RSA encryption**. It will output **n, e, ct** upon connecting to the netcat server/run the Python script locally.
+We are given two Python script. The server.py is to setup a server for `RSA encryption`. It will output `n, e, ct` upon connecting to the netcat server/run the Python script locally.
 
 <img src="crypto2.png" alt="linux" width="1000"/>
 
-Since **e** is always set to **3**, we can use [Low public exponent RSA attack](https://crypto.stackexchange.com/questions/6713/low-public-exponent-attack-for-rsa) to recover the initial message. In general, we only have to calculate **cube root** of ciphertext to get the plaintext. 
+Since `e` is always `3`, we can use [Low public exponent RSA attack](https://crypto.stackexchange.com/questions/6713/low-public-exponent-attack-for-rsa) to recover the initial message. In general, we only have to calculate `cube root` of ciphertext to get the plaintext. 
 
 Below is the implementation of the attack in Python.
 
@@ -651,7 +651,7 @@ Flag is: **HTB{5ma1l_E-xp0n3nt}**
 
 We are given a website that looks like it requires us to input the right password on a locker to process. 
 
-View page source to see if anything is given, and we can see the correct pin is **8291**.
+View page source to see if anything is given, and we can see the correct pin is `8291`.
 
 <img src="web2.png" alt="linux" width="1000"/>
 
@@ -677,7 +677,7 @@ We are given a website and a zip file containing the website's source.
 
 After a quick analyze on the source, I get to understand that either we have to use [SQL Injection](https://portswigger.net/web-security/sql-injection#:~:text=SQL%20injection%20(SQLi)%20is%20a,not%20normally%20able%20to%20retrieve.) or use a specific parameter to get to the next page.
 
-Input **admin** for the username and **" OR 1 = 1 -- -** for the password, or add **/home** to the URL will grant you access to the next page, which turns out to also contain the flag.
+Input `admin` for the username and `" OR 1 = 1 -- -` for the password, or add `/home` to the URL will grant you access to the next page, which turns out to also contains the flag.
 
 <img src="web5.png" alt="linux" width="1000"/>
 
@@ -980,13 +980,13 @@ After we insert 4 "B"s, (the hex representation of B is 0x42), the stack layout 
 
 From the netcat, we are provided with these informations.
 
-We can answer the question by looking at the informations given, where we have to overwrite the alignment address and the "target's" **0xdeadbeef** value. 
+We can answer the question by looking at the informations given, where we have to overwrite the alignment address and the `target's 0xdeadbeef` value. 
 
-From the stack layout given above, we can see that to fully overwrite, we need at least 40 bytes input (assume that we use Linux terminal because there will be a **\x00** overwrite at the right of the "target's" **0xdeadbeef** value) which will look like this.
+From the stack layout given above, we can see that to fully overwrite, we need at least 40 bytes input (assume that we use Linux terminal because there will be a `\x00` overwrite at the right of the `target's 0xdeadbeef` value) which will look like this.
 
 <img src="pwn13.png" alt="linux" width="1000"/>
 
-I don't know why it prints out **[-] You failed!** though...
+I don't know why it prints out `[-] You failed!` though...
 
 Flag is: **HTB{b0f_s33m5_3z_r1ght?}** 
 
@@ -1001,7 +1001,7 @@ Flag is: **HTB{b0f_s33m5_3z_r1ght?}**
 
 We are given a network pcap file. Although we can solve this challenge using [Wireshark](https://www.wireshark.org/), but to keep it simple for the very first challenge, we will use [strings](https://www.howtogeek.com/427805/how-to-use-the-strings-command-on-linux/) and [grep](https://www.geeksforgeeks.org/grep-command-in-unixlinux/) to get the flag.
 
-Here we use strings to dump out strings from the pcap file, then use pipe (|) and grep to find for strings that match the flag format - HTB{.
+Here we use strings to dump out strings from the pcap file, then use pipe `(|)` and grep to find for strings that match the flag format - `HTB{`.
 
 <img src="1.png" alt="linux" width="1000"/>
 
@@ -1031,7 +1031,7 @@ Flag is: **HTB{p0w3rsh3ll_Cr4dl3s_c4n_g3t_th3_j0b_d0n3}**
 
 In this challenge, we are given a shell script to look for the flag. 
 
-For the sake of understanding the flow of shell scripting, the script checks whether the username is "Pandora" and the hostname is "linux_HQ". If the check is fulfilled, it starts the process to write the base64 decoded message into the file **"/usr/lib/systemd/system/service.service"**. 
+For the sake of understanding the flow of shell scripting, the script checks whether the username is `Pandora` and the hostname is `linux_HQ`. If the check is fulfilled, it starts the process to write the base64 decoded message into the file `/usr/lib/systemd/system/service.service`. 
 
 The decoded message turned out to contain the flag for our challenge.
 
@@ -1047,9 +1047,9 @@ Flag is: **HTB{th3s3_4l13nS_4r3_s00000_b4s1c}**
 * **Difficulty:** Medium
 {{< /admonition >}}
 
-From the link attached to this challenge, we get an Onenote file named "relicmaps.one". Analyze the file, we get 2 suspicious links, which lead us to 2 different files, [http://relicmaps.htb/uploads/soft/topsecret-maps.one](https://drive.google.com/file/d/14FBabJvLlTAjhCKbJBPMk6iI9u83HI0j/view?usp=share_link) and [http://relicmaps.htb/get/DdAbds/window.bat](https://drive.google.com/file/d/1t9jembhbhIFY6PE7Lx3J7yA5prTsVGXv/view?usp=share_link).
+From the link attached to this challenge, we get an Onenote file named `relicmaps.one`. Analyze the file, we get 2 suspicious links, which lead us to 2 different files, [http://relicmaps.htb/uploads/soft/topsecret-maps.one](https://drive.google.com/file/d/14FBabJvLlTAjhCKbJBPMk6iI9u83HI0j/view?usp=share_link) and [http://relicmaps.htb/get/DdAbds/window.bat](https://drive.google.com/file/d/1t9jembhbhIFY6PE7Lx3J7yA5prTsVGXv/view?usp=share_link).
 
-I did some analysis on the file "topsecret-maps.one", and there are only some PNGs inside it. In the "window.bat" file, we are given a Powershell Script. You can run it directly, but I choose to deobfuscate using Python to understand its flow.
+I did some analysis on the file `topsecret-maps.one`, and there are only some PNGs inside it. In the `window.bat` file, we are given a Powershell Script. You can run it directly, but I choose to deobfuscate using Python to understand its flow.
 
 ```python
 dict = """
@@ -1448,7 +1448,7 @@ copy C:WindowsSystem32\WindowsPowerShell
 
 {{< admonition note "TL;DR Short analysis on the script's intention" >}}
 * **Step 1:** Initiates AES decryptor using CBC mode, PKCS7 padding mode, key and IV given.
-* **Step 2:** Decrypts the encrypted payload (via "Window.bat") using the above settings.
+* **Step 2:** Decrypts the encrypted payload (via `Window.bat`) using the above settings.
 * **Step 3:** Decompresses GZip, then run the output as a binary - executables.
 {{< /admonition >}}
 
@@ -1496,7 +1496,7 @@ Flag is: **HTB{0neN0Te?_iT'5_4_tr4P!}**
 * **Difficulty:** Very Easy
 {{< /admonition >}}
 
-We are given a website to work with. Initially, connection to the website would result in **"404 Not Found"**. I then went to read the descriptions, and from it, I got to know that we should send at least **1000 GET requests** to **/flag** to maybe get the flag.
+We are given a website to work with. Initially, connection to the website would result in `404 Not Found`. I then went to read the descriptions, and from it, I got to know that we should send at least `1000 GET requests` to `/flag` to maybe get the flag.
 
 I used this below Python script to automate the task.
 
@@ -1528,7 +1528,7 @@ Flag is: **HTB{y0u_h4v3_p0w3rfuL_sCr1pt1ng_ab1lit13S!}**
 
 We are provided with a server and it's source. From the source, we know that it is a **SSH server**. 
 
-One thing particular about this server is that, if the username is **restricted**, we will not need to provide a password to authenticate, but the user will be in restricted shell mode.
+One thing particular about this server is that, if the username is `restricted`, we will not need to provide a password to authenticate, but the user will be in restricted shell mode.
 
 <img src="misc1.png" alt="dnSpy" width="1000"/>
 
@@ -1537,13 +1537,13 @@ One thing particular about this server is that, if the username is **restricted*
 * For instances, changing directories with the cd builtin is prohibited in restricted shell.
 {{< /admonition >}}
 
-To cope with this, we can use a trick called **SSH self loop-back**, which means we initiate a SSH connection inside a SSH, since restricted shell doesn't prevent us from using SSH commands.
+To cope with this, we can use a trick called `SSH self loop-back`, which means we initiate a SSH connection inside a SSH, since restricted shell doesn't prevent us from using SSH commands.
 
-First, we connect to the SSH server using the username **restricted**.
+First, we connect to the SSH server using the username `restricted`.
 
 <img src="misc2.png" alt="dnSpy" width="1000"/>
 
-From the source, we also know that the exposed port is 1337. Then, we can use SSH self loop-back to have the permission to use cat, since we also know that **flag.txt** is changed to **flag_*** (with * represents some random bytes) and lies in plainsight.
+From the source, we also know that the exposed port is 1337. Then, we can use SSH self loop-back to have the permission to use cat, since we also know that `flag.txt` is changed to `flag_*` (with * represents some random bytes) and lies in plainsight.
 
 <img src="misc3.png" alt="dnSpy" width="1000"/>
 
