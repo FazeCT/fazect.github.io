@@ -25,21 +25,21 @@
 </span><span class=lnt>13
 </span><span class=lnt>14
 </span><span class=lnt>15
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl main(int argc, const char **argv, const char **envp)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>  void *Block; // [esp+4h] [ebp-BCh]
-</span></span><span class=line><span class=cl>  int v5[45]; // [esp+8h] [ebp-B8h] BYREF
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  v5[0] = 10;
-</span></span><span class=line><span class=cl>  v5[1] = -3;
-</span></span><span class=line><span class=cl>  ... snip
-</span></span><span class=line><span class=cl>  v5[43] = 14;
-</span></span><span class=line><span class=cl>  v5[44] = 16;
-</span></span><span class=line><span class=cl>  Block = (void *)sub_401AC0(v5, 38, 0);
-</span></span><span class=line><span class=cl>  sub_4013B0(Block);
-</span></span><span class=line><span class=cl>  sub_401B40(Block);
-</span></span><span class=line><span class=cl>  return 0;
-</span></span><span class=line><span class=cl>}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=kr>__cdecl</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>**</span><span class=n>argv</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>**</span><span class=n>envp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>void</span> <span class=o>*</span><span class=n>Block</span><span class=p>;</span> <span class=c1>// [esp+4h] [ebp-BCh]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v5</span><span class=p>[</span><span class=mi>45</span><span class=p>];</span> <span class=c1>// [esp+8h] [ebp-B8h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=mi>10</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>43</span><span class=p>]</span> <span class=o>=</span> <span class=mi>14</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>44</span><span class=p>]</span> <span class=o>=</span> <span class=mi>16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>Block</span> <span class=o>=</span> <span class=p>(</span><span class=kt>void</span> <span class=o>*</span><span class=p>)</span><span class=nf>sub_401AC0</span><span class=p>(</span><span class=n>v5</span><span class=p>,</span> <span class=mi>38</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>sub_4013B0</span><span class=p>(</span><span class=n>Block</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>sub_401B40</span><span class=p>(</span><span class=n>Block</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>The function <strong>sub_401AC0(v5, 38, 0)</strong> allocates dynamic memory using <strong>malloc</strong> based on <strong>v5</strong> then assigns it into variable <strong>Block</strong>. That variable is then being passed into function <strong>sub_4013B0(Block)</strong>, which will produce our flag once we have fixed it.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
@@ -103,69 +103,69 @@
 </span><span class=lnt>61
 </span><span class=lnt>62
 </span><span class=lnt>63
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_4013B0(_DWORD *a1)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>  int result; // eax
-</span></span><span class=line><span class=cl>  int v2; // eax
-</span></span><span class=line><span class=cl>  int v3; // [esp+4h] [ebp-64h]
-</span></span><span class=line><span class=cl>  ... snip
-</span></span><span class=line><span class=cl>  int v37; // [esp+64h] [ebp-4h]
-</span></span><span class=line><span class=cl>  int v38; // [esp+64h] [ebp-4h]
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  while ( 1 )
-</span></span><span class=line><span class=cl>  {
-</span></span><span class=line><span class=cl>    v6 = *(_DWORD *)(a1[1] + 4 * a1[3]++);
-</span></span><span class=line><span class=cl>    result = v6 - 1;
-</span></span><span class=line><span class=cl>    switch ( v6 )
-</span></span><span class=line><span class=cl>    {
-</span></span><span class=line><span class=cl>      case 1:
-</span></span><span class=line><span class=cl>        v22 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
-</span></span><span class=line><span class=cl>        v26 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
-</span></span><span class=line><span class=cl>        v2 = sub_401110(v26, v22);
-</span></span><span class=line><span class=cl>        v16 = a1[4] + 1;
-</span></span><span class=line><span class=cl>        a1[4] = v16;
-</span></span><span class=line><span class=cl>        *(_DWORD *)(a1[2] + 4 * v16) = v2;
-</span></span><span class=line><span class=cl>        break;
-</span></span><span class=line><span class=cl>      case 2:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 4:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 5:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 6:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 7:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 8:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 9:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 10:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 11:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 12:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 13:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 14:
-</span></span><span class=line><span class=cl>        v38 = *(_DWORD *)(a1[2] + 4 * a1[4]--);
-</span></span><span class=line><span class=cl>        sub_401040(&#34;RESULT: %d\n&#34;, v38);
-</span></span><span class=line><span class=cl>        sub_401260(v38);
-</span></span><span class=line><span class=cl>        break;
-</span></span><span class=line><span class=cl>      case 15:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 16:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 17:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      case 18:
-</span></span><span class=line><span class=cl>        ... snip
-</span></span><span class=line><span class=cl>      default:
-</span></span><span class=line><span class=cl>        continue;
-</span></span><span class=line><span class=cl>    }
-</span></span><span class=line><span class=cl>  }
-</span></span><span class=line><span class=cl>}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=kr>__cdecl</span> <span class=nf>sub_4013B0</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=n>a1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>result</span><span class=p>;</span> <span class=c1>// eax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v2</span><span class=p>;</span> <span class=c1>// eax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v3</span><span class=p>;</span> <span class=c1>// [esp+4h] [ebp-64h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>v37</span><span class=p>;</span> <span class=c1>// [esp+64h] [ebp-4h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v38</span><span class=p>;</span> <span class=c1>// [esp+64h] [ebp-4h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>v6</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=p>)(</span><span class=n>a1</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>+</span> <span class=mi>4</span> <span class=o>*</span> <span class=n>a1</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span><span class=o>++</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>result</span> <span class=o>=</span> <span class=n>v6</span> <span class=o>-</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>switch</span> <span class=p>(</span> <span class=n>v6</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>1</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v22</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=p>)(</span><span class=n>a1</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>+</span> <span class=mi>4</span> <span class=o>*</span> <span class=n>a1</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=o>--</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>v26</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=p>)(</span><span class=n>a1</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>+</span> <span class=mi>4</span> <span class=o>*</span> <span class=n>a1</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=o>--</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>v2</span> <span class=o>=</span> <span class=nf>sub_401110</span><span class=p>(</span><span class=n>v26</span><span class=p>,</span> <span class=n>v22</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>v16</span> <span class=o>=</span> <span class=n>a1</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>a1</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span> <span class=o>=</span> <span class=n>v16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>*</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=p>)(</span><span class=n>a1</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>+</span> <span class=mi>4</span> <span class=o>*</span> <span class=n>v16</span><span class=p>)</span> <span class=o>=</span> <span class=n>v2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>2</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>4</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>5</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>6</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>7</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>8</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>9</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>10</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>11</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>12</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>13</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>14</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v38</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=n>_DWORD</span> <span class=o>*</span><span class=p>)(</span><span class=n>a1</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>+</span> <span class=mi>4</span> <span class=o>*</span> <span class=n>a1</span><span class=p>[</span><span class=mi>4</span><span class=p>]</span><span class=o>--</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nf>sub_401040</span><span class=p>(</span><span class=s>&#34;RESULT: %d</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>v38</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nf>sub_401260</span><span class=p>(</span><span class=n>v38</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>15</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>16</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>17</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>case</span> <span class=mi>18</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>      <span class=k>default</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>continue</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Why didn't I snip case 1 and case 14 in the above pseudocode?<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li>It is easy to observe that only these two cases involve calling other functions.</li><li>To be more precise, if the program reaches <strong>case 1</strong>, the function <strong>sub_401110(v26, v22)</strong> will be called, and on the other hand, if the program reaches <strong>case 14</strong>, the function <strong>sub_401260(v38)</strong> will be called. We will talk more about these two functions in the next parts of this blog.</li></ul></div></div></div><h2 id=reaching-case-14>Reaching case 14</h2><p>As stated earlier, the function <strong>sub_401260(v38)</strong> will be called if the program reaches <strong>case 14</strong>, which will be the last part of our code flow.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
@@ -184,24 +184,24 @@
 </span><span class=lnt>16
 </span><span class=lnt>17
 </span><span class=lnt>18
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_401260(char a1)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>  char v2[256]; // [esp+10h] [ebp-224h] BYREF
-</span></span><span class=line><span class=cl>  char Buffer; // [esp+110h] [ebp-124h] BYREF
-</span></span><span class=line><span class=cl>  _BYTE v4[3]; // [esp+111h] [ebp-123h] BYREF
-</span></span><span class=line><span class=cl>  char v5[32]; // [esp+210h] [ebp-24h] BYREF
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  qmemcpy(v5, &#34;Áõ&#34;, 2);
-</span></span><span class=line><span class=cl>  v5[2] = -77;
-</span></span><span class=line><span class=cl>  v5[3] = 26;
-</span></span><span class=line><span class=cl>  ... snip
-</span></span><span class=line><span class=cl>  v5[28] = -66;
-</span></span><span class=line><span class=cl>  v5[29] = 63;
-</span></span><span class=line><span class=cl>  memset(v2, 0, sizeof(v2));
-</span></span><span class=line><span class=cl>  sub_401D50(&amp;Buffer, &#34;%d&#34;, 55 * a1);
-</span></span><span class=line><span class=cl>  sub_401160(v5, v2, 30, &amp;Buffer, &amp;v4[strlen(&amp;Buffer)] - v4);
-</span></span><span class=line><span class=cl>  return sub_401040(&#34;flag is: %s&#34;, (char)v2);
-</span></span><span class=line><span class=cl>}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=kr>__cdecl</span> <span class=nf>sub_401260</span><span class=p>(</span><span class=kt>char</span> <span class=n>a1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>char</span> <span class=n>v2</span><span class=p>[</span><span class=mi>256</span><span class=p>];</span> <span class=c1>// [esp+10h] [ebp-224h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>Buffer</span><span class=p>;</span> <span class=c1>// [esp+110h] [ebp-124h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=n>v4</span><span class=p>[</span><span class=mi>3</span><span class=p>];</span> <span class=c1>// [esp+111h] [ebp-123h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v5</span><span class=p>[</span><span class=mi>32</span><span class=p>];</span> <span class=c1>// [esp+210h] [ebp-24h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=nf>qmemcpy</span><span class=p>(</span><span class=n>v5</span><span class=p>,</span> <span class=s>&#34;Áõ&#34;</span><span class=p>,</span> <span class=mi>2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>77</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span> <span class=o>=</span> <span class=mi>26</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=p>...</span> <span class=n>snip</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>28</span><span class=p>]</span> <span class=o>=</span> <span class=o>-</span><span class=mi>66</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span><span class=p>[</span><span class=mi>29</span><span class=p>]</span> <span class=o>=</span> <span class=mi>63</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nf>memset</span><span class=p>(</span><span class=n>v2</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=k>sizeof</span><span class=p>(</span><span class=n>v2</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>  <span class=nf>sub_401D50</span><span class=p>(</span><span class=o>&amp;</span><span class=n>Buffer</span><span class=p>,</span> <span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=mi>55</span> <span class=o>*</span> <span class=n>a1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>sub_401160</span><span class=p>(</span><span class=n>v5</span><span class=p>,</span> <span class=n>v2</span><span class=p>,</span> <span class=mi>30</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>Buffer</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>v4</span><span class=p>[</span><span class=nf>strlen</span><span class=p>(</span><span class=o>&amp;</span><span class=n>Buffer</span><span class=p>)]</span> <span class=o>-</span> <span class=n>v4</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=nf>sub_401040</span><span class=p>(</span><span class=s>&#34;flag is: %s&#34;</span><span class=p>,</span> <span class=p>(</span><span class=kt>char</span><span class=p>)</span><span class=n>v2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div><p>The function receives our modified variable <strong>Block</strong>, then uses it to produce our flag.</p><h2 id=reaching-case-1>Reaching case 1</h2><p>Here is where things get interesting. Take a look at the function <strong>sub_401110(v26, v22)</strong>, we can conclude that this is why our program runs slowly. The fact that it makes our program sleeps plus it is possibly called many times throughout the process makes our executable runs without any output for a very long time.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
@@ -211,15 +211,15 @@
 </span><span class=lnt>7
 </span><span class=lnt>8
 </span><span class=lnt>9
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>int __cdecl sub_401110(int a1, int a2)
-</span></span><span class=line><span class=cl>{
-</span></span><span class=line><span class=cl>  int v3; // [esp+0h] [ebp-4h]
-</span></span><span class=line><span class=cl>
-</span></span><span class=line><span class=cl>  v3 = sub_4010F0(0);
-</span></span><span class=line><span class=cl>  Sleep(1000 * a1);
-</span></span><span class=line><span class=cl>  Sleep(1000 * a2);
-</span></span><span class=line><span class=cl>  return sub_4010F0(0) - v3;
-</span></span><span class=line><span class=cl>}
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=kr>__cdecl</span> <span class=nf>sub_401110</span><span class=p>(</span><span class=kt>int</span> <span class=n>a1</span><span class=p>,</span> <span class=kt>int</span> <span class=n>a2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>v3</span><span class=p>;</span> <span class=c1>// [esp+0h] [ebp-4h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>v3</span> <span class=o>=</span> <span class=nf>sub_4010F0</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>Sleep</span><span class=p>(</span><span class=mi>1000</span> <span class=o>*</span> <span class=n>a1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>Sleep</span><span class=p>(</span><span class=mi>1000</span> <span class=o>*</span> <span class=n>a2</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=nf>sub_4010F0</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span> <span class=o>-</span> <span class=n>v3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
 </span></span></code></pre></td></tr></table></div></div><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>About the intended algorithm flow<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>The algorithm here is very simple, however this is author&rsquo;s idea to let the program sleeps for a total of <strong>(a1 + a2) seconds</strong> each time this function is called. The intended result of this function is to <strong>return a1 + a2</strong>. We will have to patch the binary to get our flag.</div></div></div><h2 id=patch-the-binary>Patch the binary</h2><p>So we know what makes our program runs slowly, it is time to fix that. Below is the decompiled assembly code of that part.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
@@ -233,28 +233,28 @@
 </span><span class=lnt>11
 </span><span class=lnt>12
 </span><span class=lnt>13
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>mov     ecx, [ebp+arg_0]
-</span></span><span class=line><span class=cl>mov     edx, [ecx+10h]
-</span></span><span class=line><span class=cl>sub     edx, 1
-</span></span><span class=line><span class=cl>mov     eax, [ebp+arg_0]
-</span></span><span class=line><span class=cl>mov     [eax+10h], edx
-</span></span><span class=line><span class=cl>mov     ecx, [ebp+var_10]
-</span></span><span class=line><span class=cl>push    ecx
-</span></span><span class=line><span class=cl>mov     edx, [ebp+var_C]
-</span></span><span class=line><span class=cl>push    edx
-</span></span><span class=line><span class=cl>call    sub_401110
-</span></span><span class=line><span class=cl>add     esp, 8
-</span></span><span class=line><span class=cl>mov     [ebp+var_58], eax
-</span></span><span class=line><span class=cl>mov     eax, [ebp+arg_0]
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>ecx</span><span class=p>,</span> <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>arg_0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>edx</span><span class=p>,</span> <span class=p>[</span><span class=no>ecx</span><span class=err>+</span><span class=mi>10</span><span class=no>h</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nf>sub</span>     <span class=no>edx</span><span class=p>,</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>eax</span><span class=p>,</span> <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>arg_0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=p>[</span><span class=no>eax</span><span class=err>+</span><span class=mi>10</span><span class=no>h</span><span class=p>],</span> <span class=no>edx</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>ecx</span><span class=p>,</span> <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>var_10</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nf>push</span>    <span class=no>ecx</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>edx</span><span class=p>,</span> <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>var_C</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=nf>push</span>    <span class=no>edx</span>
+</span></span><span class=line><span class=cl><span class=nf>call</span>    <span class=no>sub_401110</span>
+</span></span><span class=line><span class=cl><span class=nf>add</span>     <span class=no>esp</span><span class=p>,</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>var_58</span><span class=p>],</span> <span class=no>eax</span>
+</span></span><span class=line><span class=cl><span class=nf>mov</span>     <span class=no>eax</span><span class=p>,</span> <span class=p>[</span><span class=no>ebp</span><span class=err>+</span><span class=no>arg_0</span><span class=p>]</span>
 </span></span></code></pre></td></tr></table></div></div><p>Instead of calling <strong>sub_401110</strong>, we should patch the program to directly calculates <strong>ecx + edx</strong> then assigns it into <strong>eax</strong>. We find out that the opcode of <strong>call sub_401110</strong> is <strong>E8 77 FC FF FF</strong>.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>View instructions opcode in IDA Pro<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>Using <strong>IDA Pro</strong> integrated settings, which can be found at <strong>Options > Generals > Number of Opcode bytes (non-graph) set to a large enough number</strong>, we can view each instruction&rsquo;s opcode.</div></div></div><p>With <a href=https://github.com/Gallopsled/pwntools target=_blank rel="noopener noreffer">pwntools</a>
 library, we also find out the opcode for <strong>add ecx, edx</strong> and <strong>move eax, ecx</strong> is <strong>01 D1</strong> and <strong>89 C8</strong> using this script written in <strong>Python</strong> below.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>from pwn import *
-</span></span><span class=line><span class=cl>context.arch = &#39;amd64&#39;
-</span></span><span class=line><span class=cl>print(asm(&#39;add ecx, edx&#39;))
-</span></span><span class=line><span class=cl>print(asm(&#39;mov eax, ecx&#39;))
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>arch</span> <span class=o>=</span> <span class=s1>&#39;amd64&#39;</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>asm</span><span class=p>(</span><span class=s1>&#39;add ecx, edx&#39;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>asm</span><span class=p>(</span><span class=s1>&#39;mov eax, ecx&#39;</span><span class=p>))</span>
 </span></span></code></pre></td></tr></table></div></div><p>It is now time to patch the binary. Use any hex editor of your choice to patch the binary, here I use <strong>IDA Pro</strong>&rsquo;s integrated <strong>hex view</strong> to patch the binary.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Our goal<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>Change <strong>E8 77 FC FF FF</strong> to <strong>01 D1 89 C8 90</strong> using any hex editor of your choice (here <strong>90</strong> corresponds to the <strong>NOP</strong> instruction).</div></div></div><h2 id=result>Result</h2><p>After patching the binary, run it again to get our flag.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
