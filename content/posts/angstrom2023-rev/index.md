@@ -25,7 +25,7 @@ Also check out our team's blogs at [BKISC Blog](https://blog.bkisc.com/blog/) fo
 
 ## Overview
 
-Our team, [BKISC](https://bkisc.com/) finished at top **13** of this year **ångstromCTF**, got **2550** points in total. 
+Our team, [BKISC](https://bkisc.com/) finished at top **17** of this year **ångstromCTF**, got **2550** points in total. 
 
 <img src="bkisc.png" alt="" width="1000"/>
 
