@@ -422,6 +422,7 @@ Suppose that our input is represented by an array named `arr`.
 * Each character of the input is assigned to a function, for example `arr[i]` is associated with `func_i`.
 * Each function modifies `1293` variables (in the same order).
 * Each variable will be checked with a hard-coded array, named `needed`.
+
 In conclusion, the problem is very basic. Just solve a system of `1293` equations, with `1293` variables and we are good to go. 
 {{< /admonition >}}
 
