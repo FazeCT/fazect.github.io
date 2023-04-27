@@ -502,7 +502,7 @@ from sage.all import *
 
 mat = Matrix(check)
 mat = mat.T
-target = vector(needed)
+needed = vector(needed)
 print(mat.solve_right(needed))
 ```
  
