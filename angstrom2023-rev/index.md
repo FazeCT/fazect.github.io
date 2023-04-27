@@ -255,10 +255,10 @@ Although it looks complicated at first, but turns out the algorithm is easy to u
 The algorithm here is very simple, it takes our input as a string, splits it into several "words", then it checks whether:
 * Our input has only two words.
 * First word (after converted to `int`) should satisfy this equation: `(x + 5) * 9 - 1 == 971`.
-* Second word should be "bananas".
+* Second word should be `bananas`.
 {{< /admonition >}}
 
-It is very easy to solve the challenge from this point, and our input should be "103 bananas" according to the above rules.
+It is very easy to solve the challenge from this point, and our input should be `103 bananas` according to the above rules.
 
 <img src="bananas.png" alt="" width="1000"/> 
 
@@ -274,7 +274,7 @@ Flag is: **actf{baaaaannnnananananas_yum}**
 
 We are given a binary and a PDF file. The PDF file contains our needed string for solving the challenge.
 
-For the binary, we have to use the latest IDA version to get the decompiled function (I tried using both IDA 7.6 and IDA 8.2, and only IDA 8.2 worked for me).
+For the binary, we will have to use the latest IDA version to get the decompiled function (I tried using both `IDA 7.6` and `IDA 8.2`, and only `IDA 8.2` worked for me).
 
 ```c
 __int64 __fastcall sub_1129(char *input_1, _BYTE *input_2)
@@ -391,13 +391,11 @@ LABEL_2:
 After hours of analyzing the source, I came up with some conclusions.
 
 {{< admonition tip "Conclusions" >}}
-* The string given in the PDF file doesn't contain any of these: [].*
-* Therefore, we can skip the correspondence parts in the source.
-
-* For the substring between (...): The program sets the value of qword_4040[i] (with i being the character following the closing bracket) to that substring. For example: If we have (ab)c, the program will set qword_4040[c] = "ab".
+* The string given in the PDF file doesn't contain any of these: `[].*`. Therefore, we can skip the correspondence parts in the source.
+* For the substring between `(...)`: The program sets the value of `qword_4040[i]` (with `i` being the character following the closing bracket) to that substring. For example: If we have `(ab)c`, the program will set `qword_4040[c] = "ab"`.
 * For the space: Don't mind about it, kinda useless.
-* For the apostrophe: Filter out qword_4040[i] (with i being the character following that apostrophe). Suppose we have something like (ab)c'c, then the program will filter out "a" and "b".
-* For the substring between ?...?: The program uses applied filter (as of the above clarification) to omit out some characters, and take the last character remaining.
+* For the apostrophe: Filter out `qword_4040[i]` (with `i` being the character following that apostrophe). Suppose we have something like `(ab)c'c`, then the program will filter out `a` and `b`.
+* For the substring between `?...?`: The program uses applied filter (as of the above clarification) to omit out some characters, and take the last character remaining.
 {{< /admonition >}}
 
 With that being considered, I wrote everything on a piece of paper (no script sadly) to get the flag from the hint provided in the PDF file (also with some reasonable guesses, too).
@@ -420,11 +418,11 @@ We are once again given a 64-bit ELF file to work with. I decompiled it using ID
 
 {{< admonition tip "Algorithm" >}}
 Suppose that our input is represented by an array named arr.
-* The input should have length of **1293**.
-* Each character of the input is assigned to a function, for example **arr[i]** is associated with **func_i**.
-* Each function modifies 1293 variables (in the same order).
-* Each variable will be checked with a hard-coded array, named **needed**.
-In conclusion, the problem is very basic. Just solve a system of 1293 equations, with 1293 variables and we are good to go. 
+* The input should have length of `1293`.
+* Each character of the input is assigned to a function, for example `arr[i]` is associated with `func_i`.
+* Each function modifies `1293` variables (in the same order).
+* Each variable will be checked with a hard-coded array, named `needed`.
+In conclusion, the problem is very basic. Just solve a system of `1293` equations, with `1293` variables and we are good to go. 
 {{< /admonition >}}
 
 Having the algorithm in mind, it is time to write a Python script to solve it.
