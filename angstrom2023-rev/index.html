@@ -607,7 +607,7 @@ to decompile the BEAM file.</p><p>After having decompiled the BEAM file, we shou
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=n>mat</span> <span class=o>=</span> <span class=n>Matrix</span><span class=p>(</span><span class=n>check</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=n>mat</span> <span class=o>=</span> <span class=n>mat</span><span class=o>.</span><span class=n>T</span>
-</span></span><span class=line><span class=cl><span class=n>target</span> <span class=o>=</span> <span class=n>vector</span><span class=p>(</span><span class=n>needed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>needed</span> <span class=o>=</span> <span class=n>vector</span><span class=p>(</span><span class=n>needed</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>mat</span><span class=o>.</span><span class=n>solve_right</span><span class=p>(</span><span class=n>needed</span><span class=p>))</span>
 </span></span></code></pre></td></tr></table></div></div><p>Put everything together, and using <a href=https://www.sagemath.org/ target=_blank rel="noopener noreffer">SageMath</a>
 , we get the input needed.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
