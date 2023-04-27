@@ -53,7 +53,7 @@ Flag is: **actf{ive_be3n_checkm4ted_21d1b2cebabf983f}**
 ## zaza
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:** [Get it here!](https://drive.google.com/file/d/17iqpNM8RONIN1yuTlMuN9CziY5-DjU61/view?usp=share_link)
+* **Given file:** [Get it here!](https://drive.google.com/drive/folders/1f0V9FJvKUMoizRtHBPH46v-HdCLRpCkM?usp=share_link)
 * **Description:** Bedtime!
 * **Remote:** nc challs.actf.co 32760
 * **Points:** 50
@@ -283,7 +283,7 @@ Flag is: **actf{baaaaannnnananananas_yum}**
 ## Word Search 
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:** [Get it here!](https://drive.google.com/file/d/1bBVCDrgRvdEQWhU80CHRApHSOM8NbwIp/view?usp=share_link)
+* **Given file:** [Get it here!](https://drive.google.com/drive/folders/1Ne3b6Ybct9pFxRXJMePYDaxYLrnOYrdn?usp=share_link)
 * **Description:** I decided to put a few puzzles in the kids' menu for the new AngstromCTF restaurant, but nobody has been able to solve it. Maybe you could take a crack at it.
 * **Points:** 110
 {{< /admonition >}}
