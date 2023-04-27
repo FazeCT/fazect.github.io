@@ -128,9 +128,9 @@ printf("Nice, now reset it. Bet you can't: ");
 
 For this check, we will have to input a number `x` so that `x * 4919 = 1`. It seems hard at the first glance, but actually we can use some math to get the number `x`.
 
-Since the limit for `int` in C is `4294967296`, we can rewrite our equation to this: `x * 4919 ≡ 1 (mod 4294967296)`.
+Since the limit for `int` in C is `4294967296` and `v6` is `unsigned int`, we can rewrite our equation to this: `x * 4919 ≡ 1 (mod 4294967296)`.
 
-Therefore, we can use [Modular multiplicative inverse](https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#:~:text=Modular%20multiplicative%20inverses%20are%20used,by%20the%20Chinese%20Remainder%20Theorem.&text=t3%20%3D%206%20is%20the,%C3%97%207)%20%C3%97%206%20%3D%203504) to get `x`.
+Therefore, we can use [Modular multiplicative inverse](https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/) to get `x`.
 
 ```python
 from Crypto.Util.number import *
