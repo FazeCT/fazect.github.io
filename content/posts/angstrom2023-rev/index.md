@@ -433,7 +433,7 @@ After having solved the challenge, I did try to write a Python script. However, 
 We are once again given a 64-bit ELF file to work with. I decompiled it using IDA and after several hours into the source, I got to understand the general algorithm of the source.
 
 {{< admonition tip "Algorithm" >}}
-Suppose that our input is represented by an array named arr.
+Suppose that our input is represented by an array named `arr`.
 * The input should have length of `1293`.
 * Each character of the input is assigned to a function, for example `arr[i]` is associated with `func_i`.
 * Each function modifies `1293` variables (in the same order).
