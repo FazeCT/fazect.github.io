@@ -388,7 +388,7 @@ LABEL_2:
 }
 ```
 
-After hours of analyzing the source, I came up with some conclusions.
+After a relatively short time of analyzing the source, I came up with some conclusions.
 
 {{< admonition tip "Conclusions" >}}
 * The string given in the PDF file doesn't contain any of these: `[].*`. Therefore, we can skip the correspondence parts in the source.
