@@ -1,21 +1,5 @@
----
-weight: 1
-title: "ångstromCTF 2023 - Reverse Engineering Writeups"
-date: 2023-04-27T07:05:54+07:00
-lastmod: 2023-04-27T07:05:54+07:00
-draft: false
-author: "FazeCT"
-authorLink: "https://fazect.github.io"
-description: "Short, descriptive write-ups for challenges I did from the competition."
+# ångstromCTF 2023 - Reverse Engineering Writeups
 
-tags: ["RE", "ångstromCTF", "english"]
-categories: ["Writeups"]
-
-lightgallery: true
-
-toc:
-  enable: true
----
 
 Short, descriptive write-ups for challenges I did from the competition.
 
@@ -578,4 +562,5 @@ Flag is: **actf{3verything_is_just_linear_algebr4_33e431e52e896c92}**
 {{< admonition tip "Appendix" >}}
 I tried using z3 to solve the input as a BitVec, but gained no success. Only after one of my Crypto teammate told me to use SageMath and some Linear Algebra (I learned the subject before) that I could get the flag. Kudos to the guy!
 {{< /admonition >}}
+
 

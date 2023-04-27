@@ -1,0 +1,727 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>ångstromCTF 2023 - Reverse Engineering Writeups - FazeCT Blogs</title><meta name=Description content="Short, descriptive write-ups for challenges I did from the competition."><meta property="og:title" content="ångstromCTF 2023 - Reverse Engineering Writeups"><meta property="og:description" content="Short, descriptive write-ups for challenges I did from the competition."><meta property="og:type" content="article"><meta property="og:url" content="https://fazect.github.io/angstrom2023-rev/"><meta property="og:image" content="https://fazect.github.io/logo.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-04-27T07:05:54+07:00"><meta property="article:modified_time" content="2023-04-27T07:05:54+07:00"><meta property="og:site_name" content="FazeCT blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://fazect.github.io/logo.png"><meta name=twitter:title content="ångstromCTF 2023 - Reverse Engineering Writeups"><meta name=twitter:description content="Short, descriptive write-ups for challenges I did from the competition."><meta name=application-name content="CTF Blogs"><meta name=apple-mobile-web-app-title content="CTF Blogs"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://fazect.github.io/angstrom2023-rev/><link rel=prev href=https://fazect.github.io/htb2023/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"ångstromCTF 2023 - Reverse Engineering Writeups","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/fazect.github.io\/angstrom2023-rev\/"},"genre":"posts","keywords":"RE, ångstromCTF, english","wordcount":2592,"url":"https:\/\/fazect.github.io\/angstrom2023-rev\/","datePublished":"2023-04-27T07:05:54+07:00","dateModified":"2023-04-27T07:05:54+07:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"FazeCT"},"description":"Short, descriptive write-ups for challenges I did from the competition."}</script></head><body data-header-desktop=fixed data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="FazeCT Blogs">Blogs</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>Posts </a><a class=menu-item href=/tags/>Tags </a><a class=menu-item href=/aboutme/>About Me </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder="Search titles or contents..." id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="FazeCT Blogs">Blogs</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder="Search titles or contents..." id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>Posts</a><a class=menu-item href=/tags/ title>Tags</a><a class=menu-item href=/aboutme/ title>About Me</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">ångstromCTF 2023 - Reverse Engineering Writeups</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://fazect.github.io title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>FazeCT</a>
+</span>&nbsp;<span class=post-category>included in <a href=/categories/writeups/><i class="far fa-folder fa-fw" aria-hidden=true></i>Writeups</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2023-04-27>2023-04-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;2592 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;13 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#overview>Overview</a></li><li><a href=#checkers>checkers</a></li><li><a href=#zaza>zaza</a></li><li><a href=#bananas>Bananas</a></li><li><a href=#word-search>Word Search</a></li><li><a href=#moon>moon</a></li></ul></nav></div></div><div class=content id=content><p>Short, descriptive write-ups for challenges I did from the competition.</p><p>Also check out our team&rsquo;s blogs at <a href=https://blog.bkisc.com/blog/ target=_blank rel="noopener noreffer">BKISC Blog</a>
+for other challenges/categories.</p><h2 id=overview>Overview</h2><p>Our team, <a href=https://bkisc.com/ target=_blank rel="noopener noreffer">BKISC</a>
+finished at top <strong>13</strong> of this year <strong>ångstromCTF</strong>, got <strong>2550</strong> points in total.</p><img src=bkisc.png alt width=1000><p>For reverse, we got <code>5</code> out of <code>8</code> challenges pwn-ed.</p><img src=flexin.png alt width=1000><p>Without further ado, let&rsquo;s hop into this year&rsquo;s ångstromCTF - REV category.</p><h2 id=checkers>checkers</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given file:</strong><a href="https://drive.google.com/drive/folders/1NMzxgX2cOQ4Ihvb8eulQCnVQmvvHcxAe?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> None</li><li><strong>Category:</strong> Reverse Engineering</li><li><strong>Points:</strong> 20</li></ul></div></div></div><p>We are given a 64-bit ELF file to work with. Since ångstromCTF always has a very easy Reverse challenge for us to warm up, I decided to just use <code>strings checkers | grep -i 'actf{'</code> to get the flag.</p><img src=checker.png alt width=1000><p>Flag is: <strong>actf{ive_be3n_checkm4ted_21d1b2cebabf983f}</strong></p><h2 id=zaza>zaza</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given file:</strong><a href="https://drive.google.com/file/d/17iqpNM8RONIN1yuTlMuN9CziY5-DjU61/view?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> Bedtime!</li><li><strong>Remote:</strong> nc challs.actf.co 32760</li><li><strong>Points:</strong> 50</li></ul></div></div></div><p>Once again we are given a 64-bit ELF file to work with. I used <a href=https://hex-rays.com/ida-pro/ target=_blank rel="noopener noreffer">IDA Pro</a>
+to get the decompiled source code, which looks like this.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=kr>__cdecl</span> <span class=nf>main</span><span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>**</span><span class=n>argv</span><span class=p>,</span> <span class=k>const</span> <span class=kt>char</span> <span class=o>**</span><span class=n>envp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>int</span> <span class=n>v5</span><span class=p>;</span> <span class=c1>// [rsp+8h] [rbp-58h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>v6</span><span class=p>;</span> <span class=c1>// [rsp+Ch] [rbp-54h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>s</span><span class=p>[</span><span class=mi>72</span><span class=p>];</span> <span class=c1>// [rsp+10h] [rbp-50h] BYREF
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>unsigned</span> <span class=kr>__int64</span> <span class=n>v8</span><span class=p>;</span> <span class=c1>// [rsp+58h] [rbp-8h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>v8</span> <span class=o>=</span> <span class=nf>__readfsqword</span><span class=p>(</span><span class=mh>0x28u</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>setbuf</span><span class=p>(</span><span class=n>_bss_start</span><span class=p>,</span> <span class=mi>0LL</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>v5</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=n>v6</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;I&#39;m going to sleep. Count me some sheep: &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>__isoc99_scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>v5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>v5</span> <span class=o>!=</span> <span class=mi>4919</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;That&#39;s not enough sheep!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;Nice, now reset it. Bet you can&#39;t: &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>__isoc99_scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>v6</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>v5</span> <span class=o>*</span> <span class=n>v6</span> <span class=o>==</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d&#34;</span><span class=p>,</span> <span class=n>v6</span><span class=p>,</span> <span class=n>v6</span> <span class=o>+</span> <span class=n>v5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Not good enough for me.&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Okay, what&#39;s the magic word?&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>getchar</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=nf>fgets</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>s</span><span class=p>[</span><span class=nf>strcspn</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=s>&#34;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>)]</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nf>xor_</span><span class=p>((</span><span class=kr>__int64</span><span class=p>)</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=nf>strncmp</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=s>&#34;2&amp; =$!-( &lt;*+*( ?!&amp;$$6,. )&#39; $19 , #9=!1 &lt;*=6 &lt;6;66#&#34;</span><span class=p>,</span> <span class=mh>0x32uLL</span><span class=p>)</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Nope&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nf>win</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>v8</span> <span class=o>-</span> <span class=nf>__readfsqword</span><span class=p>(</span><span class=mh>0x28u</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=nf>printf</span><span class=p>(</span><span class=s>&#34;I&#39;m going to sleep. Count me some sheep: &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>__isoc99_scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>v5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>v5</span> <span class=o>!=</span> <span class=mi>4919</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;That&#39;s not enough sheep!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>We can easily observe that, for the first <code>scanf</code>, we will have to input <code>4919</code> to pass the check.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=nf>printf</span><span class=p>(</span><span class=s>&#34;Nice, now reset it. Bet you can&#39;t: &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>__isoc99_scanf</span><span class=p>(</span><span class=s>&#34;%d&#34;</span><span class=p>,</span> <span class=o>&amp;</span><span class=n>v6</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=n>v5</span> <span class=o>*</span> <span class=n>v6</span> <span class=o>==</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d %d&#34;</span><span class=p>,</span> <span class=n>v6</span><span class=p>,</span> <span class=n>v6</span> <span class=o>+</span> <span class=n>v5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Not good enough for me.&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>For this check, we will have to input a number <code>x</code> so that <code>x * 4919 = 1</code>. It seems hard at the first glance, but actually we can use some math to get the number <code>x</code>.</p><p>Since the limit for <code>int</code> in C is <code>4294967296</code>, we can rewrite our equation to this: <code>x * 4919 ≡ 1 (mod 4294967296)</code>.</p><p>Therefore, we can use <a href="https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#:~:text=Modular%20multiplicative%20inverses%20are%20used,by%20the%20Chinese%20Remainder%20Theorem.&amp;text=t3%20%3D%206%20is%20the,%C3%97%207" target=_blank rel="noopener noreffer">Modular multiplicative inverse</a>
+%20%C3%97%206%20%3D%203504) to get <code>x</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>Crypto.Util.number</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>inverse</span><span class=p>(</span><span class=nb>pow</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=mi>32</span><span class=p>),</span> <span class=mi>4919</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 3761</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>3761</code> is the number that we should input in order to pass this check.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Okay, what&#39;s the magic word?&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=nf>getchar</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>  <span class=nf>fgets</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=mi>64</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=n>s</span><span class=p>[</span><span class=nf>strcspn</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=s>&#34;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>)]</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=nf>xor_</span><span class=p>((</span><span class=kr>__int64</span><span class=p>)</span><span class=n>s</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=p>(</span> <span class=nf>strncmp</span><span class=p>(</span><span class=n>s</span><span class=p>,</span> <span class=s>&#34;2&amp; =$!-( &lt;*+*( ?!&amp;$$6,. )&#39; $19 , #9=!1 &lt;*=6 &lt;6;66#&#34;</span><span class=p>,</span> <span class=mh>0x32uLL</span><span class=p>)</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Nope&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=nf>win</span><span class=p>();</span>
+</span></span></code></pre></td></tr></table></div></div><p>For this last check, the program prompts us to input a string, which will go through a XOR function and will be compared against <code>2& =$!-( &lt;*+*( ?!&$$6,. )' $19 , #9=!1 &lt;*=6 &lt;6;66#</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>size_t</span> <span class=kr>__fastcall</span> <span class=nf>xor_</span><span class=p>(</span><span class=kr>__int64</span> <span class=n>a1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>size_t</span> <span class=n>result</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>i</span><span class=p>;</span> <span class=c1>// [rsp+14h] [rbp-1Ch]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=k>for</span> <span class=p>(</span> <span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=p>;</span> <span class=o>++</span><span class=n>i</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>result</span> <span class=o>=</span> <span class=nf>strlen</span><span class=p>(</span><span class=s>&#34;anextremelycomplicatedkeythatisdefinitelyuselessss&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span> <span class=n>i</span> <span class=o>&gt;=</span> <span class=n>result</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>*</span><span class=p>(</span><span class=n>_BYTE</span> <span class=o>*</span><span class=p>)(</span><span class=n>i</span> <span class=o>+</span> <span class=n>a1</span><span class=p>)</span> <span class=o>^=</span> <span class=n>aAnextremelycom</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=n>result</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>To get our input, just simply XOR <code>anextremelycomplicatedkeythatisdefinitelyuselessss</code> together with <code>2& =$!-( &lt;*+*( ?!&$$6,. )' $19 , #9=!1 &lt;*=6 &lt;6;66#</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>malduck</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>s1</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;2&amp; =$!-( &lt;*+*( ?!&amp;$$6,. )</span><span class=se>\&#39;</span><span class=s1> $19 , #9=!1 &lt;*=6 &lt;6;66#&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>s2</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;anextremelycomplicatedkeythatisdefinitelyuselessss&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>xor</span><span class=p>(</span><span class=n>s1</span><span class=p>,</span> <span class=n>s2</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># b&#39;SHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEP&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>SHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEPSHEEP</code> will be our input for the last check.</p><p>Put everything altogether, we should get our precious flag.</p><img src=zaza.png alt width=1000><p>Flag is: <strong>actf{g00dnight_c7822fb3af92b949}</strong></p><h2 id=bananas>Bananas</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given file:</strong><a href="https://drive.google.com/drive/folders/1uZBLT4779RYaZYHu1fxOCIeS6HQ3GL52?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> A friend sent this to me. Can you help me find out what they want?</li><li><strong>Remote:</strong> nc challs.actf.co 31403</li><li><strong>Points:</strong> 100</li></ul></div></div></div><p>For this challenge, we are given an Erlang BEAM file to work with. This time, I googled and got <a href=https://github.com/michalmuskala/decompile target=_blank rel="noopener noreffer">this tool</a>
+to decompile the BEAM file.</p><p>After having decompiled the BEAM file, we should obtain a file named <code>Elixir.Bananas.erl</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-elixir data-lang=elixir><span class=line><span class=cl><span class=o>-</span><span class=n>file</span><span class=p>(</span><span class=s2>&#34;lib/bananas.ex&#34;</span><span class=p>,</span> <span class=mi>1</span><span class=p>)</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>module</span><span class=p>(</span><span class=s1>&#39;Elixir.Bananas&#39;</span><span class=p>)</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>compile</span><span class=p>([</span><span class=n>no_auto_import</span><span class=p>])</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>export</span><span class=p>([</span><span class=s1>&#39;__info__&#39;</span><span class=o>/</span><span class=mi>1</span><span class=p>,</span><span class=n>main</span><span class=o>/</span><span class=mi>0</span><span class=p>,</span><span class=n>main</span><span class=o>/</span><span class=mi>1</span><span class=p>])</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>-</span><span class=n>spec</span> <span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>attributes</span> <span class=o>|</span> <span class=n>compile</span> <span class=o>|</span> <span class=n>functions</span> <span class=o>|</span> <span class=n>macros</span> <span class=o>|</span> <span class=n>md5</span> <span class=o>|</span>
+</span></span><span class=line><span class=cl>                 <span class=n>exports_md5</span> <span class=o>|</span> <span class=n>module</span> <span class=o>|</span> <span class=n>deprecated</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=n>any</span><span class=p>()</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>module</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;Elixir.Bananas&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>functions</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>[{</span><span class=n>main</span><span class=p>,</span> <span class=mi>0</span><span class=p>},</span> <span class=p>{</span><span class=n>main</span><span class=p>,</span> <span class=mi>1</span><span class=p>}];</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>macros</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>[];</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>exports_md5</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>&lt;&lt;</span><span class=s2>&#34;TÀ}ÏÚ|º6þ\020Í</span><span class=se>\f</span><span class=s2>\035\005\222\203&#34;</span><span class=p>&gt;&gt;;</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=nc>Key</span> <span class=o>=</span> <span class=n>attributes</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>erlang</span><span class=ss>:get_module_info</span><span class=p>(</span><span class=s1>&#39;Elixir.Bananas&#39;</span><span class=p>,</span> <span class=nc>Key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=nc>Key</span> <span class=o>=</span> <span class=n>compile</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>erlang</span><span class=ss>:get_module_info</span><span class=p>(</span><span class=s1>&#39;Elixir.Bananas&#39;</span><span class=p>,</span> <span class=nc>Key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=nc>Key</span> <span class=o>=</span> <span class=n>md5</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>erlang</span><span class=ss>:get_module_info</span><span class=p>(</span><span class=s1>&#39;Elixir.Bananas&#39;</span><span class=p>,</span> <span class=nc>Key</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;__info__&#39;</span><span class=p>(</span><span class=n>deprecated</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>[]</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>check</span><span class=p>([</span><span class=n>_num</span><span class=err>@</span><span class=mi>1</span><span class=p>,</span> <span class=p>&lt;&lt;</span><span class=s2>&#34;bananas&#34;</span><span class=p>&gt;&gt;])</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>(</span><span class=n>_num</span><span class=err>@</span><span class=mi>1</span> <span class=o>+</span> <span class=mi>5</span><span class=p>)</span> <span class=o>*</span> <span class=mi>9</span> <span class=o>-</span> <span class=mi>1</span> <span class=o>==</span> <span class=mi>971</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>check</span><span class=p>(</span><span class=n>__asdf</span><span class=err>@</span><span class=mi>1</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=no>false</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>convert_input</span><span class=p>(</span><span class=n>_string</span><span class=err>@</span><span class=mi>1</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>to_integer</span><span class=p>(</span><span class=s1>&#39;Elixir.String&#39;</span><span class=ss>:split</span><span class=p>(</span><span class=s1>&#39;Elixir.String&#39;</span><span class=ss>:trim</span><span class=p>(</span><span class=n>_string</span><span class=err>@</span><span class=mi>1</span><span class=p>)))</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>main</span><span class=p>()</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>main</span><span class=p>([])</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>main</span><span class=p>(</span><span class=n>_args</span><span class=err>@</span><span class=mi>1</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>print_flag</span><span class=p>(</span><span class=n>check</span><span class=p>(</span><span class=n>convert_input</span><span class=p>(</span><span class=s1>&#39;Elixir.IO&#39;</span><span class=ss>:gets</span><span class=p>(&lt;&lt;</span><span class=s2>&#34;How many bananas&#34;</span>
+</span></span><span class=line><span class=cl>                                                      <span class=s2>&#34; do I have?</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>&gt;&gt;))))</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>print_flag</span><span class=p>(</span><span class=no>false</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;Elixir.IO&#39;</span><span class=ss>:puts</span><span class=p>(&lt;&lt;</span><span class=s2>&#34;Nope&#34;</span><span class=p>&gt;&gt;);</span>
+</span></span><span class=line><span class=cl><span class=n>print_flag</span><span class=p>(</span><span class=no>true</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=s1>&#39;Elixir.IO&#39;</span><span class=ss>:puts</span><span class=p>(</span><span class=s1>&#39;Elixir.File&#39;</span><span class=ss>:&#39;read!&#39;</span><span class=p>(&lt;&lt;</span><span class=s2>&#34;flag.txt&#34;</span><span class=p>&gt;&gt;))</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>to_integer</span><span class=p>([</span><span class=n>_num</span><span class=err>@</span><span class=mi>1</span><span class=p>,</span> <span class=n>_string</span><span class=err>@</span><span class=mi>1</span><span class=p>])</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=p>[</span><span class=n>binary_to_integer</span><span class=p>(</span><span class=n>_num</span><span class=err>@</span><span class=mi>1</span><span class=p>),</span> <span class=n>_string</span><span class=err>@</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=n>to_integer</span><span class=p>(</span><span class=n>_list</span><span class=err>@</span><span class=mi>1</span><span class=p>)</span> <span class=o>-&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=n>_list</span><span class=err>@</span><span class=mi>1</span><span class=o>.</span>
+</span></span></code></pre></td></tr></table></div></div><p>Although it looks complicated at first, but turns out the algorithm is easy to understand.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>About the intended algorithm flow<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><p>The algorithm here is very simple, it takes our input as a string, splits it into several &ldquo;words&rdquo;, then it checks whether:</p><ul><li>Our input has only two words.</li><li>First word (after converted to <code>int</code>) should satisfy this equation: <code>(x + 5) * 9 - 1 == 971</code>.</li><li>Second word should be &ldquo;bananas&rdquo;.</li></ul></div></div></div><p>It is very easy to solve the challenge from this point, and our input should be &ldquo;103 bananas&rdquo; according to the above rules.</p><img src=bananas.png alt width=1000><p>Flag is: <strong>actf{baaaaannnnananananas_yum}</strong></p><h2 id=word-search>Word Search</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given file:</strong><a href="https://drive.google.com/file/d/1bBVCDrgRvdEQWhU80CHRApHSOM8NbwIp/view?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> I decided to put a few puzzles in the kids&rsquo; menu for the new AngstromCTF restaurant, but nobody has been able to solve it. Maybe you could take a crack at it.</li><li><strong>Points:</strong> 110</li></ul></div></div></div><p>We are given a binary and a PDF file. The PDF file contains our needed string for solving the challenge.</p><p>For the binary, we have to use the latest IDA version to get the decompiled function (I tried using both IDA 7.6 and IDA 8.2, and only IDA 8.2 worked for me).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kr>__int64</span> <span class=kr>__fastcall</span> <span class=nf>sub_1129</span><span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=n>input_1</span><span class=p>,</span> <span class=n>_BYTE</span> <span class=o>*</span><span class=n>input_2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=kt>char</span> <span class=o>*</span><span class=n>v2</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v4</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v5</span><span class=p>;</span> <span class=c1>// al
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v6</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=o>*</span><span class=n>v7</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v8</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v9</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v10</span><span class=p>;</span> <span class=c1>// rax
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=n>_BYTE</span> <span class=o>*</span><span class=n>v11</span><span class=p>;</span> <span class=c1>// [rsp+0h] [rbp-30h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v13</span><span class=p>;</span> <span class=c1>// [rsp+16h] [rbp-1Ah]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>char</span> <span class=n>v14</span><span class=p>;</span> <span class=c1>// [rsp+1Bh] [rbp-15h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v15</span><span class=p>;</span> <span class=c1>// [rsp+1Ch] [rbp-14h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v16</span><span class=p>;</span> <span class=c1>// [rsp+20h] [rbp-10h]
+</span></span></span><span class=line><span class=cl><span class=c1></span>  <span class=kt>int</span> <span class=n>v17</span><span class=p>;</span> <span class=c1>// [rsp+24h] [rbp-Ch]
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>  <span class=n>v11</span> <span class=o>=</span> <span class=n>input_2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=c1>// here
+</span></span></span><span class=line><span class=cl><span class=c1></span>      <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span>
+</span></span><span class=line><span class=cl><span class=nl>LABEL_2</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>v2</span> <span class=o>=</span> <span class=n>input_1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>v13</span> <span class=o>=</span> <span class=o>*</span><span class=n>v2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=o>*</span><span class=n>v2</span> <span class=o>==</span> <span class=sc>&#39;)&#39;</span> <span class=o>||</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39;]&#39;</span> <span class=o>||</span> <span class=o>!</span><span class=n>v13</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=k>return</span> <span class=n>v11</span> <span class=o>-</span> <span class=n>input_2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>!=</span> <span class=sc>&#39;(&#39;</span> <span class=o>&amp;&amp;</span> <span class=n>v13</span> <span class=o>!=</span> <span class=sc>&#39;[&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39;(&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>v4</span> <span class=o>=</span> <span class=n>input_1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=n>v5</span> <span class=o>=</span> <span class=o>*</span><span class=n>v4</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=n>v5</span> <span class=o>=</span> <span class=mi>95</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>v14</span> <span class=o>=</span> <span class=n>v5</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>qword_4040</span><span class=p>[</span><span class=n>v5</span><span class=p>]</span> <span class=o>=</span> <span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=p>(</span> <span class=p>(</span><span class=o>*</span><span class=n>input_1</span> <span class=o>!=</span> <span class=sc>&#39;)&#39;</span> <span class=o>||</span> <span class=n>v5</span> <span class=o>!=</span> <span class=n>input_1</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span> <span class=o>&amp;&amp;</span> <span class=o>*</span><span class=n>input_1</span> <span class=o>!=</span> <span class=sc>&#39;]&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=o>++</span><span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>input_1</span> <span class=o>+=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39;[&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>          <span class=k>while</span> <span class=p>(</span> <span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>v17</span> <span class=o>=</span> <span class=nf>sub_1129</span><span class=p>((</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=n>qword_4040</span><span class=p>[</span><span class=n>v14</span><span class=p>],</span> <span class=n>v11</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span> <span class=n>v17</span> <span class=o>&lt;</span> <span class=mi>0</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>              <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=n>v11</span> <span class=o>+=</span> <span class=n>v17</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>          <span class=p>}</span>
+</span></span><span class=line><span class=cl>          <span class=o>--</span><span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>!=</span> <span class=sc>&#39;\&#39;&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=n>v6</span> <span class=o>=</span> <span class=n>input_1</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span> <span class=p>(</span><span class=kt>unsigned</span> <span class=kt>int</span><span class=p>)</span><span class=nf>sub_1129</span><span class=p>((</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=n>qword_4040</span><span class=p>[</span><span class=o>*</span><span class=n>v6</span><span class=p>],</span> <span class=n>v11</span><span class=p>)</span> <span class=o>!=</span> <span class=o>-</span><span class=mi>1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=mh>0xFFFFFFFFLL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39;*&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39; &#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>v8</span> <span class=o>=</span> <span class=n>v11</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span> <span class=o>!*</span><span class=n>v8</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=mh>0xFFFFFFFFLL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span> <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>==</span> <span class=sc>&#39;?&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>v9</span> <span class=o>=</span> <span class=n>v11</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=n>v15</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>while</span> <span class=p>(</span> <span class=o>*</span><span class=n>input_1</span> <span class=o>!=</span> <span class=sc>&#39;?&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>      <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span> <span class=o>*</span><span class=n>v9</span> <span class=o>==</span> <span class=o>*</span><span class=n>input_1</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>          <span class=n>v15</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>++</span><span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=o>++</span><span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span> <span class=o>!</span><span class=n>v15</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=mh>0xFFFFFFFFLL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span> <span class=k>if</span> <span class=p>(</span> <span class=n>v13</span> <span class=o>!=</span> <span class=sc>&#39;.&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>v10</span> <span class=o>=</span> <span class=n>v11</span><span class=o>++</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>if</span> <span class=p>(</span> <span class=o>*</span><span class=n>v10</span> <span class=o>!=</span> <span class=n>v13</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=mh>0xFFFFFFFFLL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>input_1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=p>(</span> <span class=o>*</span><span class=n>input_1</span> <span class=o>==</span> <span class=sc>&#39;*&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>  <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>v7</span> <span class=o>=</span> <span class=n>input_1</span> <span class=o>+</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>input_1</span> <span class=o>+=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>v16</span> <span class=o>=</span> <span class=nf>sub_1129</span><span class=p>((</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=n>qword_4040</span><span class=p>[</span><span class=o>*</span><span class=n>v7</span><span class=p>],</span> <span class=n>v11</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span> <span class=n>v16</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>      <span class=n>v11</span> <span class=o>+=</span> <span class=n>v16</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>while</span> <span class=p>(</span> <span class=o>*</span><span class=n>input_1</span> <span class=o>==</span> <span class=sc>&#39;*&#39;</span> <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>input_1</span> <span class=o>+=</span> <span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>      <span class=k>goto</span> <span class=n>LABEL_2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl>  <span class=k>return</span> <span class=mh>0xFFFFFFFFLL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>After hours of analyzing the source, I came up with some conclusions.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Conclusions<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><p>The string given in the PDF file doesn&rsquo;t contain any of these: [].*</p></li><li><p>Therefore, we can skip the correspondence parts in the source.</p></li><li><p>For the substring between (&mldr;): The program sets the value of qword_4040[i] (with i being the character following the closing bracket) to that substring. For example: If we have (ab)c, the program will set qword_4040[c] = &ldquo;ab&rdquo;.</p></li><li><p>For the space: Don&rsquo;t mind about it, kinda useless.</p></li><li><p>For the apostrophe: Filter out qword_4040[i] (with i being the character following that apostrophe). Suppose we have something like (ab)c&rsquo;c, then the program will filter out &ldquo;a&rdquo; and &ldquo;b&rdquo;.</p></li><li><p>For the substring between ?&mldr;?: The program uses applied filter (as of the above clarification) to omit out some characters, and take the last character remaining.</p></li></ul></div></div></div><p>With that being considered, I wrote everything on a piece of paper (no script sadly) to get the flag from the hint provided in the PDF file (also with some reasonable guesses, too).</p><p>Flag is: <strong>actf{both_irregular_and_inexpressive}</strong></p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Appendix<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>After having solved the challenge, I did try to write a Python script. However, I failed to generate the flag using Python, maybe because the program has some additional constraints that I did not read carefully back then. But who cares, I got the flag anyway.</div></div></div><h2 id=moon>moon</h2><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw" aria-hidden=true></i>Challenge Information<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><ul><li><strong>Given file:</strong><a href="https://drive.google.com/drive/folders/1ThJytLyNWmUymOXZMwz0kDMxNF763R4I?usp=share_link" target=_blank rel="noopener noreffer">Get it here!</a></li><li><strong>Description:</strong> To the moon! The correct sequence of inputs is the flag in ASCII.</li><li><strong>Points:</strong> 130</li></ul></div></div></div><p>We are once again given a 64-bit ELF file to work with. I decompiled it using IDA and after several hours into the source, I got to understand the general algorithm of the source.</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Algorithm<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content><p>Suppose that our input is represented by an array named arr.</p><ul><li>The input should have length of <strong>1293</strong>.</li><li>Each character of the input is assigned to a function, for example <strong>arr[i]</strong> is associated with <strong>func_i</strong>.</li><li>Each function modifies 1293 variables (in the same order).</li><li>Each variable will be checked with a hard-coded array, named <strong>needed</strong>.
+In conclusion, the problem is very basic. Just solve a system of 1293 equations, with 1293 variables and we are good to go.</li></ul></div></div></div><p>Having the algorithm in mind, it is time to write a Python script to solve it.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>e</span> <span class=o>=</span> <span class=n>ELF</span><span class=p>(</span><span class=s1>&#39;./moon&#39;</span><span class=p>,</span><span class=n>checksec</span><span class=o>=</span><span class=kc>False</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>needed</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>i</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1293</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>needed</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=nb>int</span><span class=o>.</span><span class=n>from_bytes</span><span class=p>(</span><span class=n>e</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;needed&#39;</span><span class=p>]</span><span class=o>+</span><span class=n>i</span><span class=o>*</span><span class=mi>8</span><span class=p>,</span> <span class=mi>8</span><span class=p>),</span><span class=s1>&#39;little&#39;</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>Here, I dumped out <code>needed</code> - contains our right hand side for the system of equations.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>check</span> <span class=o>=</span> <span class=p>[</span><span class=mi>63393110</span><span class=p>,</span> <span class=mi>58886046</span><span class=p>,</span> <span class=mi>67388269</span><span class=p>,</span> <span class=mi>63461910</span><span class=p>,</span> <span class=mi>67974569</span><span class=p>,</span> <span class=mi>60993599</span><span class=p>,</span> <span class=mi>67115864</span><span class=p>,</span> <span class=mi>65470744</span><span class=p>,</span> <span class=o>...</span><span class=p>,</span> <span class=mi>60800092</span><span class=p>,</span> <span class=mi>65494190</span><span class=p>,</span> <span class=mi>67202755</span><span class=p>,</span> <span class=mi>63501212</span><span class=p>,</span> <span class=mi>65078012</span><span class=p>,</span> <span class=mi>67079286</span><span class=p>,</span> <span class=mi>59084245</span><span class=p>,</span> <span class=mi>65591500</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>eq</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=n>base</span> <span class=o>=</span> <span class=mh>0x23ab900</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>check</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>j</span> <span class=ow>in</span> <span class=nb>range</span><span class=p>(</span><span class=mi>1293</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>j</span> <span class=o>!=</span> <span class=mi>1292</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>func</span> <span class=o>=</span> <span class=n>e</span><span class=o>.</span><span class=n>disasm</span><span class=p>(</span><span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=sa>f</span><span class=s1>&#39;func</span><span class=si>{</span><span class=n>j</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>],</span> <span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=sa>f</span><span class=s1>&#39;func</span><span class=si>{</span><span class=n>j</span><span class=o>+</span><span class=mi>1</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>]</span><span class=o>-</span><span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=sa>f</span><span class=s1>&#39;func</span><span class=si>{</span><span class=n>j</span><span class=si>}</span><span class=s1>&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>func</span> <span class=o>=</span> <span class=n>e</span><span class=o>.</span><span class=n>disasm</span><span class=p>(</span><span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;func1292&#39;</span><span class=p>],</span> <span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;main&#39;</span><span class=p>]</span><span class=o>-</span><span class=n>e</span><span class=o>.</span><span class=n>sym</span><span class=p>[</span><span class=s1>&#39;func1292&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>    <span class=n>ins</span> <span class=o>=</span> <span class=n>func</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>eq</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=nb>len</span><span class=p>(</span><span class=n>ins</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=ow>and</span> <span class=s1>&#39;add    rax,&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span> <span class=ow>and</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>2</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>            <span class=c1># print(ins[i+1])</span>
+</span></span><span class=line><span class=cl>            <span class=n>num</span> <span class=o>=</span> <span class=nb>int</span><span class=p>(</span><span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;,&#39;</span><span class=p>)[</span><span class=mi>1</span><span class=p>],</span><span class=mi>16</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>eq</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>num</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=ow>and</span> <span class=s1>&#39;sub    rax,&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span> <span class=ow>and</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>2</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>            <span class=n>num</span> <span class=o>=</span> <span class=mh>0xffffffffffffffff</span> <span class=o>-</span> <span class=nb>int</span><span class=p>(</span><span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s1>&#39;,&#39;</span><span class=p>)[</span><span class=mi>1</span><span class=p>],</span> <span class=mi>16</span><span class=p>)</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>            <span class=n>eq</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>num</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>3</span>
+</span></span><span class=line><span class=cl>        <span class=k>elif</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=ow>and</span> <span class=s1>&#39;mov&#39;</span> <span class=ow>in</span> <span class=n>ins</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]:</span>
+</span></span><span class=line><span class=cl>            <span class=n>eq</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>2</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span> <span class=o>=</span> <span class=n>i</span> <span class=o>+</span> <span class=mi>1</span>      
+</span></span><span class=line><span class=cl>    <span class=n>check</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>eq</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>For this part, I dumped out all coefficients of all equations.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>check</span> <span class=o>=</span> <span class=p>[[</span><span class=mi>546</span><span class=p>,</span> <span class=mi>25</span><span class=p>,</span> <span class=mi>519</span><span class=p>,</span> <span class=mi>123</span><span class=p>,</span> <span class=mi>670</span><span class=p>,</span> <span class=mi>104</span><span class=p>,</span> <span class=mi>374</span><span class=p>,</span> <span class=mi>208</span><span class=p>,</span> <span class=o>...</span><span class=p>,</span> <span class=mi>183</span><span class=p>,</span> <span class=mi>495</span><span class=p>,</span> <span class=mi>82</span><span class=p>,</span> <span class=mi>546</span><span class=p>,</span> <span class=mi>770</span><span class=p>,</span> <span class=mi>173</span><span class=p>,</span> <span class=mi>68</span><span class=p>,</span> <span class=mi>473</span><span class=p>]]</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sage.all</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>mat</span> <span class=o>=</span> <span class=n>Matrix</span><span class=p>(</span><span class=n>check</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>mat</span> <span class=o>=</span> <span class=n>mat</span><span class=o>.</span><span class=n>T</span>
+</span></span><span class=line><span class=cl><span class=n>target</span> <span class=o>=</span> <span class=n>vector</span><span class=p>(</span><span class=n>needed</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>mat</span><span class=o>.</span><span class=n>solve_right</span><span class=p>(</span><span class=n>needed</span><span class=p>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>Put everything together, and using <a href=https://www.sagemath.org/ target=_blank rel="noopener noreffer">SageMath</a>
+, we get the input needed.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=p>(</span><span class=mi>74</span><span class=p>,</span> <span class=mi>65</span><span class=p>,</span> <span class=mi>78</span><span class=p>,</span> <span class=mi>69</span><span class=p>,</span> <span class=mi>32</span><span class=p>,</span> <span class=mi>69</span><span class=p>,</span> <span class=mi>89</span><span class=p>,</span> <span class=mi>82</span><span class=p>,</span> <span class=o>...</span><span class=p>,</span> <span class=mi>101</span><span class=p>,</span> <span class=mi>56</span><span class=p>,</span> <span class=mi>57</span><span class=p>,</span> <span class=mi>54</span><span class=p>,</span> <span class=mi>99</span><span class=p>,</span> <span class=mi>57</span><span class=p>,</span> <span class=mi>50</span><span class=p>,</span> <span class=mi>125</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Convert these into ASCII characters, we get the following (which turns out to also contain the flag):</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>JANE EYRE
+</span></span><span class=line><span class=cl>AN AUTOBIOGRAPHY
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>by Charlotte Brontë
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>_ILLUSTRATED BY F. H. TOWNSEND_
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>London
+</span></span><span class=line><span class=cl>SERVICE &amp; PATON
+</span></span><span class=line><span class=cl>5 HENRIETTA STREET
+</span></span><span class=line><span class=cl>1897
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>_The Illustrations_
+</span></span><span class=line><span class=cl>_in this Volume are the copyright of_
+</span></span><span class=line><span class=cl>SERVICE &amp; PATON, _London_
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>TO
+</span></span><span class=line><span class=cl>W. M. THACKERAY, ESQ.,
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>This Work
+</span></span><span class=line><span class=cl>IS RESPECTFULLY INSCRIBED
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>BY
+</span></span><span class=line><span class=cl>THE AUTHOR
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>PREFACE
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>A preface to the first edition of “Jane Eyre” being unnecessary, I gave
+</span></span><span class=line><span class=cl>none: this second edition demands a few words both of acknowledgment
+</span></span><span class=line><span class=cl>and miscellaneous remark.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>My thanks are due in three quarters.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To the Public, for the indulgent ear it has inclined to a plain tale
+</span></span><span class=line><span class=cl>with few pretensions.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To the Press, for the fair field its honest suffrage has opened to an
+</span></span><span class=line><span class=cl>obscure aspirant.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>To my Publishers, for the aid their tact, their energy, their practical
+</span></span><span class=line><span class=cl>sense and frank liberality have afforded an unknown and unrecommended
+</span></span><span class=line><span class=cl>Author.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The Press and the Public are but vague personifications for me, and I
+</span></span><span class=line><span class=cl>must thank them in vague terms; but my Publishers are definite: so are
+</span></span><span class=line><span class=cl>certain generous critics who have encouraged me as only large-hearted
+</span></span><span class=line><span class=cl>and high-minded men know how to encourage a struggling stranger; to
+</span></span><span class=line><span class=cl>them, _i.e._, to my Publishers and the select Reviewers, I say
+</span></span><span class=line><span class=cl>cordially, Gentlemen, I thank you from my heart.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>actf{3verything_is_just_linear_algebr4_33e431e52e896c92}
+</span></span></code></pre></td></tr></table></div></div><p>Flag is: <strong>actf{3verything_is_just_linear_algebr4_33e431e52e896c92}</strong></p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw" aria-hidden=true></i>Appendix<i class="details-icon fas fa-angle-right fa-fw" aria-hidden=true></i></div><div class=details-content><div class=admonition-content>I tried using z3 to solve the input as a BitVec, but gained no success. Only after one of my Crypto teammate told me to use SageMath and some Linear Algebra (I learned the subject before) that I could get the flag. Kudos to the guy!</div></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2023-04-27</span></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/angstrom2023-rev/index.md target=_blank>Read Markdown</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://fazect.github.io/angstrom2023-rev/ data-title="ångstromCTF 2023 - Reverse Engineering Writeups" data-hashtags=RE,ångstromCTF,english><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://fazect.github.io/angstrom2023-rev/ data-hashtag=RE><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Reddit" data-sharer=reddit data-url=https://fazect.github.io/angstrom2023-rev/><i class="fab fa-reddit fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/re/>RE</a>,&nbsp;<a href=/tags/%C3%A5ngstromctf/>ångstromCTF</a>,&nbsp;<a href=/tags/english/>english</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/htb2023/ class=prev rel=prev title="Cyber Apocalypse 2023: The Cursed Mission - Writeups"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Cyber Apocalypse 2023: The Cursed Mission - Writeups</a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>Powered by <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.111.3">Hugo</a> | Theme - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden=true></i> LoveIt</a></div><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://fazect.github.io/ target=_blank>FazeCT</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=/lib/lightgallery/lightgallery.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/lightgallery/lightgallery.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/lg-thumbnail.min.js></script><script type=text/javascript src=/lib/lightgallery/plugins/lg-zoom.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{},lightgallery:!0,math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",lunrIndexURL:"/index.json",maxResultLength:10,noResultsFound:"No results found",snippetLength:30,type:"lunr"}}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
