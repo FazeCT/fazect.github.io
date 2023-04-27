@@ -126,21 +126,9 @@ printf("Nice, now reset it. Bet you can't: ");
   }
 ```
 
-For this check, we will have to input a number `x` so that `x * 4919 = 1`. It seems hard at the first glance, but actually we can use some math to get the number `x`.
+For this check, we will have to input a number `x` so that `x * 4919 != 1`.
 
-Since the limit for `int` in C is `4294967296` and `v6` is `unsigned int`, we can rewrite our equation to this: `x * 4919 ≡ 1 (mod 4294967296)`.
-
-Therefore, we can use [Modular multiplicative inverse](https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/) to get `x`.
-
-```python
-from Crypto.Util.number import *
-
-print(inverse(pow(2, 32), 4919))
-
-# 3761
-```
-
-`3761` is the number that we should input in order to pass this check.
+Let's input `1` to pass this check.
 
 ```c
 puts("Okay, what's the magic word?");
