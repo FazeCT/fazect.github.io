@@ -38,7 +38,7 @@ Without further ado, let's hop into this year's ångstromCTF - REV category.
 ## checkers
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:**[Get it here!](https://drive.google.com/drive/folders/1NMzxgX2cOQ4Ihvb8eulQCnVQmvvHcxAe?usp=share_link)
+* **Given file: **[Get it here!](https://drive.google.com/drive/folders/1NMzxgX2cOQ4Ihvb8eulQCnVQmvvHcxAe?usp=share_link)
 * **Description:** None
 * **Category:** Reverse Engineering
 * **Points:** 20
@@ -53,7 +53,7 @@ Flag is: **actf{ive_be3n_checkm4ted_21d1b2cebabf983f}**
 ## zaza
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:**[Get it here!](https://drive.google.com/file/d/17iqpNM8RONIN1yuTlMuN9CziY5-DjU61/view?usp=share_link)
+* **Given file: **[Get it here!](https://drive.google.com/file/d/17iqpNM8RONIN1yuTlMuN9CziY5-DjU61/view?usp=share_link)
 * **Description:** Bedtime!
 * **Remote:** nc challs.actf.co 32760
 * **Points:** 50
@@ -199,7 +199,7 @@ Flag is: **actf{g00dnight_c7822fb3af92b949}**
 ## Bananas
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:**[Get it here!](https://drive.google.com/drive/folders/1uZBLT4779RYaZYHu1fxOCIeS6HQ3GL52?usp=share_link)
+* **Given file: **[Get it here!](https://drive.google.com/drive/folders/1uZBLT4779RYaZYHu1fxOCIeS6HQ3GL52?usp=share_link)
 * **Description:** A friend sent this to me. Can you help me find out what they want?
 * **Remote:** nc challs.actf.co 31403
 * **Points:** 100
@@ -283,7 +283,7 @@ Flag is: **actf{baaaaannnnananananas_yum}**
 ## Word Search 
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:**[Get it here!](https://drive.google.com/file/d/1bBVCDrgRvdEQWhU80CHRApHSOM8NbwIp/view?usp=share_link)
+* **Given file: **[Get it here!](https://drive.google.com/file/d/1bBVCDrgRvdEQWhU80CHRApHSOM8NbwIp/view?usp=share_link)
 * **Description:** I decided to put a few puzzles in the kids' menu for the new AngstromCTF restaurant, but nobody has been able to solve it. Maybe you could take a crack at it.
 * **Points:** 110
 {{< /admonition >}}
@@ -427,7 +427,7 @@ After having solved the challenge, I did try to write a Python script. However, 
 ## moon
 
 {{< admonition note "Challenge Information" >}}
-* **Given file:**[Get it here!](https://drive.google.com/drive/folders/1ThJytLyNWmUymOXZMwz0kDMxNF763R4I?usp=share_link)
+* **Given file: **[Get it here!](https://drive.google.com/drive/folders/1ThJytLyNWmUymOXZMwz0kDMxNF763R4I?usp=share_link)
 * **Description:** To the moon! The correct sequence of inputs is the flag in ASCII.
 * **Points:** 130
 {{< /admonition >}}
