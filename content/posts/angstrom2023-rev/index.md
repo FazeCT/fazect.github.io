@@ -128,7 +128,7 @@ printf("Nice, now reset it. Bet you can't: ");
 
 For this check, we will have to input a number `x` so that `x * 4919 != 1`.
 
-Let's input `1` to pass this check.
+Let's input `1` to pass this check (or anything that doesn't satisfy the equation `x * 4919 == 1`).
 
 ```c
 puts("Okay, what's the magic word?");
