@@ -19,5 +19,5 @@ Ranked **57<sup>th</sup>** in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest
 
 ## Contact Me
 
-You can contact me via [Email](mailto:ctffazect@gmail.com) or [Github](https://github.com/FazeCT).
+You can contact me via [Email](mailto:ctffazect@gmail.com), [Twitter](https://twitter.com/FazeCT1512) or [Github](https://github.com/FazeCT).
 
