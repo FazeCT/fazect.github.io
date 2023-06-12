@@ -341,8 +341,8 @@ Flag is: **SEE{pIcKyP1CIF0rmeS}**
 We are given an executable to work with. Load it in IDA, and from the bunch of functions, `sub_EC1260()` looks like the main function of the encryptor.
 
 {{< admonition tip "Encryption" >}}
-* sub_EC1070: A keystream is generated from the passphrase `hithisisakey`, using `RC4 KSA algorithm`.
-* sub_EC1140: Encrypts the plaintext using above keystream.
+* `sub_EC1070`: A keystream is generated from the passphrase `hithisisakey`, using `RC4 KSA algorithm`.
+* `sub_EC1140`: Encrypts the plaintext using above keystream.
 {{< /admonition >}}
 
 From `sub_EC1140()`, we can easily see that each character of the input is encrypted separately. Knowing that, I wrote a script to bruteforce the input (again?).
