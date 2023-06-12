@@ -170,6 +170,8 @@ def perform_operation(operator, operand1, operand2):
         return operand1 / operand2
 ```
 
+A second-blood for `BKISC`!
+
 Flag is: **SEE{5w1n61n6_7hr0u6h_7h3_7r335_51e72e7f398a4fb0e3b8cg8457167552}**
 
 ## Woodchecker
