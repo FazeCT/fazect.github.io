@@ -245,7 +245,7 @@ By reading the result above, I came to some conclusions.
 * The part `mem[0:20]` is checked.
 {{< /admonition >}}
 
-Looking closer at the output, we can see that the part `mem[0:20]` is checked backward, from this i tried to input `SEE{aaaaaaaaaaaaaaa}` to see what happens next.
+Looking closer at the output, we can see that the part `mem[0:20]` is checked backward, from this I tried to input `SEE{aaaaaaaaaaaaaaa}` to see what happens next.
 
 ```
 store = mem[20] >> (0) & 1, store = 1
