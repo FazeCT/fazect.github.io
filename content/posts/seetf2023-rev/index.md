@@ -245,7 +245,7 @@ By reading the result above, I came to some conclusions.
 * The part mem[0:20] is checked.
 {{< /admonition >}}
 
-Look closer at the output, we can see that the part mem[0:20] is checked backward, from this i tried to input `SEE{aaaaaaaaaaaaaaa}` to see what happens next.
+Looking closer at the output, we can see that the part `mem[0:20]` is checked backward, from this i tried to input `SEE{aaaaaaaaaaaaaaa}` to see what happens next.
 
 ```
 store = mem[20] >> (0) & 1, store = 1
@@ -279,7 +279,7 @@ addr -= store, addr = 149
 [...]
 ```
 
-This unraveled the last part (i.e. the part that checks mem[0:20]). The program checks backward, bit-by-bit (also backward), and if that bit is correct, the VM sets `store = 1` to let the `addr` moves to the next position to check. Else, the addr would stuck and never change its position again.
+This unraveled the last part (i.e. the part that checks `mem[0:20]`). The program checks backward, bit-by-bit (also backward), and if that bit is correct, the VM sets `store = 1` to let the `addr` moves to the next position to check. Else, the addr would stuck and never changes its position again.
 
 From this, I wrote a script to bruteforce each character of the flag, backward.
 
@@ -341,7 +341,7 @@ Flag is: **SEE{pIcKyP1CIF0rmeS}**
 We are given an executable to work with. Load it in IDA, and from the bunch of functions, `sub_EC1260()` looks like the main function of the encryptor.
 
 {{< admonition tip "Encryption" >}}
-* sub_EC1070: A keystream is generated from the passphrase "hithisisakey", using `RC4 KSA algorithm`.
+* sub_EC1070: A keystream is generated from the passphrase `hithisisakey`, using `RC4 KSA algorithm`.
 * sub_EC1140: Encrypts the plaintext using above keystream.
 {{< /admonition >}}
 
