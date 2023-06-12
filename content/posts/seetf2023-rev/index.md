@@ -240,9 +240,9 @@ addr -= store, addr = 156
 By reading the result above, I came to some conclusions.
 
 {{< admonition tip "How the VM works" >}}
-* Our input is saved in mem[0:20].
+* Our input is saved in `mem[0:20]`.
 * The VM does some encryption (which I didn't really care much about).
-* The part mem[0:20] is checked.
+* The part `mem[0:20]` is checked.
 {{< /admonition >}}
 
 Looking closer at the output, we can see that the part `mem[0:20]` is checked backward, from this i tried to input `SEE{aaaaaaaaaaaaaaa}` to see what happens next.
