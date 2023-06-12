@@ -16,7 +16,6 @@ The challenges (that I did) were quite fun, and without further ado, let's hop i
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://drive.google.com/file/d/13vXpb_AoEuOIaFPe8LXUTaXrhrMXRmZj/view?usp=sharing)
 * **Description:** GO DECOMPILE ME NOW!!!
-* **Category:** Reverse Engineering
 {{< /admonition >}}
 
 We are given 2 files, `decompile-me.pyc` and `output.txt`. For `decompile-me.pyc`, I used [uncompyle6](https://pypi.org/project/uncompyle6/) to decompile pyc file to python source code.
