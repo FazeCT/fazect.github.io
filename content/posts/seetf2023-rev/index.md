@@ -417,5 +417,5 @@ This time, I got the flag!
 Flag is: **SEE{bTw_NOW_1s_riv3st_sH4m1r_Adl3m4n_cAEs4r_sh1Fted_tw3ntY_tWO}**
 
 {{< admonition tip "Appendix" >}}
-In the above two scripts, I manually inverted the constant `e7787d3f...` before, thats why I commented it out and replace `v1` with `188782c0...`.
+In the above two scripts, I inverted the constant `e7787d3f...` into `188782c0...` before, thats why I commented it out.
 {{< /admonition >}}
