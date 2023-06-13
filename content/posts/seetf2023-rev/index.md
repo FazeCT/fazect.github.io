@@ -336,13 +336,13 @@ Flag is: **SEE{pIcKyP1CIF0rmeS}**
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://drive.google.com/file/d/1REyW-ct5LQbRCbEW1v_7RARC790cB65F/view?usp=sharing)
-* **Description:** Yet another flag encryptor, but this time with an embedded magic trick. Encrypted Flag: fde5f5e12640b9860f526a9601861e752e84d866825c415549f454fe8ba3. The password for the ZIP file is infected. While the binary will not harm your system, I suggest analyzing everything in a Virtual Machine with antiviruses switched off.
+* **Description:** Yet another flag encryptor, but this time with an embedded magic trick. Encrypted Flag: `fde5f5e12640b9860f526a9601861e752e84d866825c415549f454fe8ba3`. The password for the ZIP file is infected. While the binary will not harm your system, I suggest analyzing everything in a Virtual Machine with antiviruses switched off.
 {{< /admonition >}}
 
 We are given an executable to work with. Load it in IDA, and from the bunch of functions, `sub_EC1260()` looks like the main function of the encryptor.
 
 {{< admonition tip "Encryption" >}}
-* `sub_EC1070`: A keystream is generated from the passphrase `hithisisakey`, using `RC4 KSA algorithm`.
+* `sub_EC1070`: A keystream is generated from the passphrase `hithisisakey`, using `RC4 KSA`.
 * `sub_EC1140`: Encrypts the plaintext using above keystream.
 {{< /admonition >}}
 
