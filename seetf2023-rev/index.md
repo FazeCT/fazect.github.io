@@ -367,7 +367,7 @@ We are given a 64-bit ELF file to work with. Decompile it using IDA, and we are 
 
 `sub_1A48()` is more complicated, and by analyzing that function, I quickly realized that it does [Modular Exponentiation](https://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/), using an algorithm with `O(log2n)` complexity.
 
-I then greadily wrote a script to try calculating the flag, as below.
+I then greedily wrote a script to try calculating the flag, as below.
 
 ```Python
 from Crypto.Util.number import *
