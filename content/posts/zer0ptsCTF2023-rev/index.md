@@ -59,7 +59,7 @@ print(rc4(key, enc))
 
 Flag is: **zer0pts{d0n'7_4lw4y5_7ru57_d3c0mp1l3r}**
 
-# mimikyu
+## mimikyu
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://2023.ctf.zer0pts.com/tasks/3675284017/)
@@ -119,7 +119,7 @@ print(flag.decode())
 
 Flag is: **zer0pts{L00k_th3_1nt3rn4l_0f_l1br4r13s!}**
 
-# topology
+## topology
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://2023.ctf.zer0pts.com/tasks/2548907142/)
@@ -199,20 +199,29 @@ And, here is my note again, and this time it contains the flag instead.
 
 {{< admonition note "My note" >}}
 1  zer0pts{
+
 2  kMo7UtDh
+
 3  qMfXhaUp
+
 4  0kP8MEPL
+
 5  PJFgKUx7
+
 6  YlWyyxB9
+
 7  POKUhegF
+
 8  qdNm5sXI
+
 9  fxk2FIfV
+
 10 }
 {{< /admonition >}}
 
 Flag is: `zer0pts{kMo7UtDhqMfXhaUp0kP8MEPLPJFgKUx7YlWyyxB9POKUhegFqdNm5sXIfxk2FIfV}`
 
-# fvm
+## fvm
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** [Get it here!](https://2023.ctf.zer0pts.com/tasks/4003740730/)
