@@ -2,7 +2,7 @@
 weight: 1
 title: "zer0ptsCTF 2023 - Reverse Engineering Writeups"
 date: 2023-07-16T14:30:00+07:00
-lastmod: 2023-06-12T14:30:00+07:00
+lastmod: 2023-07-16T14:30:00+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
