@@ -147,7 +147,7 @@ The first chunk of the input is checked using `case 0` of all the functions (tha
 
 Similarly, the second chunk of the input is checked using `case 1` of all the functions (since all of them are already called once), and thing goes the same for all remaining chunks of the input.
 
-A chunk is considered correct if at least `5` functions accepts it.
+A chunk is considered correct if at least `5` functions accept it.
 {{< /admonition >}}
 
 So our problem is how to solve the cases. At first I was thinking of using `angr`, but I failed to do so, and I ended up using `z3` to solve them.
