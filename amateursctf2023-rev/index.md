@@ -615,7 +615,7 @@ We can easily see that it is checking from our last character (which is our `}` 
 
 Knowing the algorithm, I solved each character one by one (without any script, I used `Python CLI`).
 
-Also, there was a character that has a different checking technique, which I remember involving `2 ^ 7` (left for the readers to find and solve it).
+Also, there was a character that has a different checking technique, which I remember involving `2 ** 7` (left for the readers to find and solve it).
 
 And, as we get `YES` outputted, there is our flag.
 
@@ -962,3 +962,4 @@ Flag is: **amateursCTF{asK_4nD_thr33_5h4ll_r3c31v3}**
 The challenges were quite fun to solve, some of them were written in uncommon languages, which I think is really cool!
 
 If you have any question regarding the above solutions, you can DM me via my [Twitter](https://twitter.com/FazeCT1512) or my `Discord` (FazeCT #fazect).
+
