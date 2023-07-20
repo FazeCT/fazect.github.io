@@ -868,7 +868,7 @@ print(res)
 # print(bacon)
 ```
 
-So our problem now becomes easier, just need to know how `egg[]` and `bacon[]` are generated. And that took me quite a bit to realize that this is implementing the game [nonogram](https://www.puzzle-nonograms.com/), where `chicken[]` contains rules for columns and `pig[]` contains rules for rows.
+So our problem now becomes easier, just need to know how `egg[]` and `bacon[]` are generated. And that took me quite some time to realize that this is implementing the game [nonogram](https://www.puzzle-nonograms.com/), where `chicken[]` contains rules for columns and `pig[]` contains rules for rows.
 
 There are plenty of nonogram solvers online, but I chose to solve this manually (really enjoyed it xD). Here is the final solution:
 
