@@ -452,7 +452,7 @@ Flag is: **amateursCTF{i_h4v3_a_spli77ing_headache_1_r3qu1re_m04r_sl33p}**
 * **Description:** I was doing some homework for my Data Structures and Algorithms class, but my program unexpectedly crashed when I entered in my flag. Could you help me get it back? Here's the coredump and the binary, I'll even toss in the header file. Can't give out the source code though, how do I know you won't cheat off me?
 {{< /admonition >}}
 
-For this challenge, I had an unintended solution to just view the `main.coredump` file to get the flag.
+For this challenge, I had an ~~unintended~~ intended solution (confirmed by the author himself that this is intended, I just took the shorter route instead) to just view the `main.coredump` file to get the flag.
 
 <img src="3.png" alt="" width="1000"/>
 
