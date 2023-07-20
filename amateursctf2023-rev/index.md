@@ -917,7 +917,7 @@ Then I saw this line `const GRAVITY = 30;`, and thought about why not just modif
 Here is a great tutorial for doing that: [Click me!](https://www.youtube.com/watch?v=i7Sdq4av8d4&t)
 {{< /admonition >}}
 
-After modified the `GRAVITY` variable to `0`, I flew up using right mouse (it works like a jetpack) and saw the balls are stacked above in the sky. Take a closer look, I recognized that it is showing our characters of the flag, in a stack.
+After modified the `GRAVITY` variable to `0`, I flew up using right click (it works like a jetpack) and saw the balls are stacked above in the sky. Take a closer look, I recognized that it is showing our characters of the flag, in a stack.
 
 <img src="8.png" alt="" width="1000"/>
 
