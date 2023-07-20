@@ -913,7 +913,7 @@ From `index.js`, I saw this `loader.load( 'collision-world.glb', ( gltf )` and t
 
 Then I saw this line `const GRAVITY = 30;`, and thought about why not just modify it to `0` to fly around?
 
-{{< admonition note "How to modify js locally" >}}
+{{< admonition tip "How to modify js locally" >}}
 Here is a great tutorial for doing that: [Click me!](https://www.youtube.com/watch?v=i7Sdq4av8d4&t)
 {{< /admonition >}}
 
