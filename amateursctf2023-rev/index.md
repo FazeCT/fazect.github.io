@@ -7,7 +7,7 @@ Solutions to ALL reverse engineering challenges in the event.
 
 ## Overview
 
-Last weekend, I had the opportunity to participate in the event with my team, `NEW JEANS FC`, where I did all the reverse engineering challenges!
+Last weekend, I had the opportunity to participate in the event with my team, `NEW JEANS FC` (aka `thehackerscrew`), where I did all the reverse engineering challenges!
 
 I want to give a big shoutout to the authors, and especially `flocto`, for creating such cool reverse challenges!
 
