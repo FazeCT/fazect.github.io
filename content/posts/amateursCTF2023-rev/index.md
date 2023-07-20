@@ -386,7 +386,7 @@ Flag is: **amateursCTF{PY7h0ns_ar3_4_f4m1lY_0f_N0Nv3nom0us_Sn4kes}**
 
 {{< admonition note "Challenge Information" >}}
 * **Given file:** `headache`
-* **Description:** Ugh... my head hurts... Flag is amateursCTF{[a-zA-Z0-9_]+}
+* **Description:** Ugh... my head hurts... Flag is `amateursCTF{[a-zA-Z0-9_]+}`
 {{< /admonition >}}
 
 We are provided with a binary named `headache`. Using decompilers, we can see that the input should has length of `61`. Dug a bit further into the checker, I see that this binary is a `self-modifying binary`.
