@@ -15,7 +15,7 @@ Being an intern at [Sky Mavis](https://www.skymavis.com/), I am also looking for
 
 **Qualified** for [Hacktheon Sejong](https://ctf.hacktheon.org/) Finals in **Sejong, Korea**.
 
-Ranked **57<sup>th</sup>** in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest
+Honorable mention in 2022 ACM-ICPC Asia HoChiMinh City Regional Contest
 
 ## Contact Me
 
