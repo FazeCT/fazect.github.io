@@ -3,7 +3,7 @@
 
 ## Some Background Informations
 
-I am **FazeCT**, a Reverser from team [BKISC](https://bkisc.com), HCMC University of Technology. I have been studying in Computer Science, HCMC University of Technology since **October 2021**. 
+I am **FazeCT**, a Reverser from team [BKISC](https://bkisc.com), HCMC University of Technology and international team [thehackerscrew](https://www.thehackerscrew.team/). I have been studying in Computer Science, HCMC University of Technology since **October 2021**. 
 
 Started playing CTFs since **July 2022**, currently I am focusly learning in the **Reverse Engineering (RE)** field of CTF.
 
