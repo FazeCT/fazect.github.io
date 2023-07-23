@@ -795,9 +795,9 @@ From the source, we probably can see that it is doing something with matrices. A
 
 Our team was stucked for quite a while on what to do next then someone made a guess that `ComputeGrid` was just doing matrix multiplication in `GF(67)`. So I went on and wrote a sage script, while another person tried to debug, then compared the results.
 
-<img src="1.png" alt="" width="1000"/>
+<img src="1.png" alt="" width="600"/>
 
-<img src="2.png" alt="" width="1000"/>
+<img src="2.png" alt="" width="600"/>
 
 And, it was indeed doing matrix multiplication in `GF(67)`. From the source, with that precious information, we went on to conclude that matrix `x` of size `8 * 8`, with `2` last elements are padded with `2` `0s` such that `ax = xb` in `GF(67)` will be the flag for our challenge.
 
@@ -884,7 +884,7 @@ Flag is: **ictf{who_need_javascript_when_you_can_do_it_all_in_typescript}**
 
 After having solved it, he had a short comment on the challenge xD
 
-<img src="3.png" alt="" width="1000"/>
+<img src="3.png" alt="" width="600"/>
 
 ## Appendix
 
