@@ -200,7 +200,7 @@ for i in enc:
 
 I had to change encoded data from `oynuuvefmqjn1qlfnw$j*vmx1dv` to `ynuuvefmqjn1qlfnw$j*vmx1dvo` to get the right order of the flag characters.
 
-Flag is: **ictf{$cr@mbl1ngfl@g$1sc00l}**
+Flag is: **ictf{Scr@mbl1ngfl@g$1sc00l}**
 
 ## Sheepish
 
