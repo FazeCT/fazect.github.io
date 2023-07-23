@@ -575,6 +575,8 @@ print('ictf' + ans)
 # ictf{babyvm_sUccessfULly_craCKEd_ee938a5954da916add9bae5f1ebc458561e231134ae5ea06}
 ```
 
+Flag is: **ictf{babyvm_sUccessfULly_craCKEd_ee938a5954da916add9bae5f1ebc458561e231134ae5ea06}**
+
 ## Typechecker
 
 {{< admonition note "Challenge Information" >}}
