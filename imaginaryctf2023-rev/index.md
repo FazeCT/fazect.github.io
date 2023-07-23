@@ -155,7 +155,7 @@ Flag is: **ictf{josephus_problem_speed_boooooooost}**
 * **Description:** The flag is all jumbled up... or is it?
 {{< /admonition >}}
 
-We are given an `ELF` file this time. Follow the xrefs([*](https://fazect.github.io/amateursctf2023-rev/#rusteze-2)) of either `CORRECT!` or `INCORRECT!`, we can reach the main function for encryption. 
+We are given an `ELF` file this time. Follow the xrefs[*](https://fazect.github.io/amateursctf2023-rev/#rusteze-2) of either `CORRECT!` or `INCORRECT!`, we can reach the main function for encryption. 
 
 ```c
   qmemcpy(v30, "zyx^wu%v!ts1r;q@op#nm$lk(ijgh*fed&ca0b-{})", 42);
