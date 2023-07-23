@@ -81,9 +81,9 @@ Flag is: **ictf{pYthOn_obFuScAtION_iS_N0_M4TCH_f0r_U_9e1b23f9}**
 * **Description:** Optimize me, if you dare. Or not. It might run if you try hard enough.
 {{< /admonition >}}
 
-We are given a shorter (and cleaner) Python source.
+We are given a shorter (and cleaner) Python source. I modified the `enc()` to see what it does. 
 
-I modified the `enc()` to see what it does. The part `b[0] * 2 ** 24 + b[1] * 2 ** 16 + b[2] * 2 ** 8 + b[3] + 1` behaves the same with `int.from_bytes(b, 'big') + 1` so I changed it, then tried to call `enc(b'a')` while printing out the `a` array inside.
+The part `b[0] * 2 ** 24 + b[1] * 2 ** 16 + b[2] * 2 ** 8 + b[3] + 1` behaves the same with `int.from_bytes(b, 'big') + 1` so I changed it, then tried to call `enc(b'a')` while printing out the `a` array inside.
 
 ```Python
 def enc(b):
@@ -287,7 +287,7 @@ bss:0000000000006840 dword_6840      dd ?                    ; DATA XREF: sub_24
 
 So to make the `vm` interpreter behaves correctly, we have to consider `dword_6840` as `memory[1025]`, `dword_6844` as `memory[1026]`, and so on. Also take into account that `ptr` takes up a 2-byte space, not 1-byte space.
 
-Further more, the analysis of mine into the functions also reveals that one function might be interpreted wrong if not handled correctly, which is the below function - corresponds with opcode `104`.
+Further more, the analysis into the functions also reveals that one function might be interpreted wrong if not handled correctly, which is the below function - corresponds with opcode `104`.
 
 ```c
 __int64 __fastcall sub_2351(char a1)
