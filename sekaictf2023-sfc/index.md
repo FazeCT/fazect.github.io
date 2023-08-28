@@ -194,7 +194,7 @@ The first constant is loaded into `xmm1` using this instruction: `vmovss  xmm1, 
 0.010638297535479069
 ```
 
-The second constant is loaded into `xmm0` using the same instruction: `vmovss  xmm0, cs:constant2; float`. We will use the same approach to get the floating point value.
+The second constant is loaded into `xmm0` using this instruction: `vmovss  xmm0, cs:constant2; float`. We will use the same approach to get the floating point value.
 
 ```py
 >>> struct.unpack("<f", int.to_bytes(0x42BC0000, 4, 'little'))[0]
@@ -229,7 +229,9 @@ for i in range(16):
 So, clearly, it is just maths. To be able to solve this, refer to the note below.
 
 {{< admonition tip "A note to solve the problem" >}}
-The elements are all in range [0, 94], so we can work on stuffs in `Zmod(94)`. From this, we can just do a simple solve_right on `AX = B` in `Zmod(94)` with A being our matrix in `Zmod(94)` and B being our target vector, with the element all subtracted by `33`, since we have this line `*((_BYTE *)ct + v14++) = add(v24, 33u);`.
+The elements are all in range `[0, 94]`, so we can work on stuffs in `Zmod(94)`. 
+
+From this, we can just do a simple solve_right on `AX = B` in `Zmod(94)` with A being our matrix in `Zmod(94)` and B being our target vector, with the elements all subtracted by `33`, since we have this line `*((_BYTE *)ct + v14++) = add(v24, 33u);`.
 {{< /admonition >}}
 
 ```py
