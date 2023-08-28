@@ -196,7 +196,28 @@ print(matA)
     while ( &v30 != _RBX );
 ```
 
-Although this part looks quite complex since it has too many `AVX-512` instructions, however by dynamic analysis, I was able to summarize the algorithm flow, using this script.
+We encounter `2` constants here, as shown below.
+
+```c
+.rodata:000055FF636BE0A0 constant1       dd 3C2E4C41h            ; DATA XREF: main:loc_55FF636BD2A0↑r
+.rodata:000055FF636BE0A4 constant2       dd 42BC0000h            ; DATA XREF: main+1BF↑r
+```
+
+The first constant is loaded into `xmm1` using this instruction: `vmovss  xmm1, cs:constant1; float`, which we can easily retrieve using Python struct using this line of code.
+
+```py
+>>> struct.unpack("<f", int.to_bytes(0x3C2E4C41, 4, 'little'))[0]
+0.010638297535479069
+```
+
+The second constant is loaded into `xmm0` using the same instruction: `vmovss  xmm0, cs:constant2; float`. We will use the same approach to get the floating point value.
+
+```py
+>>> struct.unpack("<f", int.to_bytes(0x42BC0000, 4, 'little'))[0]
+94.0
+```
+
+The `mul()` function simply sets `XMM0 = XMM0 * XMM1`. From that I was able to summarize the algorithm flow, using this script.
 
 ```py
 from Sage.all import *
@@ -204,7 +225,7 @@ from Sage.all import *
 ct = b'/M=ldDLcPkWR*8s<F#/=\TIJ=*b\)uY4-G%O"FEct"Gi[}{JH>[yC`Baf0p}(=-t'
 l = [ct[16 * i: 16 * i + 16] for i in range(4)]
 
-con1 = 0.010638298
+con1 = 0.010638298 # I debugged to get this new value, didn't believe in Python struct lol
 con2 = 94
 
 mat = Matrix([[55, 81, 66, 68, 86, 67, 51, 34, 88, 43, 44, 70, 65, 51, 93, 54], [73, 45, 54, 35, 82, 59, 67, 84, 87, 46, 69, 46, 46, 80, 79, 51], [39, 50, 57, 67, 51, 68, 61, 32, 79, 48, 35, 90, 63, 69, 66, 52], [70, 55, 64, 40, 52, 84, 79, 77, 51, 60, 74, 57, 95, 78, 93, 41], [70, 77, 58, 78, 68, 83, 49, 37, 90, 53, 61, 91, 65, 65, 95, 58], [71, 64, 91, 90, 87, 57, 53, 75, 48, 68, 48, 69, 73, 63, 47, 51], [63, 49, 74, 50, 52, 95, 32, 83, 65, 85, 66, 53, 85, 74, 42, 81], [33, 46, 63, 85, 39, 80, 89, 50, 62, 70, 47, 70, 39, 56, 54, 61], [67, 36, 84, 70, 91, 58, 68, 87, 33, 77, 91, 88, 87, 46, 66, 67], [60, 80, 35, 79, 69, 45, 54, 79, 76, 49, 38, 75, 35, 77, 70, 91], [91, 74, 63, 55, 63, 76, 83, 39, 61, 69, 61, 49, 92, 34, 75, 52], [87, 80, 83, 43, 36, 49, 62, 86, 51, 49, 67, 65, 69, 92, 95, 42], [44, 66, 68, 88, 79, 45, 46, 70, 74, 94, 75, 50, 75, 77, 66, 66], [48, 39, 58, 73, 65, 66, 63, 77, 56, 80, 85, 57, 79, 58, 78, 64], [37, 78, 75, 90, 78, 49, 76, 79, 68, 82, 76, 87, 82, 73, 52, 46], [93, 36, 34, 41, 94, 55, 42, 58, 54, 37, 40, 76, 90, 95, 40, 75]])
@@ -221,7 +242,11 @@ for i in range(16):
     assert(edi - esi + 33 == l[0][i])
 ```
 
-So, clearly, it is just maths. Took the Crypto player from my team quite some time to work on a script to solve this, and he did it!
+So, clearly, it is just maths. To be able to solve this, refer to the note below.
+
+{{< admonition tip "A note to solve the problem" >}}
+The elements are all in range [0, 94], so we can work on stuffs in `Zmod(94)`. From this, we can just do a simple solve_right on `AX = B` in `Zmod(94)` with A being our matrix in `Zmod(94)` and B being our target vector, with the element all subtracted by `33`, since we have this line `*((_BYTE *)ct + v14++) = add(v24, 33u);`.
+{{< /admonition >}}
 
 ```py
 from sage.all import *
