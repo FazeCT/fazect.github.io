@@ -245,7 +245,7 @@ for i in range(16):
 So, clearly, it is just maths. To be able to solve this, refer to the note below.
 
 {{< admonition tip "A note to solve the problem" >}}
-The elements are all in range `[0, 94]`, so we can work on stuffs in `Zmod(94)`. 
+The elements are all in range `[0, 93]`, so we can work on stuffs in `Zmod(94)`. 
 
 From this, we can just do a simple solve_right on `AX = B` in `Zmod(94)` with A being our matrix in `Zmod(94)` and B being our target vector, with the elements all subtracted by `33`, since we have this line `*((_BYTE *)ct + v14++) = add(v24, 33u);`.
 {{< /admonition >}}
