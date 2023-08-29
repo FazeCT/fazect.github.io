@@ -21,7 +21,7 @@ In this blog, I will only share my write-up for Sahuang Flag Checker challenge. 
 * **Category:** Reverse Engineering
 {{< /admonition >}}
 
-We are given a binary filled with bunch of AVX-512 instructions to work with. Using IDA to analyze the binary, we get this code.
+We are given a binary filled with bunch of `AVX-512` instructions to work with. Using IDA to analyze the binary, we get this code.
 
 ```C
     __printf_chk(1LL, "Enter the flag: ", envp);
@@ -113,7 +113,7 @@ print(eax)
 # [49, 34, 37, 32, 36, 85, 89, 66, 81, 89, 55, 74, 77, 64, 67, 86]
 ```
 
-To reverse it is a fairly easy task, just work from the bottom up and you should be good to go.
+To reverse it is a fairly easy task, just do rotate right 3 times on the lower 4 bits of the encrypted value, then add `33` to the result.
 
 ```py
 eax = [49, 34, 37, 32, 36, 85, 89, 66, 81, 89, 55, 74, 77, 64, 67, 86]
