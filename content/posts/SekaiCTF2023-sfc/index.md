@@ -134,16 +134,16 @@ To reverse it is a fairly easy task, just work from the bottom up and you should
 ```py
 eax = [49, 34, 37, 32, 36, 85, 89, 66, 81, 89, 55, 74, 77, 64, 67, 86]
 
+ror = lambda val, r_bits, max_bits=4: \
+    ((val & (2**max_bits-1)) >> r_bits%max_bits) | \
+    (val << (max_bits-(r_bits%max_bits)) & (2**max_bits-1))
+
 for i in eax:
-    p, q = i // 16, i % 16   
-    st = p * 16 + 33
+    q = i // 16
+    r = i % 16
 
-    alphabet = [chr(i) for i in range(st, st + 16)]
-
-    if q <= 7:
-        print(end=alphabet[2 * q])
-    else:
-        print(end=alphabet[2 * (q - 8) + 1])
+    print(end=chr(q * 16 + ror(r, 3) + 33))
+print()
 
 # SEKAI{test_flag}
 ```
@@ -279,17 +279,15 @@ And, combine this with our very first script, we have our flag for the challenge
 ```py
 res = [49, 34, 37, 32, 36, 85, 16, 55, 36, 55, 68, 55, 93, 55, 43, 15] + [71, 39, 71, 31, 79, 17, 66, 34, 66, 55, 52, 15, 50, 82, 61, 55] + [7, 41, 68, 73, 78, 3, 89, 55, 40, 88, 82, 57, 17, 42, 15, 88] + [33, 66, 55, 35, 82, 52, 84, 18, 86, 59, 59, 59, 59, 59, 59, 59]
 
+ror = lambda val, r_bits, max_bits=4: \
+    ((val & (2**max_bits-1)) >> r_bits%max_bits) | \
+    (val << (max_bits-(r_bits%max_bits)) & (2**max_bits-1))
+
 for i in res:
-    p, q = i // 16, i % 16   
-    st = p * 16 + 33
+    q = i // 16
+    r = i % 16
 
-    alphabet = [chr(i) for i in range(st, st + 16)]
-
-    if q <= 7:
-        print(end=alphabet[2 * q])
-    else:
-        print(end=alphabet[2 * (q - 8) + 1])
-
+    print(end=chr(q * 16 + ror(r, 3) + 33))
 print()
 
 # SEKAI{1_I_i_|_H0oOo@p3eEe_Y0Uu\_/Didn't_BruT3F0rCe_GuYy5}XXXXXXX
