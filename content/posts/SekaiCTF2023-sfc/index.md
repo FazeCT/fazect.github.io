@@ -106,22 +106,23 @@ I used IDA debugger to analyze this, and I actually guessed how `rc()` works by 
 {{< admonition tip "How it works?" >}}
 First thing we have to observe is `rc()` changes the value in `eax` register. By inputting `ABCD`, which is `0x41424344`, gives `0x20`, `0x28`, `0x21`, `0x29` in `eax` register, respectively. 
 
-From that I got the hang of this function. It basically just does some manglings on `input[i] - 33`, refer to the script below to get how the function works. 
+From that I got the hang of this function. It basically just does some manglings on `input[i] - 33`, by performing rotate left 3 times on the lower 4 bits of `input[i] - 33`. Refer to the script below to get how the function works. 
 {{< /admonition >}}
 
 ```py
 inp = b'SEKAI{test_flag}'
 eax = []
 
+rol = lambda val, r_bits, max_bits=4: \
+    (val << r_bits%max_bits) & (2**max_bits-1) | \
+    ((val & (2**max_bits-1)) >> (max_bits-(r_bits%max_bits)))
+
 for i in inp:
     p = i - 33
     q = p // 16
-    r = p % 16
+    r = p % 16 # Extracts lower 4 bits of p
     
-    if r % 2 == 0:
-        eax.append(q * 16 + (r // 2))
-    else:
-        eax.append(q * 16 + ((r - 1) // 2 + 8))
+    eax.append(q * 16 + rol(r, 3))
 
 print(eax)
 
