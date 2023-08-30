@@ -181,6 +181,8 @@ print(matA)
     while ( &v30 != _RBX );
 ```
 
+First, the program sets `rbx = v29`, means that now the `rbx` points to the vector that was calculated from the operation `v29 = A * v28`.
+
 We encounter `2` constants here, as shown below.
 
 ```c
