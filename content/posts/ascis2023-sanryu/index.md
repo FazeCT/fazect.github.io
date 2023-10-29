@@ -25,8 +25,6 @@ Solutions to the challenge Sanryu in ASCIS 2023.
 
 Last weekend, I participated in ASEAN Students Contest on Information Security (ASCIS) with my university team, and we secured one slot in the Finals. Although the Final round will be re-organized soon due to some technical difficulties in Attack & Defense, we ended our day by being the only solver of a Reverse Engineering challenge named `Sanryu`, in the final seconds of the CTF.
 
-For this writeup, as a disclaimer, I did not focus on several specific techniques used to solve the first part of the chall during the CTF, I just used my instinct instead, so feel free to skip it if you need a more insight, educative view on that part.
-
 ## Challenge Information
 {{< admonition note "Challenge Information" >}}
 * **Challenge name:** Sanryu
