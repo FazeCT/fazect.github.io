@@ -408,7 +408,7 @@ case 0xDEADu:
   break;
 ```
 
-So `v4` and `v5` contain each pair of characters in our input for the second part (it uses `[1 % a1]` to make the input `circular` - i.e. `a3[3]` with `a3[0]` are also considered to be one pair). Then based on the parity of `*(a2 + 8)`, `(a2 + 11)` will be calculated differently, and being pulled out by `eax` register for the parent process to use.
+So `v4` and `v5` contain each pair of characters in our input for the second part (it uses `[1 % a1]` to make the input `circular` - i.e. `a3[3]` with `a3[0]` are also considered to be one pair). Then based on the parity of `*(a2 + 8)`, `*(a2 + 11)` will be calculated differently, and being pulled out by `eax` register for the parent process to use.
 
 I wrote a script to solve this part, as below.
 
