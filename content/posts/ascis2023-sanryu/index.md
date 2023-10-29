@@ -6,7 +6,7 @@ lastmod: 2023-10-30T02:35:00+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
-description: "Solutions to the challenge Sanryu in ASCIS 2023."
+description: "Solution to the challenge Sanryu in ASCIS 2023."
 
 tags: ["RE", "ASCIS", "english"]
 categories: ["Writeups"]
@@ -17,7 +17,7 @@ toc:
   enable: true
 ---
 
-Solutions to the challenge Sanryu in ASCIS 2023.
+Solution to the challenge Sanryu in ASCIS 2023.
 
 <!--more-->
 
