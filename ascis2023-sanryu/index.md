@@ -1,7 +1,7 @@
 # ASCIS 2023 - Sanryu (REV)
 
 
-Solutions to the challenge Sanryu in ASCIS 2023.
+Solution to the challenge Sanryu in ASCIS 2023.
 
 <!--more-->
 
