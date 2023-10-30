@@ -98,11 +98,11 @@ print(xor([0x7D, 0x7E, 0xB3, 0x90, 0xF9, 0x15, 0xBA, 0xA7, 0x72, 0x68,
 
 A quick script gave `ZQLODBY4UGXHK5TRYILGMEZZVYU2ILTE` as the result. I tried it on the binary but it gave nothing.
 
-I tried to decrypt the image by myself (it uses RC4 to encrypt the image), but I got this.
+I tried to decrypt the image by myself (it uses `RC4` to encrypt the image), but I got this.
 
 <img src="susflag.jpg" alt="" width="1000"/>
 
-Okay, something really squishy here. I went back to recheck the code flow and I saw the assembly part where the binary does `call 0FFFFFFFFFFFFFFFF` in the `check()` function. That surely gives Exception when you run it. I did some further static analysis until I saw that the function to decrypt `RC4` was called twice. So I went on and check the other part that calls it.
+Okay, something really squishy here. I went back to recheck the code flow and I saw the assembly part where the binary does `call 0x0FFFFFFFFFFFFFFFF` in the `check()` function. That surely gives Exception when you run it. I did some further static analysis until I saw that the function to decrypt `RC4` was called twice. So I went on and check the other part that calls it.
 
 Turns out, that part in `sub_140001F50()` is where we should look at. The binary decrypts another PE file using `RC4`, and we can actually dump it out by putting a breakpoint at the end of the `RC4` decrypt function to dump the binary out.
 
@@ -151,7 +151,7 @@ So we have our second part of the flag, it's time to move on to the last one.
 
 ## Challenge 1
 
-I consider this one to be the hardest. The binary is actually nanomites, where there are 2 parallel process communicating with each other. I debugged each of them individually by patching the mutex check to debug the child process.
+I consider this one to be the hardest. The binary is actually nanomites, where there are 2 parallel processes communicating with each other. I debugged each of them individually by patching the mutex check to debug the child process.
 
 In general, the parent process wants an input from us, then it is sent to the child process by the second value of the argv. The processes communicate with each other using functions like `WaitForDebugEvent`, `GetThreadContext`, ... and through registers, like how a nanomites related challenge should work. Each time the child process encounter an `int 3` call, the parent process continues, and the parent process - having finished its job, the `eip` is changed and the flow returns to the child process and so on.
 
