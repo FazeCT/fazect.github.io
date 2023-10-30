@@ -12,7 +12,7 @@ Last weekend, I participated in ASEAN Students Contest on Information Security (
 ## Challenge Information
 {{< admonition note "Challenge Information" >}}
 * **Challenge name:** Sanryu
-* **Given file:** [Get it here!](https://drive.google.com/file/d/1wNw1lxfqTNM8-n1_56lBSkiHSER2hhFV/view?usp=sharing)
+* **Given file:** [Get it here!](https://github.com/FazeCT/ctf/blob/main/sanryu.exe)
 {{< /admonition >}}
 
 ## Main binary
