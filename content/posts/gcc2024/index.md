@@ -1,8 +1,8 @@
 ---
 weight: 1
 title: "GCC2024 Recap"
-date: 2024-02-24T11:00:00+07:00
-lastmod: 2024-02-24T11:00:00+07:00
+date: 2024-02-25T00:00:00+07:00
+lastmod: 2024-02-25T00:00:00+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
