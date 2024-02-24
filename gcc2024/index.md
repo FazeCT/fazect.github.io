@@ -99,7 +99,7 @@ My roommate was Jitae Kim (KR). We spent good time together until he got sick an
 
 20th Feb was the birthday of Rajarshi from India. Everyone cheered for him in the dining room, cut cake and enjoyed good time together. Bro was so lucky omg 🙏
 
-<video width="1000" controls>
+<video width="700" controls>
   <source src="birthday.mp4" type="video/mp4">
 </video>
 
