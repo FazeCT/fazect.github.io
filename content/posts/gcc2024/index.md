@@ -75,6 +75,8 @@ Surely the most appealing topic here, and the lecturer did a really good job wit
 
 <img src="carhack.jpg" alt="" width="1000"/>
 
+<img src="carhack2.jpg" alt="" width="1000"/>
+
 Thanks for your positive comment on my groupwork’s UI btw.
 
 ### Practical Malware Analysis and .NET Reversing
