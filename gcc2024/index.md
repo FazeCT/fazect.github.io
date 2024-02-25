@@ -65,7 +65,7 @@ Thanks for your positive comment on my groupwork’s UI btw.
 
 ### Practical Malware Analysis and .NET Reversing
 
-My main reason to apply for GCC this year. I learned a lot about .NET and PE structure, how to deal with malwares, and many more through this session.  ~~I rushed through all the lab in like 30 mins or something~~.
+My main reason to apply for GCC this year. I learned a lot about .NET and PE structure, how to deal with malwares, and many more through this session.  ~~I rushed through all the labs in like 30 mins or something~~.
 
 ## Groupwork
 
