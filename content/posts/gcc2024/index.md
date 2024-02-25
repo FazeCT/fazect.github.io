@@ -8,7 +8,7 @@ author: "FazeCT"
 authorLink: "https://fazect.github.io"
 description: "A recap of my GCC2024 journey."
 
-tags: ["GCC, English"]
+tags: ["GCC", "English"]
 categories: ["Blogs"]
 
 lightgallery: true
