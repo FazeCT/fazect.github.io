@@ -19,7 +19,7 @@ It is not gonna be a wall of text. I swear.
 
 BUT IT WAS NEXT TO THE BEACHHHHHHHH GGGGGG
 
-The rooms I stayed in were nice and clean.
+The rooms (I'll explain why later) I stayed in were nice and clean.
 
 Snacks and drinks on the break counters are good.
 
@@ -88,6 +88,10 @@ And another huge thanks to OffSec for the prizes of two top teams in the groupwo
 Oh wait, gotta respect Ching367436 (TW). He went to buy a router and made a CTF challenge on it. Smurfin'
 
 ## Random things
+
+### Vietnamese team
+
+No staff. Last to arrive. First to leave. That's it.
 
 ### Food
 
