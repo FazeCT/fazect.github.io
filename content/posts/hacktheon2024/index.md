@@ -124,7 +124,7 @@ what is that luck? 😧
 
 I met the Malaysian and Singaporean GCC 2024 students at the event, and we enjoyed our time together during our stay.
 
-Also, finally I have met Ainsetin - a pwn god from thehackerscrew. He was a little bit introvert so I did not take any picture with him. Sad!
+Also, finally I have met Ainsetin - a pwn god ~~once from thehackerscrew~~. He was a little bit introvert so I did not take any picture with him. Sad!
 
 ## First day in Myeongdong
 
