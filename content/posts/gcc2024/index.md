@@ -9,7 +9,7 @@ authorLink: "https://fazect.github.io"
 description: "A recap of my GCC2024 journey."
 
 tags: ["GCC", "English"]
-categories: ["Blogs"]
+categories: ["Blogs", "Trips", "Thailand"]
 
 lightgallery: true
 
