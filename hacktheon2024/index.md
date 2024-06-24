@@ -261,3 +261,4 @@ Hope that the Hacktheon Sejong 2025 finals won't be organized anytime during my 
 Oh and I think I will have to register as Advanced team if I want to participate again. Time to fight against the KAIST ☠️
 
 I will end this blog here and hope to see all of you soon in future onsite events!
+
