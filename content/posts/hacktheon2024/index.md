@@ -8,8 +8,8 @@ author: "FazeCT"
 authorLink: "https://fazect.github.io"
 description: "A recap of my Hacktheon Sejong 2024 journey."
 
-tags: ["Hacktheon", "English"]
-categories: ["Blogs", "Trips", "Korea"]
+tags: ["Trips", "Korea", "English"]
+categories: ["Blogs"]
 
 lightgallery: true
 
