@@ -244,7 +244,7 @@ I stayed awake to play WaniCTF with friends while having T1 soda drink (the drin
 
 Let me introduce you to our second incident - the rainy day ☠️
 
-Our planned was cancelled due to the not-so-heavy-but-heavy-enough-to-ruin-our-plan rain, and we stayed indoor to play GoogleCTF.
+Our plan was cancelled due to the not-so-heavy-but-heavy-enough-to-ruin-our-plan rain, and we stayed indoor to play GoogleCTF.
 
 In the afternoon, we met `brwook` - a pwn player from team cr3.mov (which is the international team of some of my teammates). 
 
