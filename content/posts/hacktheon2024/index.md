@@ -35,7 +35,7 @@ The first tragedy already started even before our departure from Vietnam 💀
 
 As planned, there are 11 students in total from my school that will participate in the event, and I would be the last to arrive at Incheon Int'l Airport.
 
-And somehow, I arrived first - by far - not bc they chose the ~~worst airlines possible in VN~~ (I'm looking at you Vietjet 👀), and I met the Malaysian team at the airport (the third time that I have met Zeynarz - or Ren - from Malaysia lol).
+And somehow, I arrived first - by far - not bc they chose the ~~worst airline possible in VN~~ (I'm looking at you Vietjet 👀), and I met the Malaysian team at the airport (the third time that I have met Zeynarz - or Ren - from Malaysia lol).
 
 ## Yup, Korea starts here
 
