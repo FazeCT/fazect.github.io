@@ -177,7 +177,7 @@ char smth()
 
 Back to the `smth()` function, we can see that `v2->padding4[1]` is also the VM length, along with `v2->padding2[0x10]` being another pointer that could possibly be used afterward.
 
-At this point, the VM bytecodes buffer should look like this: `flag (32 bytes) + VM (0x10000 - 32 bytes)`
+At this point, the VM bytecodes buffer should look like this: `flag (32 bytes) + actual VM bytecodes`
 
 Let's update our struct once again!
 
