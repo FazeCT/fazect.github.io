@@ -278,6 +278,8 @@ struct object
   _QWORD padding5;
 };
 ```
+## Interpreter
+
 At this point, the VM is already easy to solve statically, for example (`case 0x18`):
 
 ```C
@@ -546,7 +548,9 @@ No.
 ```
 From the trace, we can see that the executable wants four numbers instead of one, and how those numbers are checked (even though some lines are useless).
 
-This can be modeled into Z3 like this:
+## Solver
+
+The challenge can be modeled into Z3 like this:
 
 ```py
 from z3 import *
