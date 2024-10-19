@@ -1035,7 +1035,7 @@
 </span></span><span class=line><span class=cl>mem[8] = 0x0
 </span></span><span class=line><span class=cl>mem[8] = 0xfffffff0 = mem[8] - mem[9]
 </span></span><span class=line><span class=cl>RC4 decryption.
-</span></span></code></pre></td></tr></table></div></div><p>Our input will be used to make a key to RC4-decrypting the encrypted flag, so we need the EXACT result from the Z3 script above and I&rsquo;m pretty sure this is infeasible.</p><p>Luckily, the author made three hints that have the first three values of the password - <code>544047215, 369586174, 635441828</code>.</p><p>Running this updated script yields the final flag:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span></span></code></pre></td></tr></table></div></div><p>Our input will be used to make a key to RC4-decrypting the encrypted flag, so we need the EXACT result from the Z3 script above and I&rsquo;m pretty sure this is infeasible.</p><p>Luckily, the author made three hints that had the first three values of the password - <code>544047215, 369586174, 635441828</code>.</p><p>Running this updated script yields the final flag:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
