@@ -1,12 +1,12 @@
 ---
 weight: 1
-title: "ASCIS 2023 - Sanryu (REV)"
+title: "ASCIS 2024 - HACK ME! (REV)"
 date: 2023-10-30T02:35:00+07:00
 lastmod: 2023-10-30T02:35:00+07:00
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
-description: "Solution to the challenge Sanryu in ASCIS 2023."
+description: "Solution to the challenge HACK ME! in ASCIS 2024."
 
 tags: ["RE", "ASCIS", "english"]
 categories: ["Writeups"]
@@ -16,6 +16,7 @@ lightgallery: true
 toc:
   enable: true
 ---
+
 Solution to the challenge HACK ME! in ASCIS 2024.
 
 <!--more-->
