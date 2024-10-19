@@ -52,7 +52,7 @@ I will explain the four hints throughout this writeup.
 
 We are given an executable that reads from a file named `flag` and prompts us for a password.
 
-At this point I'm thinking if I should crack the zip that contains the `flag` file, but honestly what's the point doing that in a reverse challenge?
+At this point I was thinking if I should crack the zip that contains the `flag` file, but honestly what's the point of doing that in a reverse challenge?
 
 Luckily, they gave the `flag` file later on (this was the first hint).
 
