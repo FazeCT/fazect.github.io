@@ -17,7 +17,7 @@ toc:
   enable: true
 ---
 
-Solution to the challenge HACK ME! in ASCIS 2023.
+Solution to the challenge HACK ME! in ASCIS 2024.
 
 <!--more-->
 
@@ -40,7 +40,7 @@ Who created the cursed first challenge, I wonder?
 <img src="hackme.png" alt="" width="400" style="display: block; margin-left: auto; margin-right: auto;"/>
 
 
-At first, only `CHALL_RE.ZIP`, `HACKME.EXE.ZIP` and `CHECKSUM.TXT` are given. 
+At first, only `CHALL_RE.ZIP`, `HACKME.EXE.ZIP` and `CHECKSUM.TXT` were given. 
 
 `CHALL_RE.ZIP` contains `flag` file and `HACKME.EXE` binary.
 
