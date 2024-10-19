@@ -670,7 +670,7 @@ RC4 decryption.
 
 Our input will be used to make a key to RC4-decrypting the encrypted flag, so we need the EXACT result from the Z3 script above and I'm pretty sure this is infeasible.
 
-Luckily, the author made three hints that have the first three values of the password - `544047215, 369586174, 635441828`.
+Luckily, the author made three hints that had the first three values of the password - `544047215, 369586174, 635441828`.
 
 Running this updated script yields the final flag:
 
