@@ -37,7 +37,7 @@ Who created the cursed first challenge, I wonder?
 
 ## Overview
 
-<img src="hackme.png" alt="" width="400" style="display: block; margin-left: auto; margin-right: auto; margin-bottom:10px "/>
+<img src="hackme.png" alt="" width="400" style="display: block; margin-left: auto; margin-right: auto;"/>
 
 
 At first, only `CHALL_RE.ZIP`, `HACKME.EXE.ZIP` and `CHECKSUM.TXT` are given. 
