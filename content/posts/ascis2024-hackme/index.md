@@ -1,8 +1,6 @@
 ---
 weight: 1
 title: "ASCIS 2024 - HACK ME! (REV)"
-date: 2024-10-20
-lastmod: 2024-10-20
 draft: false
 author: "FazeCT"
 authorLink: "https://fazect.github.io"
