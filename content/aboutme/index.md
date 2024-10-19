@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-date: January 2, 2023
+date: 2023-01-02T02:35:00+07:00
 draft: false
 description: "About Me"
 
