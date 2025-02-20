@@ -13,13 +13,13 @@ export type Link = {
 }
 
 export const SITE: Site = {
-  TITLE: 'astro-erudite',
+  TITLE: 'FazeCT',
   DESCRIPTION:
-    'astro-erudite is a opinionated, no-frills blogging template—built with Astro, Tailwind, and shadcn/ui.',
-  EMAIL: 'jason@enscribe.dev',
-  NUM_POSTS_ON_HOMEPAGE: 2,
-  POSTS_PER_PAGE: 3,
-  SITEURL: 'https://astro-erudite.vercel.app',
+    '食べて、寝て、Reverse、繰り返す',
+  EMAIL: 'ctffazect@gmail.com',
+  NUM_POSTS_ON_HOMEPAGE: 3,
+  POSTS_PER_PAGE: 5,
+  SITEURL: 'https://fazect.github.io',
 }
 
 export const NAV_LINKS: Link[] = [
@@ -30,8 +30,8 @@ export const NAV_LINKS: Link[] = [
 ]
 
 export const SOCIAL_LINKS: Link[] = [
-  { href: 'https://github.com/jktrn', label: 'GitHub' },
-  { href: 'https://twitter.com/enscry', label: 'Twitter' },
-  { href: 'jason@enscribe.dev', label: 'Email' },
+  { href: 'https://github.com/FazeCT', label: 'GitHub' },
+  { href: 'https://x.com/fazect1512', label: 'Twitter' },
+  { href: 'ctffazect@gmail.com', label: 'Email' },
   { href: '/rss.xml', label: 'RSS' },
 ]

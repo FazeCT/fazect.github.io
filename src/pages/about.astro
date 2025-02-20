@@ -18,38 +18,31 @@ const projects = await getCollection('projects')
       <div class="min-w-full">
         <div class="prose prose-neutral mb-8 dark:prose-invert">
           <p class="mb-4">
-            astro-erudite is an opinionated, no-frills static blogging template
-            that prioritizes simplicity and performance, built with <Link
-              href="https://astro.build"
+            I am <span style="font-weight: bold">FazeCT</span>, a Reverser from team <Link
+              href="https://bkisc.com"
               class="text-foreground"
               external
-              underline>Astro</Link
-            >, <Link
-              href="https://tailwindcss.com"
-              class="text-foreground"
-              external
-              underline>Tailwind</Link
-            >, and <Link
-              href="https://ui.shadcn.com"
-              class="text-foreground"
-              external
-              underline>shadcn/ui</Link
-            >. It provides a clean foundation for your content while being
-            extremely easy to customize.
+              underline>BKISC</Link
+            >, HCMC University of Technology. I have been studying in Computer Science, HCMC University of Technology since <span style="font-weight: bold">October 2021</span>. 
           </p>
           <p>
-            To learn more about the philosophy behind this template, check out
-            the following blog post: <Link
-              href="/blog/the-state-of-static-blogs"
-              class="text-foreground"
-              underline>The State of Static Blogs in 2024</Link
-            >.
+            Started playing CTFs since <span style="font-weight: bold">August 2022</span>, currently I am focusly learning in the <span style="font-weight: bold">Reverse Engineering (RE)</span> field of CTF.
           </p>
-        </div>
 
-        <h2 class="mb-4 text-2xl font-semibold">Example Projects Listing</h2>
-        <div class="flex flex-col gap-4">
-          {projects.map((project) => <ProjectCard project={project} />)}
+          <h2 class="mb-4 text-2xl font-semibold">Traveler's Almanac</h2>
+          <p class="mb-8">
+            This map shows my
+            
+              <span style="display: inline-block; width: 1.6ch; height: 1.6ch; border-radius: 0.1rem; background-color: #4ff9ff;"></span>
+              visited countries
+            
+            and my
+              <span style="display: inline-block; width: 1.6ch; height: 1.6ch; border-radius: 0.1rem; background-color: #ff0000;"></span>
+              nationality.
+          </p>
+          <p>
+            <img src='./static/world.svg' alt="World" />
+          </p>
         </div>
       </div>
     </section>
