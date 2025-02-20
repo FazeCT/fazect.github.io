@@ -19,7 +19,7 @@ export const SITE: Site = {
   EMAIL: 'ctffazect@gmail.com',
   NUM_POSTS_ON_HOMEPAGE: 3,
   POSTS_PER_PAGE: 5,
-  SITEURL: 'https://fazect.github.io',
+  SITEURL: 'https://fazect.com',
 }
 
 export const NAV_LINKS: Link[] = [
