@@ -3,26 +3,18 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Geist';
-  src: url('/fonts/GeistVF.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMonoVF.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono[wght].woff2') format('woff2-variations');
+  font-weight: 100 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
+  src: url('/fonts/JetBrainsMono-Italic[wght].woff2') format('woff2-variations');
+  font-weight: 100 800;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -91,10 +83,23 @@
 
 @layer components {
   article {
-    @apply prose-headings:scroll-mt-20 prose-headings:break-words first:prose-headings:mt-0 prose-p:break-words prose-a:!break-words prose-a:!decoration-muted-foreground prose-a:underline-offset-[3px] prose-a:transition-colors hover:prose-a:!decoration-foreground prose-pre:!px-0 prose-img:mx-auto;
+    @apply prose-headings:scroll-mt-20 prose-headings:break-words;
+    @apply prose-p:break-words;
+    @apply prose-a:!text-primary prose-a:!decoration-primary/50 prose-a:!underline-offset-[3px] prose-a:transition-colors hover:prose-a:!decoration-inherit;
+    @apply prose-blockquote:!not-italic prose-blockquote:!text-muted-foreground;
+    @apply prose-pre:!px-0;
+    @apply prose-img:mx-auto prose-img:rounded-xl prose-img:border;
+    @apply prose-table:mx-auto prose-table:block prose-table:max-w-fit prose-table:overflow-x-auto prose-td:break-words;
+    @apply sm:prose-table:mx-0 sm:prose-table:table sm:prose-table:max-w-none;
 
+    /* Fixing Katex display */
     .katex-display {
       @apply overflow-x-auto overflow-y-hidden py-4;
+    }
+
+    /* Fixing Katex fractions */
+    .frac-line {
+      @apply border-foreground;
     }
 
     /* Removes background from <mark> elements */
@@ -105,7 +110,7 @@
     /* Blanket syntax highlighting */
     code[data-theme*=' '] {
       span {
-        color: var(--shiki-light);
+        color: var(--shiki-dark);
       }
 
       .dark & span {
@@ -115,7 +120,7 @@
 
     /* Inline code */
     :not(pre) > code {
-      @apply relative rounded bg-muted/50 px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium;
+      @apply relative rounded bg-muted/50 px-[0.3rem] py-[0.2rem] font-mono text-sm font-medium before:!content-none after:!content-none;
     }
 
     /* Code blocks */
@@ -178,6 +183,24 @@
             @apply bg-muted-foreground/40 py-[7px];
           }
 
+          .tab {
+            @apply relative;
+          }
+
+          .tab::before {
+            @apply absolute opacity-30;
+            content: '⇥';
+          }
+
+          /* Skip lines */
+          .skip {
+            @apply my-2 bg-foreground/5 text-center text-foreground;
+
+            &::before {
+              content: '' !important;
+            }
+          }
+
           /* Diff lines */
           .diff {
             &.add {
@@ -185,12 +208,19 @@
             }
             &.remove {
               @apply bg-destructive/15;
+              &::before {
+                content: '-';
+                counter-increment: none;
+              }
+            }
+            &.highlight {
+              @apply bg-foreground/10;
             }
           }
 
           /* Copy button */
           > button:has(> span) {
-            @apply right-0.5 top-[3px] m-0 size-8 rounded-md bg-background p-1 backdrop-blur-none transition-all;
+            @apply right-1 top-1 m-0 size-8 rounded-lg bg-secondary p-1 backdrop-blur-none transition-all duration-200;
           }
         }
       }
