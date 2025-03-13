@@ -110,7 +110,7 @@
     /* Blanket syntax highlighting */
     code[data-theme*=' '] {
       span {
-        color: var(--shiki-dark);
+        color: var(--shiki-light);
       }
 
       .dark & span {
