@@ -83,7 +83,7 @@ for ( m = 1; m <= 24; ++m )
 }
 ```
 
-Next, it calls a lot of function to further calculate the matrices, then our final matrix of size `[24][24]` is compared with a target matrix starting from offset `0x5620`.
+Next, it calls a lot of function to further calculate the matrices, then our final matrix of size `24 * 24` is compared with a target matrix starting from offset `0x5620`.
 
 ```c caption="" showLineNumbers{1} /apply/ /components/
 for ( ii = 0; ii <= 23; ++ii )
@@ -99,7 +99,7 @@ for ( ii = 0; ii <= 23; ++ii )
 }
 ```
 
-Let's resolve the function one by one to understand how the calculating process is done.
+Let's resolve the functions one by one to understand how the calculating process is done.
 
 ### Function at 0x152B
 
