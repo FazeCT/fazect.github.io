@@ -1,0 +1,869 @@
+---
+title: 'Advent of Code 2025 using x86 Assembly? Day 2: Gift Shop'
+description: 'A collection of writeups on ALL Advent of Code 2025 challenges using x86 Assembly.'
+date: 2025/12/13
+tags: ['writeup', 'programming']
+image: '../images/day2.jpg'
+authors: ['fazect']
+hidden: true
+tableOfContentsTitle: "Advent of Code 2025"
+tableOfContents:
+  - { depth: 3, slug: '/blog/adventofcode-2025#overview', text: 'Overview', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#preparation', text: 'Preparation', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#challenges', text: 'Challenges', subheadings: [
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-1', text: 'Day 1: Secret Entrance', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-2', text: 'Day 2: Gift Shop', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-3', text: 'Day 3: Lobby', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-4', text: 'Day 4: Printing Department', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-5', text: 'Day 5: Cafeteria', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-6', text: 'Day 6: Trash Compactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-7', text: 'Day 7: Laboratories', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-8', text: 'Day 8: Playground', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-9', text: 'Day 9: Movie Theater', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-10', text: 'Day 10: Factory', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-11', text: 'Day 11: Reactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-12', text: 'Day 12: Christmas Tree Farm', subheadings: [] }
+    ] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#in-a-nutshell', text: 'In a nutshell', subheadings: [] }
+activeSlug: '/blog/adventofcode-2025/challenge-2'
+parentTitle: 'Advent of Code 2025 using x86 Assembly?'
+parentSlug: '/blog/adventofcode-2025'
+---
+
+## Day 2: Gift Shop
+
+### Part 1
+
+``` /apply/ /components/ 
+You get inside and take the elevator to its only other stop: the gift shop. "Thank you for visiting the North Pole!" gleefully exclaims a nearby sign. You aren't sure who is even allowed to visit the North Pole, but you know you can access the lobby through here, and from there you can access the rest of the North Pole base.
+
+As you make your way through the surprisingly extensive selection, one of the clerks recognizes you and asks for your help.
+
+As it turns out, one of the younger Elves was playing on a gift shop computer and managed to add a whole bunch of invalid product IDs to their gift shop database! Surely, it would be no trouble for you to identify the invalid product IDs for them, right?
+
+They've even checked most of the product ID ranges already; they only have a few product ID ranges (your puzzle input) that you'll need to check. For example:
+11-22,95-115,998-1012,1188511880-1188511890,222220-222224,
+1698522-1698528,446443-446449,38593856-38593862,565653-565659,
+824824821-824824827,2121212118-2121212124
+
+(The ID ranges are wrapped here for legibility; in your input, they appear on a single long line.)
+
+The ranges are separated by commas (,); each range gives its first ID and last ID separated by a dash (-).
+
+Since the young Elf was just doing silly patterns, you can find the invalid IDs by looking for any ID which is made only of some sequence of digits repeated twice. So, 55 (5 twice), 6464 (64 twice), and 123123 (123 twice) would all be invalid IDs.
+
+None of the numbers have leading zeroes; 0101 isn't an ID at all. (101 is a valid ID that you would ignore.)
+
+Your job is to find all of the invalid IDs that appear in the given ranges. In the above example:
+- 11-22 has two invalid IDs, 11 and 22.
+- 95-115 has one invalid ID, 99.
+- 998-1012 has one invalid ID, 1010.
+- 1188511880-1188511890 has one invalid ID, 1188511885.
+- 222220-222224 has one invalid ID, 222222.
+- 1698522-1698528 contains no invalid IDs.
+- 446443-446449 has one invalid ID, 446446.
+- 38593856-38593862 has one invalid ID, 38593859.
+- The rest of the ranges contain no invalid IDs.
+
+Adding up all the invalid IDs in this example produces 1227775554.
+
+What do you get if you add up all of the invalid IDs?
+```
+
+```text title="2/problem/input.txt" /apply/ /components/
+9100-11052,895949-1034027,4408053-4520964,530773-628469,4677-6133,2204535-2244247,55-75,77-96,6855-8537,55102372-55256189,282-399,228723-269241,5874512-6044824,288158-371813,719-924,1-13,496-645,8989806846-8989985017,39376-48796,1581-1964,699387-735189,85832568-85919290,6758902779-6759025318,198-254,1357490-1400527,93895907-94024162,21-34,81399-109054,110780-153182,1452135-1601808,422024-470134,374195-402045,58702-79922,1002-1437,742477-817193,879818128-879948512,407-480,168586-222531,116-152,35-54
+```
+To summarize the requirements, we have to count `invalid IDs` within the ranges - in which `invalid IDs` are numbers that are made of some sequence of digits repeated twice (e.g., 123123, 8989, ...).
+
+It is obvious that for a number to be considered as an `invalid ID`, it must match all of these conditions:
+- Its digit count must be an even number.
+- The first half and the second half of the number must be identical.
+
+We can either convert the number to its corresponding ASCII format, split it in half, then compare the two strings together; or use the following formulas to skip the convert step: `ID/(pow(10, L/2))` for the first half and `ID % pow(10, L/2)` for the second half, with `L` being the digit count.
+
+The `id_checker` component below follows the second choice.
+
+```asm title="2/solution/id_checker.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: ID checker
+; Args: rdi
+; Ret: 1 if invalid ID, else 0
+; Method: len(ID) % 2 == 0 and ID/(pow(10, L/2)) == ID % pow(10, L/2)
+
+id_checker:
+    mov rax, rdi 
+    mov rbx, 10 
+    xor rcx, rcx 
+
+.length_loop:
+    xor rdx, rdx 
+    div rbx 
+    inc rcx 
+    test rax, rax 
+    jnz .length_loop 
+
+    test rcx, 1 
+    jnz .false 
+
+    shr rcx, 1 
+    mov rax, 1
+    mov rbx, 10
+
+.pow_loop:
+    mul rbx
+    dec rcx
+    jnz .pow_loop  
+
+    mov rbx, rax 
+    mov rax, rdi 
+    xor rdx, rdx 
+    div rbx 
+
+    cmp rax, rdx 
+    je .true
+
+.false:
+    xor rax, rax
+    ret 
+
+.true:
+    mov rax, 1
+    ret
+```
+
+Finally, we loop through the ranges and check every ID within each range to see whether it is invalid or not.
+
+```asm title="2/solution/solver.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Problem Solver
+; Args: rdi
+; result += count(invalid ID in the range)
+; Method: Loop + Check + Update result
+
+solver:
+    mov r15, rdi
+    call atoi 
+    mov r14, rax 
+
+    ; Find - to split range
+.range_reader:
+    movzx rax, byte [r15]
+    inc r15
+    cmp rax, '-'
+    je .continue_solver
+
+    jmp .range_reader
+
+.continue_solver:
+    mov rdi, r15 
+    call atoi 
+    mov r15, rax
+
+    ; Loop through the range 
+.loop_range:
+    mov rax, r14 
+    cmp r14, r15 
+    jg .done 
+
+    mov r13, rax
+    mov rdi, rax
+    call id_checker
+    cmp rax, 0
+    je .continue_range 
+
+    add qword [result], r13
+
+.continue_range:
+    inc r14
+    jmp .loop_range
+    
+.done:
+    ret
+```
+
+Gathering every component together, we obtain the following solution.
+
+```asm title="2/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+    result resq 1
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the ranges and process them one by one
+    mov r8, input
+    mov r9, input 
+    mov qword [result], 0
+
+reader: 
+    movzx rax, byte [r9]
+    test rax, rax 
+    je process_last_range
+
+    cmp rax, ','
+    je process_range 
+
+    inc r9
+    jmp reader 
+
+process_range:
+    mov rdi, r8 
+    call solver
+
+    inc r9
+    mov r8, r9
+    jmp reader
+
+process_last_range:
+    cmp r8, r9 
+    je print_output 
+
+    mov rdi, r8 
+    call solver
+
+print_output:
+    ; Print to stdout 
+    mov rdi, qword [result]
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Atoi (String to Int) conversion
+; Args: rdi
+; Ret: rax = atoi(rdi)
+; Terminate if any byte is not in range [0-9]
+
+atoi:
+    xor rax, rax
+
+.convert:
+    movzx rsi, byte [rdi]
+    test rsi, rsi 
+    je .atoi_done
+
+    cmp rsi, 10
+    je .atoi_done
+
+    cmp rsi, '0'
+    jl .atoi_done 
+
+    cmp rsi, '9'
+    jg .atoi_done 
+
+    sub rsi, '0'
+    imul rax, 10
+    add rax, rsi 
+
+    inc rdi 
+    jmp .convert
+
+.atoi_done:
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret
+
+; ----------------------------------------------------------------------
+; Component: ID checker
+; Args: rdi
+; Ret: 1 if invalid ID, else 0
+; Method: len(ID) % 2 == 0 and ID/(pow(10, L/2)) == ID % pow(10, L/2)
+
+id_checker:
+    mov rax, rdi 
+    mov rbx, 10 
+    xor rcx, rcx 
+
+.length_loop:
+    xor rdx, rdx 
+    div rbx 
+    inc rcx 
+    test rax, rax 
+    jnz .length_loop 
+
+    test rcx, 1 
+    jnz .false 
+
+    shr rcx, 1 
+    mov rax, 1
+    mov rbx, 10
+
+.pow_loop:
+    mul rbx
+    dec rcx
+    jnz .pow_loop  
+
+    mov rbx, rax 
+    mov rax, rdi 
+    xor rdx, rdx 
+    div rbx 
+
+    cmp rax, rdx 
+    je .true
+
+.false:
+    xor rax, rax
+    ret 
+
+.true:
+    mov rax, 1
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Problem Solver
+; Args: rdi
+; result += count(invalid ID in the range)
+; Method: Loop + Check + Update result
+
+solver:
+    mov r15, rdi
+    call atoi 
+    mov r14, rax 
+
+    ; Find - to split range
+.range_reader:
+    movzx rax, byte [r15]
+    inc r15
+    cmp rax, '-'
+    je .continue_solver
+
+    jmp .range_reader
+
+.continue_solver:
+    mov rdi, r15 
+    call atoi 
+    mov r15, rax
+
+    ; Loop through the range 
+.loop_range:
+    mov rax, r14 
+    cmp r14, r15 
+    jg .done 
+
+    mov r13, rax
+    mov rdi, rax
+    call id_checker
+    cmp rax, 0
+    je .continue_range 
+
+    add qword [result], r13
+
+.continue_range:
+    inc r14
+    jmp .loop_range
+    
+.done:
+    ret
+```
+
+This gives us a result of `18952700150` for the puzzle.
+
+### Part 2
+
+``` /apply/ /components/
+The clerk quickly discovers that there are still invalid IDs in the ranges in your list. Maybe the young Elf was doing other silly patterns as well?
+
+Now, an ID is invalid if it is made only of some sequence of digits repeated at least twice. So, 12341234 (1234 two times), 123123123 (123 three times), 1212121212 (12 five times), and 1111111 (1 seven times) are all invalid IDs.
+
+From the same example as before:
+- 11-22 still has two invalid IDs, 11 and 22.
+- 95-115 now has two invalid IDs, 99 and 111.
+- 998-1012 now has two invalid IDs, 999 and 1010.
+- 1188511880-1188511890 still has one invalid ID, 1188511885.
+- 222220-222224 still has one invalid ID, 222222.
+- 1698522-1698528 still contains no invalid IDs.
+- 446443-446449 still has one invalid ID, 446446.
+- 38593856-38593862 still has one invalid ID, 38593859.
+- 565653-565659 now has one invalid ID, 565656.
+- 824824821-824824827 now has one invalid ID, 824824824.
+- 2121212118-2121212124 now has one invalid ID, 2121212121.
+
+Adding up all the invalid IDs in this example produces 4174379265.
+
+What do you get if you add up all of the invalid IDs using these new rules?
+```
+
+Now that the invalid IDs may consist of more than two repetitions of a sequence of digits, both of our previous conditions will be incorrect from now on:
+- ~~Its digit count must be an even number~~. There is no limitation based on the parity anymore.
+- ~~The first half and the second half of the number must be identical~~. This only works if the ID consists of a sequence of digits repeated twice.
+
+Consider an invalid ID formed by repeating a sequence $a$ (of length $n$) exactly $k$ times:
+
+$$
+\underbrace{a a \dots a}_{k \text{ times}}
+$$
+
+We can expand this concatenation into a sum of powers of 10:
+
+$$
+a \cdot 10^{n(k - 1)} + a \cdot 10^{n(k - 2)} + \dots + a \cdot 10^0
+$$
+
+By factoring out $a$, we can observe that the term in the parentheses forms a specific **mask** - a large integer consisting of `1`s separated by $(n-1)$ `0`s:
+
+$$
+a \cdot \left( 10^{n(k - 1)} + 10^{n(k - 2)} + \dots + 1 \right)
+$$
+
+$$
+\text{mask} = 1\underbrace{00\dots0}_{n-1}1\underbrace{00\dots0}_{n-1}1\dots1
+$$
+
+This clarifies that any invalid ID must be divisible by a specific mask of the above form.
+
+Adapting this proof to our problem, we can derive a method for checking invalid IDs. Since an invalid ID must be formed by repeating a sequence $a$ of length $n$, exactly $k$ times, it implies that the ID is divisible by the mask corresponding to those parameters.
+
+Therefore, to check if a given ID is invalid, we can brute-force the possible values of $n$ and $k$. For each pair $(n, k)$, we construct the corresponding mask and verify if ID is divisible by the created mask. If the condition holds true for any valid $(n, k)$ pair, the ID is invalid.
+
+We modify the previous ID checker to use the new verifying method as described.
+
+```asm title="2/solution/id_checker.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: ID checker
+; Args: rdi
+; Ret: 1 if invalid ID, else 0
+; Method: len(ID) % 2 == 0 and ID/(pow(10, L/2)) == ID % pow(10, L/2) [!code --]
+; Method: Use a mask of 1's and 0's.                                  [!code ++]
+
+id_checker:
+    push rbx          ;[!code ++]
+    push r12          ;[!code ++]
+    push r13          ;[!code ++]
+    push r14          ;[!code ++]
+    push r15          ;[!code ++]
+​;[!code ++]
+    mov rax, rdi           ;[!code ++]
+    cmp rax, 10           ;[!code ++]
+    jl .false          ;[!code ++]
+​;[!code ++]
+    mov rax, rdi 
+    mov rbx, 10 
+    xor rcx, rcx 
+
+.length_loop:
+    xor rdx, rdx 
+    div rbx 
+    inc rcx 
+    test rax, rax 
+    jnz .length_loop 
+
+    test rcx, 1 ​;[!code --]
+    jnz .false ​;[!code --]
+​;[!code --]
+    shr rcx, 1​;[!code --]
+    mov rax, 1​;[!code --]
+    mov rbx, 10​;[!code --]
+    mov r15, 1​;[!code ++]
+​;[!code ++]
+.check_k:​;[!code ++]
+    mov rax, rcx​;[!code ++]
+    shr rax, 1 ​;[!code ++]
+    cmp r15, rax ​;[!code ++]
+    jg .false ​;[!code ++]
+​;[!code ++]
+    mov rax, rcx​;[!code ++]
+    xor rdx, rdx ​;[!code ++]
+    div r15 ​;[!code ++]
+    test rdx, rdx ​;[!code ++]
+    jnz .next_k​;[!code ++]
+​;[!code ++]
+    mov r14, rax ​;[!code ++]
+​;[!code ++]
+    mov rax, 1 ​;[!code ++]
+    mov rbx, 10​;[!code ++]
+    mov r13, r15​;[!code ++] 
+
+.pow_loop:
+    mul rbx
+    dec rcx ​;[!code --]
+    jnz .pow_loop​;[!code --]
+​;[!code --]
+    mov rbx, rax​;[!code --]
+    dec r13​;[!code ++]
+    jnz .pow_loop​;[!code ++]
+​;[!code ++]
+    mov r12, rax ​;[!code ++]
+    xor rbx, rbx ​;[!code ++]
+​;[!code ++]
+.mask_loop:​;[!code ++]
+    mov rax, rbx​;[!code ++]
+    mul r12​;[!code ++]
+    add rax, 1 ​;[!code ++]
+    mov rbx, rax ​;[!code ++]
+    dec r14​;[!code ++]
+    jnz .mask_loop ​;[!code ++]
+​;[!code ++]
+    mov rax, rdi 
+    xor rdx, rdx 
+    div rbx 
+
+    cmp rax, rdx ;[!code --]
+    je .true ;[!code --]
+​;[!code --]
+    test rdx, rdx           ;[!code ++]
+    jz .true          ;[!code ++]
+​;[!code ++]
+.next_k:          ;[!code ++]
+    inc r15          ;[!code ++]
+    jmp .check_k           ;[!code ++]
+​;[!code ++]
+.false:
+    xor rax, rax
+    pop rbx          ;[!code ++]
+    pop r12          ;[!code ++]
+    pop r13          ;[!code ++]
+    pop r14          ;[!code ++]
+    pop r15          ;[!code ++]
+    ret 
+
+.true:
+    mov rax, 1
+    pop rbx          ;[!code ++]
+    pop r12          ;[!code ++]
+    pop r13          ;[!code ++]
+    pop r14          ;[!code ++]
+    pop r15          ;[!code ++]
+    ret
+```
+
+Applying these fixes into the original solve script, we have the following solution.
+
+```asm title="2/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+    result resq 1
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the ranges and process them one by one
+    mov r8, input
+    mov r9, input 
+    mov qword [result], 0
+
+reader: 
+    movzx rax, byte [r9]
+    test rax, rax 
+    je process_last_range
+
+    cmp rax, ','
+    je process_range 
+
+    inc r9
+    jmp reader 
+
+process_range:
+    mov rdi, r8 
+    call solver
+
+    inc r9
+    mov r8, r9
+    jmp reader
+
+process_last_range:
+    cmp r8, r9 
+    je print_output 
+
+    mov rdi, r8 
+    call solver
+
+print_output:
+    ; Print to stdout 
+    mov rdi, qword [result]
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Atoi (String to Int) conversion
+; Args: rdi
+; Ret: rax = atoi(rdi)
+; Terminate if any byte is not in range [0-9]
+
+atoi:
+    xor rax, rax
+
+.convert:
+    movzx rsi, byte [rdi]
+    test rsi, rsi 
+    je .atoi_done
+
+    cmp rsi, 10
+    je .atoi_done
+
+    cmp rsi, '0'
+    jl .atoi_done 
+
+    cmp rsi, '9'
+    jg .atoi_done 
+
+    sub rsi, '0'
+    imul rax, 10
+    add rax, rsi 
+
+    inc rdi 
+    jmp .convert
+
+.atoi_done:
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret
+
+; ----------------------------------------------------------------------
+; Component: ID checker
+; Args: rdi
+; Ret: 1 if invalid ID, else 0
+; Method: Use a mask of 1's and 0's.
+
+id_checker:
+    push rbx
+    push r12
+    push r13
+    push r14
+    push r15
+
+    mov rax, rdi 
+    cmp rax, 10 
+    jl .false
+
+    mov rax, rdi 
+    mov rbx, 10 
+    xor rcx, rcx 
+
+.length_loop:
+    xor rdx, rdx 
+    div rbx 
+    inc rcx 
+    test rax, rax 
+    jnz .length_loop 
+
+    mov r15, 1
+
+.check_k:
+    mov rax, rcx
+    shr rax, 1 
+    cmp r15, rax 
+    jg .false 
+
+    mov rax, rcx
+    xor rdx, rdx 
+    div r15 
+    test rdx, rdx 
+    jnz .next_k
+
+    mov r14, rax 
+
+    mov rax, 1 
+    mov rbx, 10
+    mov r13, r15 
+
+.pow_loop:
+    mul rbx
+    dec r13
+    jnz .pow_loop
+
+    mov r12, rax 
+    xor rbx, rbx 
+
+.mask_loop:
+    mov rax, rbx
+    mul r12
+    add rax, 1 
+    mov rbx, rax 
+    dec r14
+    jnz .mask_loop 
+
+    mov rax, rdi 
+    xor rdx, rdx 
+    div rbx 
+
+    test rdx, rdx 
+    jz .true
+
+.next_k:
+    inc r15
+    jmp .check_k 
+
+.false:
+    xor rax, rax
+    pop rbx
+    pop r12
+    pop r13
+    pop r14
+    pop r15
+    ret 
+
+.true:
+    mov rax, 1
+    pop rbx
+    pop r12
+    pop r13
+    pop r14
+    pop r15
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Problem Solver
+; Args: rdi
+; result += count(invalid ID in the range)
+; Method: Loop + Check + Update result
+
+solver:
+    mov r15, rdi
+    call atoi 
+    mov r14, rax 
+
+    ; Find - to split range
+.range_reader:
+    movzx rax, byte [r15]
+    inc r15
+    cmp rax, '-'
+    je .continue_solver
+
+    jmp .range_reader
+
+.continue_solver:
+    mov rdi, r15 
+    call atoi 
+    mov r15, rax
+
+    ; Loop through the range 
+.loop_range:
+    mov rax, r14 
+    cmp r14, r15 
+    jg .done 
+
+    mov r13, rax
+    mov rdi, rax
+    call id_checker
+    cmp rax, 0
+    je .continue_range 
+
+    add qword [result], r13
+
+.continue_range:
+    inc r14
+    jmp .loop_range
+    
+.done:
+    ret
+```
+
+This yields us the final result to the problem: `28858486244`.

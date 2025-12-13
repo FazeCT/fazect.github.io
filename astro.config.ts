@@ -21,16 +21,18 @@ import icon from 'astro-icon'
 
 // https://astro.build/config
 export default defineConfig({
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+      },
+    },
+  },
   site: 'https://blog.fazect.com',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    sitemap(),
-    mdx(),
-    react(),
-    icon(),
-  ],
+  integrations: [tailwind({
+    applyBaseStyles: false,
+  }), 
+  mdx(), react(), sitemap(), icon()],
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [

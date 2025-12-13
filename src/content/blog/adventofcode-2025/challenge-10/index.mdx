@@ -1,0 +1,1564 @@
+---
+title: 'Advent of Code 2025 using x86 Assembly? Day 10: Factory'
+description: 'A collection of writeups on ALL Advent of Code 2025 challenges using x86 Assembly.'
+date: 2025/12/13
+tags: ['writeup', 'programming']
+image: '../images/day10.jpg'
+authors: ['fazect']
+hidden: true
+tableOfContentsTitle: "Advent of Code 2025"
+tableOfContents:
+  - { depth: 3, slug: '/blog/adventofcode-2025#overview', text: 'Overview', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#preparation', text: 'Preparation', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#challenges', text: 'Challenges', subheadings: [
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-1', text: 'Day 1: Secret Entrance', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-2', text: 'Day 2: Gift Shop', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-3', text: 'Day 3: Lobby', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-4', text: 'Day 4: Printing Department', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-5', text: 'Day 5: Cafeteria', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-6', text: 'Day 6: Trash Compactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-7', text: 'Day 7: Laboratories', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-8', text: 'Day 8: Playground', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-9', text: 'Day 9: Movie Theater', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-10', text: 'Day 10: Factory', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-11', text: 'Day 11: Reactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-12', text: 'Day 12: Christmas Tree Farm', subheadings: [] }
+    ] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#in-a-nutshell', text: 'In a nutshell', subheadings: [] }
+activeSlug: '/blog/adventofcode-2025/challenge-10'
+parentTitle: 'Advent of Code 2025 using x86 Assembly?'
+parentSlug: '/blog/adventofcode-2025'
+---
+
+## Day 10: Factory
+
+### Part 1
+
+``` /apply/ /components/
+Just across the hall, you find a large factory. Fortunately, the Elves here have plenty of time to decorate. Unfortunately, it's because the factory machines are all offline, and none of the Elves can figure out the initialization procedure.
+
+The Elves do have the manual for the machines, but the section detailing the initialization procedure was eaten by a Shiba Inu. All that remains of the manual are some indicator light diagrams, button wiring schematics, and joltage requirements for each machine.
+
+For example:
+[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}
+
+The manual describes one machine per line. Each line contains a single indicator light diagram in [square brackets], one or more button wiring schematics in (parentheses), and joltage requirements in {curly braces}.
+
+To start a machine, its indicator lights must match those shown in the diagram, where . means off and # means on. The machine has the number of indicator lights shown, but its indicator lights are all initially off.
+
+So, an indicator light diagram like [.##.] means that the machine has four indicator lights which are initially off and that the goal is to simultaneously configure the first light to be off, the second light to be on, the third to be on, and the fourth to be off.
+
+You can toggle the state of indicator lights by pushing any of the listed buttons. Each button lists which indicator lights it toggles, where 0 means the first light, 1 means the second light, and so on. When you push a button, each listed indicator light either turns on (if it was off) or turns off (if it was on). You have to push each button an integer number of times; there's no such thing as "0.5 presses" (nor can you push a button a negative number of times).
+
+So, a button wiring schematic like (0,3,4) means that each time you push that button, the first, fourth, and fifth indicator lights would all toggle between on and off. If the indicator lights were [#.....], pushing the button would change them to be [...##.] instead.
+
+Because none of the machines are running, the joltage requirements are irrelevant and can be safely ignored.
+
+You can push each button as many times as you like. However, to save on time, you will need to determine the fewest total presses required to correctly configure all indicator lights for all machines in your list.
+
+There are a few ways to correctly configure the first machine:
+[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+
+- You could press the first three buttons once each, a total of 3 button presses.
+- You could press (1,3) once, (2,3) once, and (0,1) twice, a total of 4 button presses.
+- You could press all of the buttons except (1,3) once each, a total of 5 button presses.
+
+However, the fewest button presses required is 2. One way to do this is by pressing the last two buttons ((0,2) and (0,1)) once each.
+
+The second machine can be configured with as few as 3 button presses:
+[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+
+One way to achieve this is by pressing the last three buttons ((0,4), (0,1,2), and (1,2,3,4)) once each.
+
+The third machine has a total of six indicator lights that need to be configured correctly:
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}
+
+The fewest presses required to correctly configure it is 2; one way to do this is by pressing buttons (0,3,4) and (0,1,2,4,5) once each.
+
+So, the fewest button presses required to correctly configure the indicator lights on all of the machines is 2 + 3 + 2 = 7.
+
+Analyze each machine's indicator light diagram and button wiring schematics. What is the fewest button presses required to correctly configure the indicator lights on all of the machines?
+```
+
+```text title="10/problem/input.txt" /apply/ /components/
+[.#.#] (0,2,3) (1,3) {11,10,11,21}
+[..#.##] (1,2) (0,2,3) (0,2,4) (0,5) (2,3) {22,13,33,18,2,16}
+[.####..#] (0,1,7) (0,2,4,5,6,7) (2,3) (1,2,6) (1,2,5,7) (3,4,6,7) (2,7) (2,3,4,6,7) {10,187,228,38,28,192,33,218}
+[#...#.] (1,4) (1) (2,3) (0,3,4,5) (3,5) {12,25,13,35,23,22}
+[..#...#...] (0,1,2,3,4,7,8,9) (0,1,3,4,5,6,7,8,9) (0,1,2,4,5,7,8) (0,2) (4,5,7,9) (1,3,4,6,7,8,9) (0,6,8) (2,6) {52,34,38,25,39,25,39,39,47,30}
+[###.##.] (3,4,6) (2,3,4) (0,6) (1) (0,2,3,4,5) (0,2,4,5,6) (3,4,5,6) (0,1,2,4,5) (0,1,2,5,6) {52,40,42,214,239,56,215}
+[..##..###] (0,1,2,3,4,8) (0,2,4,5,6,8) (0,6,8) (1,2,3,4,5,6) (5,7,8) (2,4,5,7,8) (0,2,3,5,8) (3,4,5,7,8) (2,7) (2,5) (0,1,2,7,8) {46,15,79,50,53,95,24,58,93}
+[##.##.#...] (0,2,4,6,8,9) (1,2,3,5,6,7,9) (0,1,2,3,6,9) (0,1,2,3,4,5,6,9) (5) (0,2,5,6,9) (4,7) (0,2,4,5,7,8,9) {35,36,49,36,15,30,49,15,11,49}
+[#.###...] (0,3,4,5,6,7) (6) (1,2,3,6,7) (5) (3,4,6,7) (0,1,3,5,7) (0,4,6) (0,3,5,6,7) (0,3,4,5,6) {201,159,11,202,62,187,75,186}
+[#..##] (0,1,3) (1,4) (0,2) {30,40,10,20,20}
+[##.##.#.] (0,3,5,6) (0,2,3,5,6) (3,4,5,6) (1,2,7) (0,5) (3,4,5) (0,1,2,3,4,6) (0,2) (0,1,2,3,7) {209,177,209,196,171,38,191,14}
+[..#.] (0,3) (1,2) (0,2) (3) (0,1,2) {36,25,34,20}
+[#..###] (3,5) (2,3) (0,2,3) (0,2,3,4) (0,2,4,5) (1,3,4,5) (0,1,3,5) (0,4) {49,20,137,143,32,34}
+[#.#.#] (0,2,4) (0,1,2,3,4) (0,1,2,4) {27,24,27,5,27}
+[.###] (0,1,2) (1,2,3) {15,21,21,6}
+[##....#.##] (0,1,2,4,5,6,7,9) (0,1,2,3,4,6,7,9) (0,1,6) (0,5,8) (1,3,4,5,9) (0,1,3,8,9) (0,2,4,5) (0,1,2,5,8,9) (1,2,4,5,6,8,9) (0,2,3,5,7,8,9) (0,2,3,4,7,8,9) (1,2,3,5,6,7,8) {97,74,93,57,65,79,46,51,84,79}
+[.....#..#] (1,4,5,7) (0,3,8) (0,1,3,4,5,6,7) (0,1,3,5,8) (0,3,4,5,7) (0,2,3,5,6,7,8) (2,5,8) (0,1,3,4,5,6) {45,35,11,45,45,56,26,49,20}
+[.##...##.] (1,7) (0,2) (0,2,3,5,6) (4,6,8) (3,4,5,6) (0,1,8) (0,2,4,7) (1,3,4,5,6,7) (0,1,4,5,7) {45,54,24,31,66,38,42,59,25}
+[#####.#...] (0,4) (1) (0,1,3,4,6,7,8,9) (1,4) (0,2,6,8) (0,3,6,7,9) (2,5,7,8,9) (0,2,4,6,7,8) (0,1,2,3,4,5,6,8) (0,2,5,6) (0,2,5,6,8) {81,61,74,37,57,51,76,53,81,42}
+[.##....#] (1,2,3,4,5,7) (0,2,4,6) (0,2) (0,1,2,3,6,7) (0,2,6) (0,1,2,5,6,7) {221,48,238,34,19,31,221,48}
+[#.#.#.#...] (0,1,2,4,5,6,7,8,9) (0,1,2,4,9) (0,2,3,8,9) (1,3,4,6,8,9) (5,6,7) (5,6,7,9) (2,8) (5,6) (0,4,5,6,8) {58,38,65,23,51,67,75,38,74,69}
+[..#.#...] (3) (3,7) (2,3,4,6,7) (0,1,4,5,7) (0,1,2,3,4,5,7) (0,1,2,4,5,6) (1,3,4,5,6,7) (1,2) (0,2,3,4,5) (2,4) {53,53,67,63,100,68,34,62}
+[#.#.] (0,2) (0) (0,2,3) (1,2,3) {45,6,45,26}
+[...#.###.#] (0,1,3,5,7,8,9) (0,2,3,4,6,7,8,9) (0,1,5,6,7) (7) (0,2,3,4,6,8,9) (2,6,7,9) (0,3,4,8) (1,4) (0,3,6,7,8) (1,3) (3,8) (1,2,4,7) {92,54,46,84,67,32,62,92,81,54}
+[#..#...] (0,2,3,5,6) (3,4,6) (0,3) (0,2,3,4,5) (1,5,6) {28,11,9,36,9,20,27}
+[.###] (1,2,3) (0,2) {1,9,10,9}
+[#.#.##] (3,5) (0,2,3,4,5) (0,2,4,5) (0,1,3,5) {135,119,16,129,16,139}
+[.##..] (0,1,3,4) (1,2,3) (0,2,4) (3) {27,30,33,32,27}
+[.#..#...] (0,2,5,7) (1,2,4) (0,1,2,3,4,7) (0,3,5) (0,1,5,6,7) (1,2,5,6,7) (0) (2) (0,3,4,5,6) (1,2,6) {67,55,71,26,21,53,44,59}
+[.#...#..] (0,1,2,6,7) (3,6) (0,1,2,3,5,7) (5,7) (0,6,7) (0,1,4,5,6) (0,1,2,4,6,7) {44,44,31,8,29,19,44,33}
+[#..#..] (0,3) (1,2,5) (0,1,2,4,5) (1,2,4) {36,41,41,20,28,29}
+[...##..#..] (3,4) (2,4,8,9) (0,1,2,3,5,6,7,9) (0,5,9) (2,4,6) (0,1,4,6,9) (0,3,4,5,6,9) (3,6,9) (0,3,6,9) {52,20,41,49,67,31,66,8,18,80}
+[..##.....#] (0,1,2,3,4,6,7,8) (2,3,4,5,6,8,9) (5,6) (0,1,2,3,6,7,9) (0,3,8) (0,3) (2,3,4,5,7,8) (0,1,2,3,5,6,8,9) {54,29,40,65,16,26,40,34,36,25}
+[##..#] (0,1,2) (1,2,3) (0,1,4) (2,3) (0,3) {24,18,121,126,3}
+[#.#.##] (3) (0,1) (1,2,3,5) (0,1,2,4) (0,2,3,5) (0,1,2) (1,2,3,4,5) {19,45,42,39,17,32}
+[...#..#.#] (1,3,5,6) (2,4,6,7) (1,5,8) (0,1,2,5,7) (0,3,4,6,7) (3,7) (1,4,7) {26,38,12,45,32,24,29,60,3}
+[##....] (0,1,2,3) (2,3,4,5) (2,4,5) (1,5) (2) (1,4,5) (3,5) (0,1,2,4,5) {10,17,29,31,16,32}
+[.#.####..] (1,4,6,8) (0,1,2,3,7,8) (5) (2,3,8) (2,6) (5,6,8) (0,1,4,6,7) (0,1,2,4,5,8) (1,5,6) (0,1,2,3,6) (2,3,4,5,7,8) {41,60,38,24,48,45,53,25,45}
+[##......##] (5,6) (0,1,2,3,5,6,7,8,9) (0,2,3,4,5,6) (0,1,3,4,5,6,7,8,9) (0,1,3,4) (0,1,2,4,5,8) (0,1,3,4,6,8) (0,2,3,4,5,6,8,9) (0,4,5,7,9) (0,3,5,7,9) {115,60,55,92,80,106,74,63,64,72}
+[...#.] (1,2,3,4) (0,1,2) (0,1,2,3) {23,37,37,25,14}
+[#.#...#.#] (6) (0,1,2,4,5,6,7) (0,1,2,3,4,5,7,8) (1,3,4,5,6,7) (1,2,3,4,5,8) (2,4,6,7) (0,2,4,5,7,8) (3) (3,4,5,6,7,8) (1,3,4,6,8) (0,1,2,3,6,7,8) {30,69,39,73,58,46,62,52,54}
+[...#.] (2,4) (0,4) (1,2,4) (4) (0,1,3) (3) {22,19,10,29,35}
+[#.#.###.##] (0,8) (0,7,8,9) (0,1,3,4,8,9) (0,2,3,6,8,9) (1,6,9) (0,2,5,7) (1,4,5,7) (3) (0,2,3,4,5,6,8,9) {62,26,34,36,39,42,22,36,46,46}
+[.####.#] (1,2,3,4) (1,3,4) (0,1,2,5,6) (0,5) (2,3,4) (0,6) {35,39,29,41,41,24,19}
+[###..] (0,1,2) (3) (1,2,4) (0,4) (0,3) {43,19,19,29,15}
+[#.##] (1,3) (0,2,3) {13,4,13,17}
+[#....] (0) (2,3) (0,2,4) (1,2,3) (2,3,4) {22,10,45,33,26}
+[..###] (0,2) (1,2,3,4) (0,2,3) (0,1,2,3) (1,3,4) {42,41,61,52,30}
+[....###.] (3,4,5,7) (2,3) (3,7) (4,5,6) (0,1,2,6) (1,4,5,6) (1,2,3,4,5,6,7) (1,4,7) {0,26,20,59,46,37,17,65}
+[#...#.#.#] (0,1,3,6) (0,1,2,3,6,7,8) (0,1,2,4) (0,1,2,3,5,6,7,8) (1,2,3,6,7) (0,1,3,5,7) (3,4,6) (3,5) (2,6,7) (1,2,6,7) {19,173,170,186,23,22,190,172,8}
+[..####] (2,3) (0,2,4,5) (1,3,5) (4,5) (0,1,2,3,5) (0,1,4,5) {21,11,23,13,23,34}
+[###.#] (0,1,2,4) (0,3) (1,2,3,4) {178,16,16,166,16}
+[####] (0,1) (1,3) (1,2,3) (2,3) (0,3) {4,18,195,207}
+[.###..#.#] (2,6) (0,1,4,7,8) (1,4,8) (7,8) (0,2,3,4,5,6) (0,1,3,4,5,6,7,8) (0,1,2,3,6,7,8) (1,2,6) (3,8) {20,57,36,27,31,11,47,35,62}
+[..###] (0,2) (0,3,4) (0,3) (2,3) (0,1,2,4) (1,2,3,4) (0,2,4) {37,29,49,46,34}
+[###.##] (0,2) (1,4,5) (2) (3) (0,4) (5) (0,1,4,5) (0,1,2) {218,43,208,17,39,25}
+[.####.####] (0,1,4,5,6,8,9) (0,2,3,4,5,6,8) (0,1,3,4,5,6,7,9) (3,5,6) (0,4,9) (1,3,5,6,7,9) (5,6,8,9) (0,1,2,3,4,5,8,9) (0,6,7,8) (0,1,7,9) {53,42,10,48,42,80,85,35,49,62}
+[###....#] (0,2) (3,7) (0,1,2,3,4,5) (0,1,2,5,6,7) (0,2,3,4,5,7) (1,6) (1,4,5,6,7) (1,3) (1,5) {42,71,42,43,37,56,46,51}
+[...#.##.] (2,4,5,6,7) (0,1,4,6) (1,2,3,4,7) (1,2,4,5,6,7) (2,4,7) (3,6) (3,5,6) (1,2,3,5,6,7) {7,50,61,59,51,65,83,61}
+[..#.#.#.##] (1,3,5,8) (1,5) (0,1,2,3,4,7,9) (4,7,9) (0,1,3,4,5,6,8,9) (0,1,3,5,7,8,9) (0,2,4,6,7,8) (0,2,3,4,5,6,7) (2,6) {67,58,159,57,63,52,144,67,42,39}
+[....#...] (0,1,2,3,4,5) (2,3,4,6) (2,5,7) (1,2,4,5,6,7) (2,5,6,7) (5) (1) (1,3) (5,6,7) {1,31,40,17,10,53,22,34}
+[...##.] (0,1,2,3,4) (0,1,2,4,5) (0,1,3,5) (3,5) (3,4) (2,4,5) {42,42,36,43,40,37}
+[#.#.] (1,2) (0,2,3) (0,1) (0,2) (1) {8,34,21,1}
+[#..###.#] (0,3,4,5) (0,5,6) (0,1,3,4,5,7) (1,2,6,7) (2) (0,3,4,5,7) {31,28,33,29,29,31,19,39}
+[#.###] (1,2) (2,4) (2) (0,1,2,3) (1,4) (0,2,3) {10,22,41,10,27}
+[...##..#] (1,2,3,4,7) (0,1,2,4,5,6,7) (3,4,7) (1,4,6) (0,1,2,3,5) (0,1,3,4,5,6) {16,26,17,12,25,16,19,16}
+[.###] (0,3) (1,3) (3) (1,2,3) (1) (1,2) {17,22,15,36}
+[#.#.###.] (2,3) (1,6,7) (0,1,2,3,4,6) (5,6,7) (1,2,3,4,7) (0,3,6,7) (0,1,3,6,7) {26,27,25,45,11,17,59,58}
+[#.#...] (0,2) (0,1,2,3,4) (0,5) (0,2,5) (1,3) (0,1,2,3,5) (2,3,4) (0,2,3,4,5) {51,6,62,36,31,35}
+[..#####.#] (0,3,4,5,6) (1,4) (0,1,2,4,5,8) (0,1,6,8) (1,2,3,4,5,6,8) (0,1,2,6,7,8) (0,1,4,6,8) (1,2,3,4,5,7,8) {69,87,61,49,74,60,70,38,82}
+[##.#.#####] (0,1,5,7,9) (1,2,6,7,8) (1,2,4,5,6,7,8,9) (1,2,7,8,9) (0,1,4,7,8,9) (1,2,3,4,6,7,8,9) (3,5) (0,1,3,5,6,7,8,9) (2,5,7) {44,103,59,35,46,55,67,103,88,85}
+[.#.#...] (0,1) (1,4) (0,1,2,4,5) (0,1,2,5,6) (0,2,4,5,6) (5) (0,1,2,3,4,6) (1,2,3,5,6) (3,5) {54,53,50,19,52,60,31}
+[...#.#.] (0,1,2,6) (3,5) (3,5,6) (0,1,3,5,6) (0,1,5,6) (0,2,4,5) {43,34,23,40,9,52,43}
+[##.##...] (4,5) (0,3,4,5,7) (1,2,5,7) (2,3,7) (0,2,3,4,6,7) (0,1,3,5,6) (0,1,5) (0,1,2,3,6,7) (0,4) {152,45,145,134,145,52,121,150}
+[.##.] (1) (1,2) (2,3) (0,2) (0,1) {27,14,26,6}
+[....#.##] (0,2,4,5,6) (1,2,3,4,5) (3,4,5,6) (0,1,2,3,6,7) (0,1,3,4,5,7) (0,1,5) (1,2,3,5,6,7) {52,190,171,187,53,201,166,166}
+[.......#.] (0,1,3,6,7) (0,1,3,7) (0,1,2,3,5,6,8) (0,1,2,3,4,7,8) (1,3,5,8) (0,4,5,6,7,8) (0,1,2,6,7,8) (3,4,5,7) (3,7) (1,3,6,8) {245,262,204,269,25,210,234,62,243}
+[.....#] (0,1) (2,3,4) (2,3,4,5) (0,1,2,5) (0,2,3,5) (0,2,3,4,5) {31,12,46,44,41,31}
+[.##.] (0) (1) (3) (0,2) {23,19,10,2}
+[..##.#.#] (0,2,3,4,5,7) (1,3,4,6) (0) (1,3,4,5,6) (0,1,2,4,5,6) (0,2,3,4,6,7) (2,3,5,6,7) (0,5,6) (1,3,4,7) {66,52,49,73,67,66,89,47}
+[#.#.#.#] (0,1,2,4,5) (1,2,3,5,6) (0,2,3,5) (4,5) (1,4,6) {33,204,51,31,189,54,184}
+[..#.##.##.] (0,2,3,4,6,7) (0,1,3,5,7,8) (1,3,5) (2,3,4,5,7) (6,7) (2,4,5,9) (0,2,3,5,6,8) (1,4,8) (0,2,3,4,6,8,9) (3,6,9) (3,7,9) {24,16,30,50,30,33,40,30,25,47}
+[###...] (0,2,3) (0,4) (3,5) (1,2,3,4,5) {17,124,139,148,126,133}
+[#..#] (0,2,3) (2) (1,2) {19,8,35,19}
+[.##.##..] (0,1,2,4,5) (2,3,4,5) (1,2,5,6) (0,1,3,5,7) (0,2,6) (0,3,5,6) (3,5,6) (2,3,4,5,6,7) (1,5,6,7) (0,1,4,7) {48,17,163,156,138,167,63,27}
+[.##..#] (0,1,3,5) (1) (1,2) (2,3) (1,4) (0,2) (1,3,5) {17,51,24,22,16,22}
+[.##.###] (0,3,5,6) (0,2,3,4,6) (1,4) (0,1,3,4) (0,1,2,5,6) (2,3,5) (0,2,3,4) (3,4,5,6) {45,29,37,34,41,25,35}
+[..#.] (0,1,3) (1,2,3) (1,3) {16,33,10,33}
+[#.##..#] (1,3,5,6) (3,4) (2,4,5) (0,2,3,6) (2,4) (0,2,5) {29,6,59,38,50,37,18}
+[..#.##.###] (0,3,4,6,8,9) (0,1,2,6,7,8,9) (4,6,7,9) (0,2,4,5,8,9) (0,1,2,3,4,7,8,9) (0,7,8) (1,3,5,6,7,8,9) (0,2,5,6,7) (1,2,5,6,8,9) (3,4,7,8) {70,37,71,37,73,46,71,87,81,81}
+[..#.#####.] (1,3,6,8) (2,4,7,9) (0,4,6,7,8,9) (1,2,3,4,6,7,8,9) (0,2,3,4,6,7,8,9) (1,7) (0,1,2,3,4,5,6,7,8) (6,8) (0,1,2,5,6,7,8,9) (0,2,7) (1,2,5,6,7,8,9) {39,192,206,186,193,16,202,220,202,187}
+[#.##] (2,3) (1,2) (0,3) (1) (1,2,3) (0,1,3) {20,38,13,31}
+[..###.#] (0,1,2,4,5) (2,4,5) (1,2,5,6) (1,6) (2,6) (2) (2,3,6) (0,3,4,5,6) (0,2,3,6) {38,31,247,42,176,196,86}
+[#.###] (2,4) (0,3) (1,2) (3,4) (3) (0,3,4) (0,1,3) {33,40,36,70,43}
+[...###] (1,3) (1,2,4) (0,4) (0,1,3) (0,3,5) {29,23,10,14,30,1}
+[.######.#] (0,1,2,3,4,6,8) (0,2,6) (2,3,4,5,7) (1,2,3,4,5,6,8) (1,7) (2,3,4,5,6) (2,5,6,7) (2,5,6,8) (2,3,4,5) {141,36,216,45,45,75,197,33,42}
+[.##.##..#] (1,8) (0,2,3,4,5,6,8) (0,1,2,4,7,8) (2,7) (0,2,3,4,6,7,8) (0,5) (2,3,6,8) {36,24,41,26,32,22,26,17,50}
+[..#####.] (1,3) (1,3,4,5) (0,2,3,4,5,7) (0,1,7) (0,2,3,4,6,7) (0,1,4,6) (3,5,6,7) (0,2,3,5) {51,25,38,53,39,34,16,49}
+[..##...##.] (2,3,5,6,7,9) (0,3) (4,6,8,9) (0,1,3,4,6,7,8,9) (1,3,4,5,6,7,9) (0,1,2,4,6,7,9) (0,2,3,4,5,8,9) (0,1,2,3,6,7,8,9) {52,35,33,56,66,30,56,38,51,73}
+[#####..] (1,2,3) (0,4) (0,1,5,6) (2,3,5) (0,1,3) (3,4,6) (2,6) {23,38,50,63,22,16,39}
+[####] (1,3) (0,1) (0,2) (2,3) {17,29,14,26}
+[#..###..#] (6,7) (2,4) (0,1,2,5,7) (0,1,2,3,6,7,8) (0,2,3,7,8) (0,1,2,5,6,7,8) (1,2,4,5,7,8) {73,69,94,36,21,50,53,102,67}
+[.#.#.] (0,2,3,4) (1,2) (1,3) (0,1) (0,4) (2,4) (0,2,3) {48,23,25,29,37}
+[#.####] (0,5) (0,2,3,4,5) (3,5) (2,5) (1,2,3) (0,4) (1,2,4,5) {17,19,29,39,22,35}
+[##.#] (1) (1,2,3) (0,1,3) {184,216,19,203}
+[.....#..#] (1,2,6,7) (0,3) (0,1,2,5,6,8) (1,2,3,4,6,7,8) (0,2,5,8) (4,7,8) (4,5,8) (0,3,7,8) {41,18,31,31,148,148,18,29,174}
+[#####..##] (0,5,7,8) (0,1,3,4,6) (0,1,2,3,4,6,7) (0,1,2,3,4,7,8) (0,2,5,8) (0,2,3,5,7) (6,7) (0,1,2,4,5,6,7) (3,4,5,6) {74,49,46,55,68,57,78,49,27}
+[###.] (2,3) (0,1,2) (0,1,3) (0,2,3) {32,19,43,32}
+[#.######] (3,7) (0,1,4,7) (0,2,3,5,7) (0,1,4,6) (0,2,3,5,6,7) (2,3,4,5,6,7) (0,1,2,5,6) (0,3,6,7) (0,1,3) (0,3,4) {84,54,34,76,35,34,68,54}
+[..#.#...] (0,1,2,3,6,7) (4,6) (2,3,4,5) (0,3) (2,4) (0,2,5,6,7) (1,2,3,5,6) (6,7) {17,0,15,23,12,12,6,6}
+[..#.#.] (1,3) (0,2,3,4) (2,4) (0,1,3,5) (0,2,3,4,5) (0,5) (5) {38,8,33,31,33,35}
+[.#.##] (0,1,3) (2) (1,3,4) (0,1,3,4) {17,26,176,26,25}
+[##...#.] (1,5) (1,3) (0,1,2,3,4) (1,2,4,5,6) (0,1,2,4,5) (0,1) (0,1,2,3,4,6) {38,75,42,25,42,36,30}
+[#..##..##] (3,4,6) (0,1,7,8) (4,5,8) (0,2,5,6,7,8) (2,3,4,5,7,8) (0,1,3,4,5,7,8) (2,6) (0,3,5,7) (2,3,6,8) (0,1,6) {37,28,22,29,22,28,30,32,31}
+[..#..#...] (0,3,4,6,7,8) (0,2,3,4,5,6,8) (2,3,5,7) (2,8) (0,1,2,4,8) (1,2,3,5,7) (1,2,3,5,6,7,8) (3,4,6,7,8) (3,4,7) (8) (0,1,3,4,5,6,7) {34,43,224,74,49,56,47,60,228}
+[#...#.#] (1,3) (0) (0,6) (0,2,4) (0,1,4,5) (1,2,3) (0,1,2,3) {46,39,24,30,14,9,1}
+[.###..] (0,1,3,4,5) (0,2,3,4) (0,1,3,5) (1,2,3) {32,29,27,44,17,17}
+[##.#] (0,1,3) (0,2) {5,2,3,2}
+[..#####.#] (0,3,4,6,7,8) (0,1,2,3,4,5,6,8) (5,6) (1,7) (0,1,2,3,8) (4,5,6,8) (0,6,7) (1,2,4,5,6,7) {17,29,26,15,42,38,46,28,31}
+[......#.#.] (0,3,5,8) (0,1,2,3,9) (0,3,6,7,9) (4,5,6) (0,1,2,5,6,7,8,9) (0,1,2,3,4,5,6,8,9) (3) (0,1,2,3,4,5,6,7,8) (2,5,7,9) (0,1,2,4,6,9) (0,2,4,6,7,8,9) (6,7) {80,49,74,45,52,56,89,63,49,82}
+[..###.#.#] (1,2,3,4,5,7,8) (1,4,5,7) (7) (2,3,4,5,6) (0,5) (1,8) (0,1,2,3,5) (2,4,6,7,8) (0,1,2,3,5,6,7) (2,4,5,6) {37,47,51,23,45,62,39,52,37}
+[.###.##.] (0,1,4,5,6,7) (0,2,3,6) (2,4,6) (2,4,6,7) (1,2) (0,2,7) (4,6) {30,25,48,2,213,18,215,46}
+[..#.#.#.#] (2,3,5,6,7) (1,5,7,8) (0,2,4,5) (0,2,3,4,6,7,8) (0,1,2,5,6,7,8) (1,3,6,8) (3,6) (0,3,4,5,8) (1,2,3,5) (3,4) {60,42,47,37,40,79,32,40,60}
+[###.#.####] (2,4,5) (2,4,7) (1,5,6,8,9) (0,2,4,6,8) (1,2) (6) (3,4) (1,2,3,4,6,7,8,9) (4,5,6) (0,2,3) (0,1,5,6,7,8,9) (1,3,4,6,7,8) (1,2,4,5,7,9) {34,44,202,42,244,43,83,204,54,26}
+[...#.##] (1,2,4,5) (0,5) (1,3,5) (0,1,5,6) (0,1,2,5,6) {36,30,18,12,2,50,16}
+[##..] (0,2,3) (0) (2) (1,2) (0,1,3) (1,3) {38,30,44,43}
+[....#.] (0,1,2,5) (4) (1,2) (0,1,3,4,5) (1,3) {12,40,14,26,17,12}
+[.#....] (0,1,2,3,4) (0,3,4,5) (0,1,5) (2,5) (0,1,4) (0,1,3,5) (1,2,3,5) (0,4,5) {176,170,41,52,156,67}
+[...#...##.] (4,6) (0,1,2,5,6,7,8) (0,4,9) (1,5,8,9) (1,2,3,5,6,7,9) (3,7,8) (0,6) (0,2,3,4,5,7,8,9) (1,2,3,4,5,7,8,9) (0,1,2,5,6,7) {46,49,36,26,33,52,54,42,35,53}
+[##.....#] (1,2,3,5,7) (4) (0,1,4,5,6,7) (1,2,3,5,6) (0,1,2,3,5,6,7) (2,3,6) (0,2,3,4,5,7) {43,43,43,43,39,51,48,45}
+[.#....##.] (4) (1,2,3,4,6) (2,3,4,5,6,7) (0,7) (0,1,3,4,8) (0,1,3,4,5,6,7) (1,5,8) {11,35,21,32,32,7,21,2,16}
+[#...#.#] (3,5) (3,6) (0,2) (0,1,2,3,5) (3,5,6) (0,4) (1,2) {25,32,40,52,5,36,25}
+[###.###] (0,1,3,4,5) (1,2,5,6) (2,3) (0,1,2,4,5,6) (0,2,6) (1,2,3,4) (0,1,3,5) (2,4) (4,5,6) {39,56,62,55,51,51,32}
+[#.#####...] (8,9) (2,4,8) (1,2,3,5,6,7,8,9) (0,1,2,3,5,6,8,9) (0,4,6) (0,2,3,5,6,7,8,9) (4,5,6,7,8) (0,2,3,4,5,6,7,9) (1,3) (1,3,4,5,6,7,8) (4,5,6) (0,4,5,7,8,9) {62,64,55,77,99,95,102,59,94,66}
+[.....#.#] (4,6) (0,2,3,4,5,6) (1,3,7) (2,3,4,6) (4,5,7) (0,1,3,4,6,7) (0,1,3,4,5,6) (2,3,4,5,6,7) (0,1,2,3,5,6) {198,193,50,230,222,193,225,40}
+[.#......##] (0,2,3,5,6,9) (0,1,2,4,6,7,9) (0,1,2,4,6) (0,3,4,5,7,8) (1,2,3,4,5,8,9) (0,1,4,5,6,7,8,9) (0,1,2,6,9) (1,2,7) (0,4,5,6,7) {99,84,80,33,80,55,84,60,37,64}
+[######..#.] (0,1,3,4,7) (0,3) (1,3,5,6,7) (0,1,2,3,4,6,8) (0,2,3,4,6) (0,3,6,7,9) (1,2,3,5) (0,1,2,9) (0,3,6,8,9) (3,5,7) (0,2,3,7,8,9) (9) (1,4,5,6) {64,51,53,97,29,45,47,27,16,37}
+[.#.....] (0,1,2,4,6) (0,1,5,6) (0,2,3,5,6) (0,2,4) (4,5,6) (2,3) (0,4) (1,2,4,5,6) {35,33,34,5,48,25,37}
+[..###] (3,4) (0,1,2,3,4) (0,1,3,4) (2,3) {146,146,18,155,147}
+[.##.#....] (1,2,3,5,6,7) (3,5,7) (0,1,4,7,8) (3,4,7,8) (0,1,2,3,5,6,7,8) (1,2) (1,3,4,8) {172,202,184,201,29,182,168,203,191}
+[##...#.##.] (2,9) (0,1,2,4,5,6,7,8) (7,8) (0,2,3,4,6,9) (1,3,4,5,8) (0,4) (1,2,3,5,6,8,9) (0,1,2,3,6,7,8,9) (0,2,7) (0,4,5,7,9) (0,1,5) (6,7) (1,2,3,5,8) {63,64,76,48,59,65,47,43,55,38}
+[###...] (1,4) (0,4,5) (0,1,3,5) (0,2,4,5) (0,2,3,4) (0,1) {71,53,19,29,50,39}
+[#.#.###...] (1,7,9) (1,3,6,8) (0,1,2,5,6,8,9) (1,2,3,5,6,8) (0,1,2,4,5,6,8) (4,5,6,7,9) (0,3,4,5,6,7,9) (7) (0,7) (0,2,7,9) (0,1,4,5,6,7,8) (1,2,3,4,5,8,9) (1,2,5,6,8) {182,64,189,51,40,78,74,199,60,187}
+[.#....#] (5,6) (0,3,5,6) (0,2,5) (1,2,3) (0,5,6) (0,2,6) (0,3) (1,2,3,4,6) {168,23,165,42,10,152,50}
+[###..] (1,3,4) (0,3) (0,1,4) (2,4) {15,8,15,19,23}
+[.##.#] (1,2,4) (1,3) (1,4) (1,2,3,4) (1,3,4) (0,2,4) {18,62,42,36,73}
+[#.##..#] (1,2,3,5,6) (0,5,6) (0,1,2,4) (0,1,5) (0,1,4,5,6) (0,1,2,3,4,6) {67,78,56,40,48,51,61}
+[#.#.] (0,1,2) (1,2,3) (3) (0,3) (0,1,3) (2,3) {195,193,12,208}
+[.###...#.#] (1,2,3,5,7,9) (0,1,2,3,5,6,8,9) (0,1,3,7) (4,5,6,7,8,9) (1,6) (0,3,4,7,9) (3,4) (1,2,3,4,5) (0,1,3,4,5,6,8) (2,3,6,9) (1,2,3,4,8) {41,75,47,77,55,68,69,41,52,62}
+[###..] (1,3,4) (0,1,2,4) (1,2,4) (0,2,4) (0,3,4) (0,2) {26,31,32,20,49}
+[..##] (0,1,2,3) (2,3) (0,1) {26,26,16,16}
+[..#.#.#.#.] (2,5,7,8,9) (3,4,5,6) (0,1,2,3,4,6,9) (3,5,6,9) (5,6,8) (0,2,3,4,5,6,7,9) (1,7) (2) (0,1,2,3,4,5,8,9) (3,5,8) (4,5) (0,2,8,9) (2,3,5,6,7,8) {39,31,65,43,41,58,50,23,48,53}
+[.####.#...] (3,5,6,7,8,9) (0,1,2,3,4,5,7,8,9) (1,2,3,5) (1,2,3,6,8,9) (4,5,6) (2,6) (0,3,4) (0,1,8,9) (2,4) (0,1,2,4,6,7,8,9) (0,1) (3,4,6) {53,69,70,45,54,31,67,29,50,50}
+[.#..#...] (0,2,3,6) (0,1,3,4,5,7) (1,4,5,6,7) (0,3,4,6) (1,2,3) (0,3,5,7) {39,31,34,56,22,21,32,21}
+[#.###] (0,1,2) (2,3) (0,1,4) (0,3,4) (3,4) (1,3,4) (1,4) {42,43,30,42,44}
+[#.#.#.#] (0,2,4,6) (1,2,4,6) (1,2,3,4,5) (2,3,4) (1,4) (0,3) (4,5,6) (3,4,5,6) {34,36,40,40,58,22,19}
+[.##..] (1,2) (1,4) (0,1,3) {6,21,0,6,15}
+[##.##.#] (0,2,5,6) (0,1,2,3,6) (1,2,3,4,5) (1,2,3,4,5,6) (0,2,3,4,5,6) {37,27,60,41,37,56,50}
+```
+
+Analyzing the puzzle, it is easy to observe that this can be simplified to solving the matrix equation $Ax = B$ in [GF(2)](https://en.wikipedia.org/wiki/GF%282%29), in which:
+- $A$ is the matrix that describes which lights a button can operate on, for each button.
+- $B$ is the target on/off sequence of indicator lights.
+
+And why GF(2)? Since each light has only two states (on/off), pressing a button **twice** is actually the same with pressing it **none** times.
+
+To construct the matrix $A$ (initially set to all zeros), for each button $i$, we iterate through the indexes $j$ of the lights that are linked to the button and store 1 at $A[i][j]$.
+
+```asm title="10/solution/matrix_insertion.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Matrix insertion
+; Args: rdi, rsi
+; Ret: rax = terminated position; matrix[rsi][integer] = 1
+; Terminate if any byte is not in range [0-9]
+
+matrix_insertion:
+    push r14
+
+    xor rax, rax
+
+.convert:
+    movzx r14, byte [rdi]
+    test r14, r14 
+    je .matrix_insertion_done
+
+    cmp r14, 10
+    je .matrix_insertion_done
+
+    cmp r14, '0'
+    jl .matrix_insertion_done 
+
+    cmp r14, '9'
+    jg .matrix_insertion_done 
+
+    sub r14, '0'
+    imul rax, 10
+    add rax, r14 
+
+    inc rdi 
+    jmp .convert
+
+.matrix_insertion_done:
+    mov r14, rsi
+    shl r14, 7
+    add r14, rax
+    mov byte [matrix + r14], 1
+
+    mov rax, rdi
+    pop r14
+    ret 
+```
+
+For the vector $B$, we parse the given indicator lights sequence, store 0 if the light is off or 1 if the light is on. 
+
+```asm
+; rdi currently points to the next byte of [
+    xor rsi, rsi 
+
+.vector_loop:
+    movzx rax, byte [rdi]
+    cmp rax, ']'
+    je .end_vector
+
+    cmp rax, '.'
+    je .lights_off
+
+    cmp rax, '#'
+    je .lights_on 
+
+    inc rdi 
+    jmp .vector_loop
+
+.lights_off:
+    mov byte [vector + rsi], 0 
+    inc rsi 
+    inc rdi 
+    jmp .vector_loop
+
+.lights_on:
+    mov byte [vector + rsi], 1 
+    inc rsi 
+    inc rdi 
+    jmp .vector_loop
+
+.end_vector:
+    mov [vector_size], rsi
+```
+
+Now comes the actual $Ax = B$ solving. Am I going to implement [Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination) and such for solving the matrix equation?
+
+Absolutely not, as I took the brute-force route instead. It is easier to brute-force all combinations of pressing buttons than solving system of linear equations in x86 Assembly.
+
+For the brute-force solution, we can test every bitmask of zeros and ones of length equal to the amount of buttons. Each bit at index `i` means that the button `i` is skipped (0) or is pressed (1).
+
+For each combination of buttons, we operate on a fresh vector `current_state`. To *press* a button, we simply XOR the corresponding row within the matrix with the `current_state` buffer. 
+
+After applying the combination, if the `current_state` vector equals to our target, the combination is valid. Within all valid combinations, we want to find the one with least set bits.
+
+To implement this part, we iterate from 0 to $2^{vector\_size}$, test each combination with the help of `bt` instruction (to retrieve the bit at a position in a number), and count set bits using `popcnt`.
+
+```asm title="10/solution/solver.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Solver
+; Args: None
+
+solver:
+    push rbx 
+    push rcx
+    push r13
+    push r14
+    push r15 
+
+    mov rcx, qword [matrix_height]
+    mov r14, 1 
+    shl r14, cl
+
+    mov r15, 0xFFFFFFFFFFFFFFFF
+    xor r13, r13
+
+.combination_loop:
+    cmp r13, r14
+    je .done_solver
+
+    mov rcx, 1000
+    mov rdi, current_state
+    mov rax, 0
+    rep stosb
+    xor rbx, rbx 
+
+.matrix_row_loop:
+    cmp rbx, qword [matrix_height]
+    je .check_output
+
+    bt r13, rbx 
+    jnc .next_row 
+
+    mov rdi, rbx
+    call xor_vectors 
+
+.next_row:
+    inc rbx 
+    jmp .matrix_row_loop
+
+.check_output:
+    call compare_vectors
+    cmp rax, 1 
+    jne .next_combination
+
+    popcnt rax, r13 
+    cmp rax, r15 
+    jae .next_combination
+
+    mov r15, rax
+
+.next_combination:
+    inc r13 
+    jmp .combination_loop
+
+.done_solver:
+    mov rax, r15
+    pop r15
+    pop r14
+    pop r13
+    pop rcx
+    pop rbx
+    ret
+```
+
+With all helpers introduced, we have the full solution for the first part.
+
+```asm title="10/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+
+    matrix resb 128 * 1000
+    vector resb 1000
+
+    vector_size resq 1
+    matrix_height resq 1
+
+    current_state resb 1000
+
+    result resq 1
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the lines and process them one by one
+    mov r8, input
+    mov r9, input
+    mov qword [result], 0
+
+reader:
+    movzx rax, byte [r9]
+    test rax, rax 
+    je process_last_line
+
+    cmp rax, 10
+    je process_line 
+
+    inc r9 
+    jmp reader
+
+process_line:
+    mov rcx, 128000
+    mov rdi, matrix
+    mov rax, 0
+    rep stosb
+
+    mov rcx, 1000
+    mov rdi, vector
+    mov rax, 0
+    rep stosb
+
+    mov byte [matrix_height], 0
+    mov byte [vector_size], 0
+
+    mov rdi, r8
+    call parser 
+
+    call solver 
+    add qword [result], rax
+
+    inc r9
+    mov r8, r9
+    jmp reader
+
+process_last_line:
+    cmp r8, r9
+    je print_output
+
+    mov rcx, 128000
+    mov rdi, matrix
+    mov rax, 0
+    rep stosb
+
+    mov rcx, 1000
+    mov rdi, vector
+    mov rax, 0
+    rep stosb
+
+    mov byte [matrix_height], 0
+    mov byte [vector_size], 0
+
+    mov rdi, r8
+    call parser
+
+    call solver 
+    add qword [result], rax
+
+print_output:
+    ; Print result to stdout 
+    mov rdi, qword [result] 
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Matrix insertion
+; Args: rdi, rsi
+; Ret: rax = terminated position; matrix[rsi][integer] = 1
+; Terminate if any byte is not in range [0-9]
+
+matrix_insertion:
+    push r14
+
+    xor rax, rax
+
+.convert:
+    movzx r14, byte [rdi]
+    test r14, r14 
+    je .matrix_insertion_done
+
+    cmp r14, 10
+    je .matrix_insertion_done
+
+    cmp r14, '0'
+    jl .matrix_insertion_done 
+
+    cmp r14, '9'
+    jg .matrix_insertion_done 
+
+    sub r14, '0'
+    imul rax, 10
+    add rax, r14 
+
+    inc rdi 
+    jmp .convert
+
+.matrix_insertion_done:
+    mov r14, rsi
+    shl r14, 7
+    add r14, rax
+    mov byte [matrix + r14], 1
+
+    mov rax, rdi
+    pop r14
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Parser
+; Args: rdi
+
+parser:
+.find_bracket:
+    movzx rax, byte [rdi]
+    test rax, rax
+    jz .done  
+
+    cmp rax, '['
+    je .start_vector
+
+    inc rdi
+    jmp .find_bracket
+
+.start_vector:
+    inc rdi 
+    xor rsi, rsi 
+
+.vector_loop:
+    movzx rax, byte [rdi]
+    cmp rax, ']'
+    je .end_vector
+
+    cmp rax, '.'
+    je .lights_off
+
+    cmp rax, '#'
+    je .lights_on 
+
+    inc rdi 
+    jmp .vector_loop
+
+.lights_off:
+    mov byte [vector + rsi], 0 
+    inc rsi 
+    inc rdi 
+    jmp .vector_loop
+
+.lights_on:
+    mov byte [vector + rsi], 1 
+    inc rsi 
+    inc rdi 
+    jmp .vector_loop
+
+.end_vector:
+    mov [vector_size], rsi
+    xor rsi, rsi 
+
+.find_open_parenthesis:
+    movzx rax, byte [rdi]
+    inc rdi 
+    cmp rax, '{'
+    je .done 
+
+    cmp rax, '('
+    je .parse_number 
+ 
+    jmp .find_open_parenthesis
+
+.parse_number:
+    call matrix_insertion 
+    mov rdi, rax
+
+    movzx rax, byte [rdi]
+    inc rdi 
+    cmp rax, ')'
+    jne .parse_number
+
+    inc rsi
+    jmp .find_open_parenthesis
+
+.done:
+    mov [matrix_height], rsi
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: XOR Vectors
+; Args: rdi (index of row)
+; Ret: XOR matrix[rdi] with current_state vector
+
+xor_vectors:
+    push rbx
+
+    xor rbx, rbx 
+
+.element_loop:
+    cmp rbx, qword [vector_size]
+    je .done_xor
+
+    mov rax, rdi 
+    shl rax, 7
+    add rax, rbx 
+
+    movzx rax, byte [matrix + rax]
+    xor byte [current_state + rbx], al 
+
+    inc rbx
+    jmp .element_loop
+
+.done_xor:
+    pop rbx 
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Compare vectors 
+; Args: None
+; Ret: rax = 1 if current_state == vector; 0 otherwise
+
+compare_vectors:
+    push rbx
+
+    xor rbx, rbx 
+
+.compare_loop:
+    cmp rbx, qword [vector_size]
+    je .true
+
+    movzx rax, byte [vector + rbx]
+    cmp byte [current_state + rbx], al
+    jne .false
+
+    inc rbx
+    jmp .compare_loop
+
+.false:
+    mov rax, 0
+    pop rbx 
+    ret
+
+.true:
+    mov rax, 1
+    pop rbx 
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Solver
+; Args: None
+
+solver:
+    push rbx 
+    push rcx
+    push r13
+    push r14
+    push r15 
+
+    mov rcx, qword [matrix_height]
+    mov r14, 1 
+    shl r14, cl
+
+    mov r15, 0xFFFFFFFFFFFFFFFF
+    xor r13, r13
+
+.combination_loop:
+    cmp r13, r14
+    je .done_solver
+
+    mov rcx, 1000
+    mov rdi, current_state
+    mov rax, 0
+    rep stosb
+    xor rbx, rbx 
+
+.matrix_row_loop:
+    cmp rbx, qword [matrix_height]
+    je .check_output
+
+    bt r13, rbx 
+    jnc .next_row 
+
+    mov rdi, rbx
+    call xor_vectors 
+
+.next_row:
+    inc rbx 
+    jmp .matrix_row_loop
+
+.check_output:
+    call compare_vectors
+    cmp rax, 1 
+    jne .next_combination
+
+    popcnt rax, r13 
+    cmp rax, r15 
+    jae .next_combination
+
+    mov r15, rax
+
+.next_combination:
+    inc r13 
+    jmp .combination_loop
+
+.done_solver:
+    mov rax, r15
+    pop r15
+    pop r14
+    pop r13
+    pop rcx
+    pop rbx
+    ret
+```
+
+At least `411` button presses are required to correctly configure the indicator lights on all of the machines.
+
+### Part 2
+
+``` /apply/ /components/
+All of the machines are starting to come online! Now, it's time to worry about the joltage requirements.
+
+Each machine needs to be configured to exactly the specified joltage levels to function properly. Below the buttons on each machine is a big lever that you can use to switch the buttons from configuring the indicator lights to increasing the joltage levels. (Ignore the indicator light diagrams.)
+
+The machines each have a set of numeric counters tracking its joltage levels, one counter per joltage requirement. The counters are all initially set to zero.
+
+So, joltage requirements like {3,5,4,7} mean that the machine has four counters which are initially 0 and that the goal is to simultaneously configure the first counter to be 3, the second counter to be 5, the third to be 4, and the fourth to be 7.
+
+The button wiring schematics are still relevant: in this new joltage configuration mode, each button now indicates which counters it affects, where 0 means the first counter, 1 means the second counter, and so on. When you push a button, each listed counter is increased by 1.
+
+So, a button wiring schematic like (1,3) means that each time you push that button, the second and fourth counters would each increase by 1. If the current joltage levels were {0,1,2,3}, pushing the button would change them to be {0,2,2,4}.
+
+You can push each button as many times as you like. However, your finger is getting sore from all the button pushing, and so you will need to determine the fewest total presses required to correctly configure each machine's joltage level counters to match the specified joltage requirements.
+
+Consider again the example from before:
+[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}
+[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}
+[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}
+
+- Configuring the first machine's counters requires a minimum of 10 button presses. One way to do this is by pressing (3) once, (1,3) three times, (2,3) three times, (0,2) once, and (0,1) twice.
+- Configuring the second machine's counters requires a minimum of 12 button presses. One way to do this is by pressing (0,2,3,4) twice, (2,3) five times, and (0,1,2) five times.
+- Configuring the third machine's counters requires a minimum of 11 button presses. One way to do this is by pressing (0,1,2,3,4) five times, (0,1,2,4,5) five times, and (1,2) once.
+
+So, the fewest button presses required to correctly configure the joltage level counters on all of the machines is 10 + 12 + 11 = 33.
+
+Analyze each machine's joltage requirements and button wiring schematics. What is the fewest button presses required to correctly configure the joltage level counters on all of the machines?
+```
+
+Now that the problem shifts from switching the lights on/off to matching the required joltage, it is now $Ax = B$ but not in GF(2) anymore, in which:
+- $A$ is still the matrix that describes which lights a button can operate on, for each button.
+- $B$ is now the vector of required joltages.
+
+We keep the same method of constructing the matrix $A$. For vector $B$, we now have to parse the part between curly braces instead.
+
+```asm title="10/solution/vector_insertion.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Vector insertion
+; Args: rdi
+; Ret: rax = terminated position; vector[vector_size] = converted integer
+; Terminate if any byte is not in range [0-9]
+
+vector_insertion:
+    push r14
+
+    xor rax, rax
+
+.convert_2:
+    movzx r14, byte [rdi]
+    test r14, r14 
+    je .vector_insertion_done
+
+    cmp r14, 10
+    je .vector_insertion_done
+
+    cmp r14, '0'
+    jl .vector_insertion_done
+
+    cmp r14, '9'
+    jg .vector_insertion_done
+
+    sub r14, '0'
+    imul rax, 10
+    add rax, r14 
+
+    inc rdi 
+    jmp .convert_2
+
+.vector_insertion_done:
+    mov r14, qword [vector_size]
+    mov qword [vector + r14 * 8], rax
+    inc qword [vector_size]
+
+    mov rax, rdi
+    pop r14
+    ret 
+```
+
+In a different ~~timeline~~ language, I would absolutely solve $Ax = B$ (for example using Sage's [solve_right](https://doc.sagemath.org/html/en/tutorial/tour_linalg.html)). Just not in x86 Assembly.
+
+However, it is still solvable without having to implement a solver for the equation. Consider an integer $x$ that can be rewritten as follows:
+
+$$
+x = a \cdot 2^0 + b \cdot 2^1 + c \cdot 2^2 + \dots
+$$
+
+which means, for a joltage value of $x$, we can press a button (that operates on the corresponding light) **zero** or **one** time to make the value $x$ **even**. We can then safely divide the value by 2 and solve for the next bit.
+
+Applying the above claim to solve our problem, for a set of joltage value `{a, b, c}`:
+- Determine the LSB/parity of each joltage.
+- Find a combination that matches with the LSB combination (which is basically the first part of our challenge).
+- Subtract the chosen button combination from the joltage set, divide all element in the new set by 2 (this is because the set can be created by pressing combinations of buttons **twice**).
+- Continue the same with the smaller set.
+- Return when the current set is `{0, 0, 0}`.
+
+From that, the formula for getting total presses would be: `total_presses = button_count + 2 * recursive`.
+
+However, we must pay attention to some cases where we cannot find a valid combination for the current set of parity of each joltage. If such case happens, we must fall back to the previous state by rolling back all changes made and search for a new combination for the previous state.
+
+```asm title="10/solution/solver.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Solver
+; Args: None
+; Ret: min press for each case
+
+solver:
+    push r12
+    push r13
+    push r14
+    push r15
+
+    call is_vector_zero
+    test rax, rax
+    jz .not_zero
+
+    xor rax, rax
+    xor r15, r15
+    jmp .done_solver
+
+.not_zero:
+    mov rcx, [matrix_height]
+    mov r14, 1
+    shl r14, cl
+    
+    mov r15, 0xFFFFFFFFFFFFFFFF
+    xor r13, r13
+
+.combination_loop:
+    cmp r13, r14
+    je .done_solver
+
+    mov rdi, r13
+    call apply_combination
+    cmp rax, -1
+    je .next_combination
+
+    call shift_vector_right
+
+    call solver
+    mov r12, rax
+
+    call shift_vector_left
+
+    mov rdi, r13
+    call restore_combination
+
+    cmp r12, -1
+    je .next_combination
+
+    mov rax, r12
+    add rax, rax
+    
+    popcnt rcx, r13
+    add rax, rcx
+
+    cmp rax, r15
+    jae .next_combination
+
+    mov r15, rax
+
+.next_combination:
+    inc r13
+    jmp .combination_loop
+
+.done_solver:
+    mov rax, r15
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    ret
+```
+
+The full solution can be found below.
+
+```asm title="10/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+
+    matrix resq 128 * 1000
+    vector resq 1000
+
+    vector_size resq 1
+    matrix_height resq 1
+
+    result resq 1 
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the lines and process them one by one
+    mov r8, input
+    mov r9, input
+    mov qword [result], 0
+
+reader:
+    movzx rax, byte [r9]
+    test rax, rax 
+    je process_last_line
+
+    cmp rax, 10
+    je process_line 
+
+    inc r9 
+    jmp reader
+
+process_line:
+    mov rcx, 128000
+    mov rdi, matrix
+    mov rax, 0
+    rep stosq
+
+    mov rcx, 1000
+    mov rdi, vector
+    mov rax, 0
+    rep stosq
+
+    mov byte [matrix_height], 0
+    mov byte [vector_size], 0
+
+    mov rdi, r8
+    call parser 
+
+    call solver 
+    add qword [result], rax
+
+    inc r9
+    mov r8, r9
+    jmp reader
+
+process_last_line:
+    cmp r8, r9
+    je print_output
+
+    mov rcx, 128000
+    mov rdi, matrix
+    mov rax, 0
+    rep stosq
+
+    mov rcx, 1000
+    mov rdi, vector
+    mov rax, 0
+    rep stosq
+
+    mov byte [matrix_height], 0
+    mov byte [vector_size], 0
+
+    mov rdi, r8
+    call parser
+
+    call solver 
+    add qword [result], rax
+
+print_output:
+    ; Print result to stdout 
+    mov rdi, qword [result] 
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Matrix insertion
+; Args: rdi, rsi
+; Ret: rax = terminated position; matrix[rsi][integer] = 1
+; Terminate if any byte is not in range [0-9]
+
+matrix_insertion:
+    push r14
+
+    xor rax, rax
+
+.convert:
+    movzx r14, byte [rdi]
+    test r14, r14 
+    je .matrix_insertion_done
+
+    cmp r14, 10
+    je .matrix_insertion_done
+
+    cmp r14, '0'
+    jl .matrix_insertion_done 
+
+    cmp r14, '9'
+    jg .matrix_insertion_done 
+
+    sub r14, '0'
+    imul rax, 10
+    add rax, r14 
+
+    inc rdi 
+    jmp .convert
+
+.matrix_insertion_done:
+    mov r14, rsi
+    shl r14, 7
+    add r14, rax
+    mov qword [matrix + r14 * 8], 1
+
+    mov rax, rdi
+    pop r14
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: Vector insertion
+; Args: rdi
+; Ret: rax = terminated position; vector[vector_size] = converted integer
+; Terminate if any byte is not in range [0-9]
+
+vector_insertion:
+    push r14
+
+    xor rax, rax
+
+.convert_2:
+    movzx r14, byte [rdi]
+    test r14, r14 
+    je .vector_insertion_done
+
+    cmp r14, 10
+    je .vector_insertion_done
+
+    cmp r14, '0'
+    jl .vector_insertion_done
+
+    cmp r14, '9'
+    jg .vector_insertion_done
+
+    sub r14, '0'
+    imul rax, 10
+    add rax, r14 
+
+    inc rdi 
+    jmp .convert_2
+
+.vector_insertion_done:
+    mov r14, qword [vector_size]
+    mov qword [vector + r14 * 8], rax
+    inc qword [vector_size]
+
+    mov rax, rdi
+    pop r14
+    ret 
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Parser
+; Args: rdi
+
+parser:
+.find_closing_square_bracket:
+    movzx rax, byte [rdi]
+    cmp rax, ']'
+    je .end_lights  
+
+    inc rdi 
+    jmp .find_closing_square_bracket
+
+.end_lights:
+    xor rsi, rsi 
+
+.find_open_parenthesis:
+    movzx rax, byte [rdi]
+    inc rdi 
+    cmp rax, '{'
+    je .done_matrix 
+
+    cmp rax, '('
+    je .parse_number 
+    
+    jmp .find_open_parenthesis
+
+.parse_number:
+    call matrix_insertion 
+    mov rdi, rax
+
+    movzx rax, byte [rdi]
+    inc rdi 
+    cmp rax, ')'
+    jne .parse_number
+
+    inc rsi
+    jmp .find_open_parenthesis
+
+.done_matrix:
+    mov [matrix_height], rsi
+    xor rsi, rsi 
+
+.parse_vector:
+    call vector_insertion 
+    mov rdi, rax
+
+    movzx rax, byte [rdi]
+    inc rdi 
+    cmp rax, '}'
+    jne .parse_vector
+
+.done:
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Solver
+; Args: None
+; Ret: min press for each case
+
+solver:
+    push r12
+    push r13
+    push r14
+    push r15
+
+    call is_vector_zero
+    test rax, rax
+    jz .not_zero
+
+    xor rax, rax
+    xor r15, r15
+    jmp .done_solver
+
+.not_zero:
+    mov rcx, [matrix_height]
+    mov r14, 1
+    shl r14, cl
+    
+    mov r15, 0xFFFFFFFFFFFFFFFF
+    xor r13, r13
+
+.combination_loop:
+    cmp r13, r14
+    je .done_solver
+
+    mov rdi, r13
+    call apply_combination
+    cmp rax, -1
+    je .next_combination
+
+    call shift_vector_right
+
+    call solver
+    mov r12, rax
+
+    call shift_vector_left
+
+    mov rdi, r13
+    call restore_combination
+
+    cmp r12, -1
+    je .next_combination
+
+    mov rax, r12
+    add rax, rax
+    
+    popcnt rcx, r13
+    add rax, rcx
+
+    cmp rax, r15
+    jae .next_combination
+
+    mov r15, rax
+
+.next_combination:
+    inc r13
+    jmp .combination_loop
+
+.done_solver:
+    mov rax, r15
+    pop r15
+    pop r14
+    pop r13
+    pop r12
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Apply combination
+; Args: rdi (combination)
+; Ret: 1 if success else 0
+
+apply_combination:
+    push rbx
+    push r12
+    push r13
+    push r14
+
+    mov r13, rdi
+    xor rcx, rcx
+
+.apply_combination_loop:
+    cmp rcx, [vector_size]
+    je .apply_combination_success
+
+    xor r14, r14
+    xor rbx, rbx
+
+.apply_combination_button_loop:
+    cmp rbx, [matrix_height]
+    je .apply_combination_apply
+    
+    bt r13, rbx
+    jnc .apply_combination_next
+    
+    mov r12, rbx
+    shl r12, 10
+    add r14, [matrix + r12 + rcx*8]
+
+.apply_combination_next:
+    inc rbx
+    jmp .apply_combination_button_loop
+
+.apply_combination_apply:
+    mov r12, [vector + rcx * 8]
+    sub r12, r14
+    
+    cmp r12, 0
+    jl .apply_combination_fail
+
+    test r12, 1
+    jnz .apply_combination_fail
+
+    mov [vector + rcx * 8], r12
+    inc rcx
+    jmp .apply_combination_loop
+
+.apply_combination_fail:
+    push rcx
+    xor rcx, rcx
+
+.res_loop:
+    cmp rcx, [rsp]
+    je .res_done
+    
+    xor r14, r14
+    xor rbx, rbx
+
+.res_button:
+    cmp rbx, [matrix_height]
+    je .res_apply_b
+
+    bt r13, rbx
+    jnc .res_next
+    
+    mov r12, rbx
+    shl r12, 10
+    add r14, [matrix + r12 + rcx * 8]
+
+.res_next:
+    inc rbx
+    jmp .res_button
+
+.res_apply_b:
+    add [vector + rcx * 8], r14
+    inc rcx
+    jmp .res_loop
+
+.res_done:
+    pop rcx
+    mov rax, -1
+    pop r14
+    pop r13
+    pop r12
+    pop rbx
+    ret
+
+.apply_combination_success:
+    xor rax, rax
+    pop r14
+    pop r13
+    pop r12
+    pop rbx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Restore combination
+; Args: rdi (combination)
+
+restore_combination:
+    push rbx
+    push r12
+    push r13
+    push r14
+
+    mov r13, rdi
+    xor rcx, rcx
+
+.restore_combination_loop:
+    cmp rcx, [vector_size]
+    je .done_restore_combination
+
+    xor r14, r14
+    xor rbx, rbx
+
+.restore_combination_button:
+    cmp rbx, [matrix_height]
+    je .restore_combination_apply
+
+    bt r13, rbx
+    jnc .restore_combination_next
+
+    mov r12, rbx
+    shl r12, 10
+    add r14, [matrix + r12 + rcx * 8]
+
+.restore_combination_next:
+    inc rbx
+    jmp .restore_combination_button
+
+.restore_combination_apply:
+    add [vector + rcx * 8], r14
+    inc rcx
+    jmp .restore_combination_loop
+
+.done_restore_combination:
+    pop r14
+    pop r13
+    pop r12
+    pop rbx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Vector zero check 
+; Args: None 
+; Ret: 1 if vector is zero; 0 otherwise
+
+is_vector_zero:
+    xor rcx, rcx
+
+.zero_loop:
+    cmp rcx, [vector_size]
+    je .zero_true
+
+    cmp qword [vector + rcx*8], 0
+    jne .zero_false
+
+    inc rcx
+    jmp .zero_loop
+
+.zero_false:
+    xor rax, rax
+    ret
+
+.zero_true:
+    mov rax, 1
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Shift vector right
+; Args: None 
+; Ret: Divide all element of vector by 2
+
+shift_vector_right:
+    xor rcx, rcx
+
+.shift_right:
+    cmp rcx, [vector_size]
+    je .done_shift_right
+
+    shr qword [vector + rcx * 8], 1
+    inc rcx
+    jmp .shift_right
+
+.done_shift_right:
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Shift vector right
+; Args: None 
+; Ret: Multiply all element of vector by 2
+
+shift_vector_left:
+    xor rcx, rcx
+    
+.shift_left:
+    cmp rcx, [vector_size]
+    je .done_shift_left
+
+    shl qword [vector + rcx * 8], 1
+    inc rcx
+    jmp .shift_left
+
+.done_shift_left:
+    ret
+```
+
+`16063` is the fewest button presses required to correctly configure the joltage level counters on all of the machines.
+
+### Appendix 
+
+The solution for the second part took quite some time to run on my machine. Maybe it can be further optimized, but I will leave it like that for now.
+
+```bash
+time ./solve2
+16063
+./solve2  14.09s user 0.00s system 108% cpu 13.034 total
+```
+
+Later on, I found [this solution](https://www.reddit.com/r/adventofcode/comments/1pk87hl/2025_day_10_part_2_bifurcate_your_way_to_victory/) to be quite identical with our solution, but it is way more detailed than my explanation above. You can refer to the post to further understand the solving process for the second part of this challenge.

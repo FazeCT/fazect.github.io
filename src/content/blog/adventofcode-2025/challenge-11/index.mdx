@@ -1,0 +1,1679 @@
+---
+title: 'Advent of Code 2025 using x86 Assembly? Day 11: Reactor'
+description: 'A collection of writeups on ALL Advent of Code 2025 challenges using x86 Assembly.'
+date: 2025/12/13
+tags: ['writeup', 'programming']
+image: '../images/day11.jpg'
+authors: ['fazect']
+hidden: true
+tableOfContentsTitle: "Advent of Code 2025"
+tableOfContents:
+  - { depth: 3, slug: '/blog/adventofcode-2025#overview', text: 'Overview', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#preparation', text: 'Preparation', subheadings: [] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#challenges', text: 'Challenges', subheadings: [
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-1', text: 'Day 1: Secret Entrance', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-2', text: 'Day 2: Gift Shop', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-3', text: 'Day 3: Lobby', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-4', text: 'Day 4: Printing Department', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-5', text: 'Day 5: Cafeteria', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-6', text: 'Day 6: Trash Compactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-7', text: 'Day 7: Laboratories', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-8', text: 'Day 8: Playground', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-9', text: 'Day 9: Movie Theater', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-10', text: 'Day 10: Factory', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-11', text: 'Day 11: Reactor', subheadings: [] },
+      { depth: 3, slug: '/blog/adventofcode-2025/challenge-12', text: 'Day 12: Christmas Tree Farm', subheadings: [] }
+    ] }
+  - { depth: 2, slug: '/blog/adventofcode-2025#in-a-nutshell', text: 'In a nutshell', subheadings: [] }
+activeSlug: '/blog/adventofcode-2025/challenge-11'
+parentTitle: 'Advent of Code 2025 using x86 Assembly?'
+parentSlug: '/blog/adventofcode-2025'
+---
+
+## Day 11: Reactor
+
+### Part 1
+
+``` /apply/ /components/
+You hear some loud beeping coming from a hatch in the floor of the factory, so you decide to check it out. Inside, you find several large electrical conduits and a ladder.
+
+Climbing down the ladder, you discover the source of the beeping: a large, toroidal reactor which powers the factory above. Some Elves here are hurriedly running between the reactor and a nearby server rack, apparently trying to fix something.
+
+One of the Elves notices you and rushes over. "It's a good thing you're here! We just installed a new server rack, but we aren't having any luck getting the reactor to communicate with it!" You glance around the room and see a tangle of cables and devices running from the server rack to the reactor. She rushes off, returning a moment later with a list of the devices and their outputs (your puzzle input).
+
+For example:
+aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out
+
+Each line gives the name of a device followed by a list of the devices to which its outputs are attached. So, bbb: ddd eee means that device bbb has two outputs, one leading to device ddd and the other leading to device eee.
+
+The Elves are pretty sure that the issue isn't due to any specific device, but rather that the issue is triggered by data following some specific path through the devices. Data only ever flows from a device through its outputs; it can't flow backwards.
+
+After dividing up the work, the Elves would like you to focus on the devices starting with the one next to you (an Elf hastily attaches a label which just says you) and ending with the main output to the reactor (which is the device with the label out).
+
+To help the Elves figure out which path is causing the issue, they need you to find every path from you to out.
+
+In this example, these are all of the paths from you to out:
+- Data could take the connection from you to bbb, then from bbb to ddd, then from ddd to ggg, then from ggg to out.
+- Data could take the connection to bbb, then to eee, then to out.
+- Data could go to ccc, then ddd, then ggg, then out.
+- Data could go to ccc, then eee, then out.
+- Data could go to ccc, then fff, then out.
+
+In total, there are 5 different paths leading from you to out.
+
+How many different paths lead from you to out?
+```
+
+```text title="11/problem/input.txt" /apply/ /components/
+dfa: nbz qhk kzw
+nzm: ors
+coh: hvt mrm yvu
+grm: jon
+jcu: dco reg
+hgd: zum ets rml
+yqr: gbd you dev oki
+zia: fft gpd
+wgs: mwd
+rma: smb
+pfh: jgr
+kva: wkb elg
+ggl: qcf hvt
+egb: hzs dwx
+nwk: out
+owz: nwk abc
+loe: adu roz vis
+qdw: npt you dev
+esy: pbj gyu nph jeh
+fdg: ykn epk jau
+piz: dxz jbc swk
+bby: pxp
+qcf: enj qhf sav siy tbn ccn
+req: ckp lew
+you: vhr jzm onn muy wsz pba nqx chd uvn fgl leo tvv ajb
+epk: gbd npt dev oki
+ttu: hzs dwx weu dsm
+ajb: knu
+zis: owr wie sdo
+baz: icr xxa
+wof: hht wwo hpk
+yde: aha acu gob
+ugq: bpa
+gxo: muw gcw dca kja
+cnf: swk
+kby: spx suh ats
+qgt: php zqq jva pkm
+oeh: huq ahv gun van
+osl: qcf hvt yvu
+hya: gob szv aha ors acu
+vlc: lfr vfm xsh
+hqt: ptd nid
+ifl: yvu qcf
+nba: ddz hsk are wkt
+gob: xsh vfm lfr
+ckc: zia tub
+biu: qrc
+ekm: wgs mit
+oki: jcu nqx mok uvn pph pfh ajb tvv vhr onn avk jzm vcb muy pba qvl chd ssk leo dnj nno fgl wqz vyw wsz
+ytg: isi thh csk
+fwt: xzk guu obh
+ivc: xog
+pkm: xxa icr
+wux: qcf yvu hvt mrm
+yjo: spx
+zqq: xxa ptd icr
+scc: xsh
+jbc: bby grt
+ssk: ugq rhm
+epo: bgi avt vrq
+hmi: awf
+uhe: xog ble
+dla: yaa shj
+hok: ryk anu qqm mag zes uhe ygh kaj jif syl dla qdf nle vao udl dvq xil
+ors: lfr dhl xsh
+vrt: xsh lfr
+onn: wfl
+xhi: smb
+wol: nqc fga frw
+mfc: wyu hhq
+uku: obh xzk wcz
+vyw: ekm
+tmh: mrm
+lfr: lvh dly ibi yee ywp ksa ogz rog zph fks nnp qnp zsg drv
+vhh: dhl
+rhb: jur cgb
+ovf: dln bvr
+azm: vzw yfz osl bmb
+ken: vso ybh ifl ofa
+for: scc icp
+fuj: nmg zia dls
+scb: ijp ekw
+lme: mod ygu
+cev: til yox axf
+fks: red qip sda
+szv: vfm dhl xsh
+ygf: vnf xvj hgd
+ygu: icr ptd xxa
+zzz: qbf kik
+weh: out
+ljf: xvj ybc
+php: ptd nid
+wsx: rgq
+wnb: snh wct
+suh: vfm
+are: ilu
+qec: yuj lwk tso
+uys: vip
+guu: out
+nkj: loi jfl ejf
+ddw: asd yot owz
+tid: bgi qzw xiv
+dmu: kgk gxo ebz yaa
+ptd: der inq jwg piz klp qag mtj yyf emp foa fgy ift zii lwe ddd gbz
+qhv: dfd tnj vkj
+nmv: mwb vkj dfd
+isi: uba izt mdn xhi
+jau: npt gbd oki
+bhg: vas rnl ora pnt
+mcg: otw mfq
+wkr: dev oki npt gbd
+vis: oih
+kzw: jur
+wwo: ivg acz
+ykn: you oki dev
+oen: hvt
+dsu: ytg cim
+kzx: byq few btc rrz
+mrm: qgx tbn dsu kbc ccn rci crh neh wnb enj sav xur mfc azx qgu qiq qhf apg siy
+ucs: ead rhb
+swk: grt bby
+nvu: hvt qcf
+jon: vhh vlc
+few: out
+vgb: lfr dhl xsh
+gdd: hvt yvu
+osi: jvm zmz ddw
+thh: izt rma uba
+dys: wbu ucs bpf
+vso: hvt mrm qcf
+npt: wqz fgl nno dnj leo ssk chd wsz vyw tvv ajb pfh pph uvn mok jcu nqx biu qvl pba muy vcb jzm avk onn vhr
+dac: epk kbw jau
+izj: mea hmi
+qrc: jxk epv
+vaf: qgt
+ddd: bhg bcj
+pph: jgr rhm ugq
+nfh: qmt csk thh
+qdf: hyp
+ets: out
+xgk: dhl xsh
+boa: hpk hht
+ppr: wof
+ble: lht ugz bpr
+dyg: qmt
+dca: cpe eyi
+hjm: nep yya kik
+zes: hyp uzy
+vgl: hfm
+vkp: mgv iah
+vsh: cts xtl xsp
+rrz: out
+ckp: hsk ddz kqe
+mxe: yuj
+tre: luh
+paz: wwo
+luh: wcg
+bvv: vxi etm
+qzw: fri
+hht: vgl yjo acz kby
+itk: sdc alv tjv
+xyo: hpz axf yox yyn
+xkh: hhq zdi wyu qix
+kgk: muw
+mit: fsf mvk mwd
+qse: lqt lxh wil
+ofa: hvt mrm yvu qcf
+ior: icr ptd nid xxa
+syz: duo
+vrq: rxb pfk fri
+snh: hyg nop vaf sgh
+csk: uba rma izt mdn xhi
+dpw: jur zod
+xwy: lsk bbi
+mvk: tlo itk juq
+wbu: rhb
+otw: loi tcv
+gpd: vrt scc
+xog: ugz lht bpr bvv
+nbr: byq few
+hzt: wsx fms
+sda: tdh bye eif ggl
+byq: out
+gbd: uvn pph mok jcu nqx ajb tvv pfh onn avk jzm vhr pba qvl biu vcb muy chd ssk wqz leo nno dnj vyw wsz
+rhj: paz
+kaj: dfa zzp jky ost
+zsg: rwo sqf xyg
+reg: hoi epv
+oee: bne
+jha: gyu jeh
+chd: wfl
+yyf: poh zzz hjm
+wil: ahz
+dfd: oki you gbd npt
+mfj: bgi vrq xiv
+fri: vyd
+qvl: jgr
+oyd: vfm lfr dhl
+smg: oki dev you gbd
+bco: amy kzx
+ats: dhl vfm
+cqs: lfr
+tzw: oen gnu qxh gdd
+rwc: mrp jbc
+iwx: qlz bss awf
+dnj: reg qrc dco
+ibi: vrm elg
+dly: ykj qip sda
+jur: izj hfj tid epo ckc gwu eei syz tlb
+ast: php jva zqq uxg
+rnl: ngy eiq
+zzp: kzw hed lfk qhk
+nkp: tnj vkj
+viz: mvk
+hpz: ptd
+qip: eif bye
+rwo: pth
+mwb: gbd npt
+qiq: vsh vca
+prl: kzw lfk qhk
+flo: dhl lfr
+lkz: hhx
+siy: sce
+xtl: xlz guz
+kgu: qtw ura wkr smg bwf
+uun: out
+gyu: ldh ttu
+nep: mfq gvg
+bpr: qec etm mxe
+ltr: gbd npt oki dev
+svr: yxc gwm hok
+avk: sdn zpz vvt zhw
+xyg: krb wcg
+boh: nmv qhv nkp
+rgo: jdt rhb ead
+jva: xxa nid
+tni: nmg tub zia dls
+nei: vfm
+izd: mvp kgx scb sjc
+qpy: rwo sqf
+qtw: dev oki
+izt: lrw baz smb
+jdt: zod cgb jur
+ewt: iwx mea auv
+lwe: bcj
+qag: sjc
+hgv: osi bws hhx
+sce: sdo
+cts: guz hqt
+vzw: hvt mrm qcf
+lrw: nid icr xxa
+ivg: fzd suh spx
+gun: tzw eia
+ebz: muw kja
+abc: out
+apg: lkf vsh sif
+xlz: xxa nid ptd icr
+see: bmi
+sdn: bsl rob
+cai: van huq
+lrg: qtw bwf wkr smg
+vsy: gfb weh uun
+acu: vfm xsh
+bwf: gbd npt you dev oki
+sdo: nid ptd xxa
+mfp: qip
+dls: gpd fft
+nsc: ivf
+vhr: mxw dco
+ldh: dpw hzs weu
+vwg: paz
+yfz: hvt
+rci: nfh dyg nqt
+bbi: qcf mrm yvu
+xkj: weh
+juq: tjv alv sdc
+kqe: gik clq ilu
+jxk: bco
+inq: zzz hjm poh
+nqx: ekm aet uyh
+blj: ior mod rgi
+udl: jha var esy vqa zex
+mok: vvt sdn
+fsf: juq tlo hgf
+qwi: mwb dfd
+ora: ngy eiq
+sav: zis mbp
+axf: nid ptd
+kik: otw
+cxl: azm
+nbz: jur
+zmz: vkp okc owz
+zum: out
+eei: boa paz
+nhm: uun gfb
+shj: gcw
+sow: lsk
+byv: ybh ofa
+anu: isj xog
+tso: zod jur cgb
+xdr: osl vzw
+jky: hed kzw qhk nbz
+klc: xdr fol
+vas: eiq gys
+ykj: bye tdh
+dsm: zod jur cgb
+van: tzw azs fkq
+rux: bby grt mgw
+nnp: vrm wkb elg
+klp: kgx scb
+pth: coh jpj nvu wmz tmh
+ekw: fga frw
+xsh: fks mfp vlq kva kqb gtw drv qnp
+hyp: fvp nba lew
+hde: bvv bpr ugz
+weu: jur
+nmg: gpd
+yvu: crh ruf rci ccn xkh kbc dsu qgx tbn sav enj wnb neh azx mfc xur siy apg qhf qiq qgu
+nno: zpz zhw vvt
+gwu: dln bvr
+vlq: sqf rwo
+lxh: ahz lme blj
+bcj: vas
+kgx: ggc ekw wol
+tus: pkm php jva zqq
+fft: icp ymx vrt vgb scc
+ahv: eia azs tzw fkq
+hgf: esi tjv
+dhl: tre ibi fks lvh qpy cai kqb oeh ywp
+vcb: reg qrc dco mxw
+yuj: jur cgb
+emp: mvp
+nbj: obh wcz eot
+muw: mao cpe eyi ybf
+nvy: vso ifl ybh
+yvt: ljf llb eoc
+auv: dxq qlz awf
+jns: ucs
+smb: ptd
+icp: lfr vfm dhl
+lvh: vrm
+wct: hyg nop vaf
+foa: fms
+gik: jur zod
+ugz: etm
+hhq: dog xzr bne xyo
+qdc: eoc
+pnt: gys ngy
+hed: zod
+acz: fzd
+lqt: lme ahz
+ujd: qwi
+xiy: vso ybh ifl
+qlz: oyd nei cqs
+ssl: yvu
+jeh: egb ttu ldh
+wkw: vlc
+ubb: guz hqt
+dev: onn wsz vcb biu mok ssk uvn chd fgl nno dnj leo
+vca: xsp xtl cdb ubb
+uvn: zpz zhw vvt
+zph: zok yvz
+pyk: vhh
+hsk: clq gik
+kja: ybf cpe mao
+jgr: wkf bjz bpa yvt
+der: nkp
+kbw: dev you
+fkq: gdd qxh gnu
+ijq: sgh vaf
+dgy: uxg jva
+bss: wfz flo oyd
+avt: fri pfk grm rxb
+bne: axf
+yya: nkj
+xur: sce mbp
+mxw: hoi epv
+qhd: lxh
+eot: out
+rml: out
+huq: fkq azs tzw
+ost: hed kzw qhk nbz
+fgy: scb
+jif: xog isj hde
+azx: dyg cim nfh ytg
+wqz: wfl loe
+uxg: nid xxa
+zok: lsk bbi
+fbt: uun gfb
+xiv: hsb
+icr: pyl inq cnf boh hzt gbz klp piz aoz pkd
+qbf: nkj otw mfq
+qmt: uba
+rgq: gys
+bpf: jdt
+llb: vnf ybc
+vvt: bsl
+gys: you oki gbd npt
+yyn: ptd nid xxa
+adu: oih
+owr: nid icr ptd xxa
+xil: hde ble
+ybc: rml ets zum
+cdb: xlz hqt guz
+rva: guu obh wcz
+yvz: wux
+mkh: fwt nbj
+gtd: xgk vlc
+vkj: oki dev gbd
+qhf: zis
+fka: adu uys vis
+til: ptd icr xxa
+pkd: bhg wsx bcj
+jzm: aet ekm
+jbt: req
+knu: hhx bws
+syl: zex esy var jha
+clq: cgb
+qix: xyo xzr cev
+yee: xwy sow zok
+zdi: dog
+ddz: gik clq
+qhk: cgb jur
+tbn: qhd qys qse
+vfm: qpy fks zph ogz nnp oeh qnp gtw drv lvh ibi dly ywp yee cai
+bjz: eoc ljf llb
+xpa: njk nbr hcw
+lus: eia
+dln: hya
+uba: lrw
+iah: out
+mfq: ltr ejf
+ura: dev you npt
+ygh: zzp dfa prl ost
+sif: xtl xsp cts cdb ubb
+nid: der jwg pyl inq klp piz izd pkd boh hzt emp mtj qag fgy see foa rwc lwe aoz ift gbz ddd
+fga: yqr qdw caw uud
+ift: qhv nkp
+dfi: gfb weh
+ogz: sow zok xwy yvz
+pfk: wkw pyk jon gtd
+alv: out
+leo: fka
+fzd: xsh lfr vfm
+uyh: wgs viz mit
+vxi: tso lwk
+wkf: ygf eoc ljf
+ywp: lus
+loi: you oki dev
+bsl: mkh jmw
+qys: lxh
+xzr: yyn hpz axf yox
+spx: xsh
+mbp: owr wie
+wkt: gik
+qgu: ijq
+rhm: bjz wkf qdc
+gvg: ltr tcv jfl loi
+obh: out
+bpa: llb ygf
+oih: nhm dfi vsy
+ymx: vfm lfr xsh
+lsk: yvu
+nqt: isi qmt
+hcw: few rrz btc
+wcz: out
+sqf: wcg pth krb
+ruf: wct ijq snh
+tdh: qcf hvt yvu
+rob: mkh ivf
+wcg: jpj nvu wmz coh
+fvp: ddz kqe are
+eoc: xvj
+sdc: out
+saq: fol
+lkf: xsp xtl cts ubb
+muy: aet ekm
+ijp: fga
+grt: lrg
+poh: qbf kik mcg
+nph: ttu
+ryk: zex
+qnp: cxl
+zii: swk mrp jbc rux
+jvm: asd owz
+etm: lwk tso yuj
+hoi: bco xpa kqt
+duo: yde nzm
+bmi: epk
+azs: gdd qxh
+zod: tni hfj rhj ewt pma dbc syz fuj gwu epo vwg
+dxq: oyd nei cqs flo wfz
+lcw: kbw epk jau
+gcw: cpe
+hpk: yjo kby vgl ivg
+nqc: qdw uud yqr
+mdn: lrw smb baz
+hhx: jvm zmz
+sxj: out
+hvt: dsu qiq nvm apg ruf
+dwx: jur zod
+pba: hgv lkz
+tnj: npt gbd dev oki you
+esa: yya mcg
+jmw: uku nud nbj
+isj: bvv lht
+ybf: jur
+eyi: jur cgb zod
+hyg: scl tus
+wmz: yvu qcf
+bye: qcf yvu mrm
+red: ggl eif tdh ssl
+ggc: nqc
+fym: gxo shj kgk ebz
+mgv: out
+tlo: esi tjv
+lwk: zod
+aoz: zzz hjm esa poh
+gwm: anu ryk dmu qqm uhe zes dys jif kaj jbt qdf dla jns dvq fym vao ivc udl
+gtw: vrm wkb
+sgh: tus dgy
+ilu: zod jur cgb
+dbc: iwx hmi
+ybz: lxh wil
+xvj: zum
+hfj: zia
+krb: nvu
+vqa: pbj nph
+yaa: muw kja dca gcw
+elg: ken byv
+btc: out
+hsb: gtd vyd pyk
+scl: jva
+jwg: bmi fdg lcw dac
+bvr: yde hya
+cgb: fuj vwg ban tlb eei dbc syz ovf pma hfj ndm ckc gwu tid epo mfj ewt izj ppr rhj tni
+hzs: cgb
+rxb: vyd wkw jon gtd
+awf: nei wfz flo
+ahz: rgi mod ygu
+kqt: hcw amy njk
+cim: csk thh
+vnf: ets
+bmb: qcf
+nvm: ybz qhd
+mtj: dac lcw bmi
+caw: npt
+njk: btc rrz few byq
+mea: qlz
+rgi: icr
+ejf: you gbd npt
+ivf: rva uku nbj
+lfk: zod jur cgb
+bnb: nhm fbt
+mwd: juq hgf
+vip: xkj vsy nhm
+pxp: qtw bwf ura wkr smg
+mrp: bby mgw
+qgx: hhq oee qix
+wfz: xsh
+ybh: hvt mrm
+tjv: out
+kbc: sif vca vsh lkf
+eia: gnu gdd
+xxa: jwg ujd pyl inq boh piz izd pkd fgy foa emp yyf mtj qag gbz ddd aoz ift zii
+gnu: qcf mrm
+aha: vfm xsh
+pbj: ldh ttu
+neh: oee wyu qix hhq
+fms: rnl
+gbz: poh zzz
+wkb: nvy ken byv xiy
+tcv: gbd npt oki dev you
+uud: you oki dev npt gbd
+asd: nwk abc
+pma: tub
+nop: scl dgy qgt ast
+ead: zod
+utv: owz yot okc asd
+tub: fft gpd for
+esi: out
+nud: eot
+roz: vip bnb
+bgi: grm fri
+nle: zex vqa
+eiq: dev you
+jpj: hvt qcf
+yot: abc iah mgv
+zex: jeh gyu pbj
+ndm: dln duo
+zhw: pka
+wyu: xzr
+qqm: req hyp uzy
+epv: kqt
+dco: epv
+qxh: qcf hvt mrm yvu
+tlb: wof paz boa
+dvq: jha zex esy
+wie: ptd
+yox: icr
+ksa: van gun ahv huq
+skr: mrm hvt
+mao: cgb
+ban: auv mea hmi
+frw: uud qdw
+vao: prl zzp dfa
+zpz: rob bsl nsc pka
+vyd: xgk
+eif: mrm yvu qcf
+cpe: zod jur
+aet: viz
+enj: snh
+dxz: mgw
+mvp: ekw wol ggc
+var: nph gyu
+mgw: lrg pxp kgu
+lht: vxi qec etm
+mag: ucs wbu rgo
+pyl: nkp qwi nmv
+drv: klc cxl saq
+mod: nid icr xxa
+amy: rrz byq
+dog: yox
+wfl: vis uys
+bws: utv jvm
+wsz: ekm uyh
+tvv: wfl
+yxc: ryk dmu anu qqm uhe mag jbt jif qdf jns ivc fym dvq nle xil
+hfm: vfm lfr dhl
+crh: qse qys
+kqb: cxl saq
+okc: sxj iah mgv abc
+fol: skr yfz osl
+xsp: xlz guz
+sjc: ekw ijp
+pka: mkh ivf jmw
+rog: zok xwy yvz
+guz: xxa ptd icr
+ngy: dev oki you npt gbd
+xzk: out
+gfb: out
+fgl: lkz knu hgv
+vrm: nvy xiy
+jfl: gbd npt oki you
+ccn: qse
+lew: ddz
+uzy: lew ckp nba
+```
+
+In this problem, we can treat the input as a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph). We will use graph traversal techniques to find out how many possible paths to go from `you` to `out`.
+
+A hard part is to save the graph vertices, edges and create an adjacency matrix.
+
+For each graph node (a string consists of three characters), we assign an index for it. Thus, we mimic a map-like structure with key being the string and value being the ID.
+
+```asm title="11/solution/get_node_id.asm" showLineNumbers{1} /apply/ /components/
+section .bss
+    node_names resq 2000
+    node_count resq 1
+
+; ----------------------------------------------------------------------
+; Component: Get node ID
+; Args: rdi
+; Ret: Find existing node/Append new node -> Return corresponding index
+
+get_node_id:
+    xor rcx, rcx
+    mov rdx, [node_count]
+
+.search:
+    cmp rcx, rdx
+    je .add_new
+
+    cmp [node_names + rcx*8], rdi
+    je .found
+
+    inc rcx
+    jmp .search
+
+.add_new:
+    mov [node_names + rcx*8], rdi
+    inc qword [node_count]
+    mov rax, rcx
+    ret
+
+.found:
+    mov rax, rcx
+    ret
+```
+
+Now, for the adjacency matrix, we call the `get_node_id` method for each of the neighbours of one node, then insert it into a buffer. Make sure the index is scaled perfectly (think of it as a matrix but in a flattened format).
+
+```asm
+section .bss
+    adj_matrix resw 2000 * 64 
+    adj_counts resb 2000
+
+; rbx = ID of current node
+; loop the following code for each neighbour 
+; ...
+mov r8, rbx
+shl r8, 7 ; this is because each row of matrix can contain at most 64 words (of two bytes each, obviously)
+
+movzx rcx, byte [adj_counts + rbx]
+cmp rcx, 64
+jge check_next
+
+mov word [adj_matrix + r8 + rcx * 2], dx
+add byte [adj_counts + rbx], 1
+; ...
+```
+
+For the solution, observe that this graph is **directed**, hence we have a claim: For each node, the amount of paths that can reach the current node will be equal to the total paths of all its neighbours. That is, for instance if the current node can be reached **five** times, the neighbours of this node will also be reached **five** times in total.
+
+This is crucial for solving our problem, as we can adapt the above observation to build our recursive solution. We implement a function named `count_path` that receives the current node and:
+- If it is the end node (target), return 1.
+- If the current node is not in the graph, return 0.
+- Else: Return the sum of `count_path(each neighbour of the current node)`.
+
+```asm title="11/solution/count_path.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Count Paths
+; Args: rdi
+; Ret: 1 if current = "out"; 0 otherwise. total_parent += count_path(children)
+
+count_paths:
+    push rbx
+    push r12
+    push r13
+
+    cmp rdi, [id_end]
+    jne .start_recursion
+
+    mov rax, 1
+    jmp .done
+
+.start_recursion:
+    xor r12, r12
+    
+    movzx rcx, byte [adj_counts + rdi]
+    test rcx, rcx
+    jz .dead_end
+
+    mov rbx, rdi
+    shl rbx, 7
+    lea r13, [adj_matrix + rbx]
+
+.loop_neighbors:
+    push rcx
+    push rdi
+    
+    movzx rdi, word [r13]
+    add r13, 2
+    
+    call count_paths
+    add r12, rax
+
+    pop rdi
+    pop rcx
+    dec rcx
+    jnz .loop_neighbors
+
+    mov rax, r12
+    jmp .done
+
+.dead_end:
+    mov rax, 0
+
+.done:
+    pop r13
+    pop r12
+    pop rbx
+    ret
+```
+
+With every piece connected together, we have this working script.
+
+```asm title="11/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+
+    node_names resq 2000
+    node_count resq 1
+
+    adj_matrix resw 2000 * 64 
+    adj_counts resb 2000
+    
+    id_start resq 1
+    id_end resq 1
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the lines and process them one by one
+    mov rsi, input
+    mov qword [node_count], 0
+
+reader:
+    cmp byte [rsi], 0
+    je parsing_done
+
+    call read_token
+    mov rdi, rax
+    call get_node_id
+    mov rbx, rax
+
+    call skip_token
+
+read_neighbors:
+    cmp byte [rsi], 10
+    je line_done
+
+    cmp byte [rsi], 0
+    je parsing_done
+
+    call read_token
+    test rax, rax
+    jz check_next
+
+    mov rdi, rax
+    call get_node_id
+    mov rdx, rax
+
+    mov r8, rbx
+    shl r8, 7
+    
+    movzx rcx, byte [adj_counts + rbx]
+    cmp rcx, 64
+    jge check_next
+
+    mov word [adj_matrix + r8 + rcx * 2], dx
+    add byte [adj_counts + rbx], 1
+
+check_next:
+    cmp byte [rsi], ' '
+    je skip_space_continue
+    cmp byte [rsi], 10
+    je line_done
+    jmp read_neighbors
+
+skip_space_continue:
+    inc rsi
+    jmp read_neighbors
+
+line_done:
+    inc rsi
+    jmp reader
+
+parsing_done:
+    ; you
+    mov rdi, 0x756F79
+    call find_id
+    mov [id_start], rax
+
+    ; out
+    mov rdi, 0x74756F
+    call find_id
+    mov [id_end], rax
+
+    mov rdi, [id_start]
+    call count_paths
+
+    ; Print result to stdout
+    mov rdi, rax
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Read Token/Read Node Name
+; Args: rsi
+; Ret: Return alphanumeric tokens from rsi to rsi + 2 inclusive
+
+read_token:
+    xor rax, rax
+    xor rcx, rcx
+
+.read_token_loop:
+    movzx rdx, byte [rsi]
+    shl rdx, cl
+    or rax, rdx
+    
+    add rcx, 8
+    inc rsi
+    cmp rcx, 24
+    jl .read_token_loop
+
+.read_token_done:
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Skip token
+; Args: rsi
+; Ret: Skip some tokens (:, space)
+
+skip_token:
+.skip_token_loop:
+    cmp byte [rsi], ' '
+    je .skip_token_next
+    cmp byte [rsi], ':'
+    je .skip_token_next
+    ret
+
+.skip_token_next:
+    inc rsi
+    jmp .skip_token_loop
+
+; ----------------------------------------------------------------------
+; Component: Get node ID
+; Args: rdi
+; Ret: Find existing node/Append new node -> Return corresponding index
+
+get_node_id:
+    xor rcx, rcx
+    mov rdx, [node_count]
+
+.search:
+    cmp rcx, rdx
+    je .add_new
+
+    cmp [node_names + rcx*8], rdi
+    je .found
+
+    inc rcx
+    jmp .search
+
+.add_new:
+    mov [node_names + rcx*8], rdi
+    inc qword [node_count]
+    mov rax, rcx
+    ret
+
+.found:
+    mov rax, rcx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Find ID by hex value
+; Args: rdi
+; Ret: index of the input node (in hex)
+
+find_id:
+    xor rcx, rcx
+    mov rdx, [node_count]
+
+.find_id_search:
+    cmp [node_names + rcx*8], rdi
+    je .done_find_id
+    inc rcx
+    jmp .find_id_search
+
+.done_find_id:
+    mov rax, rcx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Count Paths
+; Args: rdi
+; Ret: 1 if current = "out"; 0 otherwise. total_parent += count_path(children)
+
+count_paths:
+    push rbx
+    push r12
+    push r13
+
+    cmp rdi, [id_end]
+    jne .start_recursion
+
+    mov rax, 1
+    jmp .done
+
+.start_recursion:
+    xor r12, r12
+    
+    movzx rcx, byte [adj_counts + rdi]
+    test rcx, rcx
+    jz .dead_end
+
+    mov rbx, rdi
+    shl rbx, 7
+    lea r13, [adj_matrix + rbx]
+
+.loop_neighbors:
+    push rcx
+    push rdi
+    
+    movzx rdi, word [r13]
+    add r13, 2
+    
+    call count_paths
+    add r12, rax
+
+    pop rdi
+    pop rcx
+    dec rcx
+    jnz .loop_neighbors
+
+    mov rax, r12
+    jmp .done
+
+.dead_end:
+    mov rax, 0
+
+.done:
+    pop r13
+    pop r12
+    pop rbx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret
+```
+
+There will be `555` paths that start from `you` and finish on `out`.
+
+### Part 2
+
+``` /apply/ /components/
+Thanks in part to your analysis, the Elves have figured out a little bit about the issue. They now know that the problematic data path passes through both dac (a digital-to-analog converter) and fft (a device which performs a fast Fourier transform).
+
+They're still not sure which specific path is the problem, and so they now need you to find every path from svr (the server rack) to out. However, the paths you find must all also visit both dac and fft (in any order).
+
+For example:
+svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out
+
+This new list of devices contains many paths from svr to out:
+- svr,aaa,fft,ccc,ddd,hub,fff,ggg,out
+- svr,aaa,fft,ccc,ddd,hub,fff,hhh,out
+- svr,aaa,fft,ccc,eee,dac,fff,ggg,out
+- svr,aaa,fft,ccc,eee,dac,fff,hhh,out
+- svr,bbb,tty,ccc,ddd,hub,fff,ggg,out
+- svr,bbb,tty,ccc,ddd,hub,fff,hhh,out
+- svr,bbb,tty,ccc,eee,dac,fff,ggg,out
+- svr,bbb,tty,ccc,eee,dac,fff,hhh,out
+
+However, only 2 paths from svr to out visit both dac and fft.
+
+Find all of the paths that lead from svr to out. How many of those paths visit both dac and fft?
+```
+
+In the second part, we are required to calculate the amount of paths from `svr` to `out` that also visit `dac` and `fft`.
+
+We can divide the group of paths into two subgroups:
+- `svr` -> `dac` -> `fft` -> `out`
+- `svr` -> `fft` -> `dac` -> `out`
+
+Recall that the given graph is **directed**, we can apply Combinatorics' **Rule of Product** to calculate the amount of paths for complicated routes. 
+
+Consider an example where we have to count paths from `x` -> `y` -> `z`, the amount of paths from `x` to `z` that pass `y` is equal to total paths from `x` to `y`, multiply by total paths from `y` to `z`.
+
+Which means, our problem is solved when we are able to calculate:
+
+$$ 
+count\_path(svr, dac) \cdot count\_path(dac, fft) \cdot count\_path(fft, out)
+$$
+
+$$ 
++ 
+$$
+
+$$ 
+count\_path(svr, fft) \cdot count\_path(fft, dac) \cdot count\_path(dac, out) 
+$$
+
+*(fact: one of `count_path(fft, dac)` or `count_path(dac, fft)` will be 0. Explain yourself why?)*
+
+It is pretty easy to update our previous solution to solve the second part, as we only have to tweak the script a bit to call `count_path` eight times and perform the above expression.
+
+However, our previous setup will most likely fail due to the very large number of paths that will clog the recursive function. For example, there are a whopping `207021583630500079` paths that lead from `svr` to `out`, and with our current implementation, most likely one path will be calculated multiple times.
+
+We will have to implement a `cache` for the recursive function - one that works like [@cache](https://www.datacamp.com/tutorial/python-cache-introduction) decorator from Python functools.
+
+Each time the `count_path` is called for a specific path, the returned result is stored into the `cache`. For each subsequent invocation that involves the same path, the function returns the stored result within the `cache`.
+
+```asm title="11/solution/solve_path.asm" showLineNumbers{1} /apply/ /components/
+section .bss
+    cache resq 2000
+
+; ----------------------------------------------------------------------
+; Component: Solve path
+; Args: rdi, rsi
+; Ret: count_path(rdi -> rsi)
+
+solve_path:
+    call find_id
+    mov [id_start], rax
+
+    mov rdi, rsi
+    call find_id
+    mov [id_end], rax
+
+    mov rcx, 2000
+    mov rdi, cache
+    mov rax, -1
+    rep stosq
+
+    mov rdi, [id_start]
+    call count_paths
+    ret
+```
+
+```asm title="11/solution/count_path.asm" showLineNumbers{1} /apply/ /components/
+; ----------------------------------------------------------------------
+; Component: Count Paths
+; Args: rdi
+; Ret: 1 if current = "out"; 0 otherwise. total_parent += count_path(children)
+
+count_paths:
+    push rbx
+    push r12
+    push r13
+
+    mov rax, [cache + rdi*8]​;[!code ++]
+    cmp rax, -1​;[!code ++]
+    jne .return_cache​;[!code ++]
+​;[!code ++]
+    cmp rdi, [id_end]
+    jne .start_recursion
+
+    mov rax, 1
+    jmp .done ​;[!code --]
+    jmp .save_cache​;[!code ++]
+
+.start_recursion:
+    xor r12, r12
+    
+    movzx rcx, byte [adj_counts + rdi]
+    test rcx, rcx
+    jz .dead_end
+
+    mov rbx, rdi
+    shl rbx, 7
+    lea r13, [adj_matrix + rbx]
+
+.loop_neighbors:
+    push rcx
+    push rdi
+    
+    movzx rdi, word [r13]
+    add r13, 2
+    
+    call count_paths
+    add r12, rax
+
+    pop rdi
+    pop rcx
+    dec rcx
+    jnz .loop_neighbors
+
+    mov rax, r12
+    jmp .done​;[!code --]
+    jmp .save_cache​;[!code ++]
+
+.dead_end:
+    mov rax, 0
+
+.done:​;[!code --]
+.save_cache:​;[!code ++]
+    mov [cache + rdi*8], rax​;[!code ++]
+​;[!code ++]
+.return_cache:​;[!code ++]
+    pop r13
+    pop r12
+    pop rbx
+    ret
+```
+
+With this change, we obtain the fully working solution for the second part.
+
+```asm title="11/solution/solve.asm" showLineNumbers{1} /apply/ /components/
+section .data
+    filename db "../problem/input.txt", 0
+
+section .bss
+    input resb 100000
+    output resb 20
+
+    node_names resq 2000
+    node_count resq 1
+
+    adj_matrix resw 2000 * 64 
+    adj_counts resb 2000
+
+    cache resq 2000   
+
+    id_start resq 1
+    id_end resq 1
+
+section .text
+    global _start
+
+_start:
+    ; Open input file 
+    mov rax, 2
+    mov rdi, filename 
+    xor rsi, rsi
+    xor rdx, rdx
+    syscall
+    mov rbx, rax
+
+    ; Read input file 
+    xor rax, rax
+    mov rdi, rbx 
+    mov rsi, input
+    mov rdx, 100000
+    syscall
+
+    ; Close the file
+    mov rax, 3
+    mov rdi, rbx
+    syscall
+
+    ; Split the lines and process them one by one
+    mov rsi, input
+    mov qword [node_count], 0
+
+reader:
+    cmp byte [rsi], 0
+    je parsing_done
+
+    call read_token
+    mov rdi, rax
+    call get_node_id
+    mov rbx, rax
+
+    call skip_token
+
+read_neighbors:
+    cmp byte [rsi], 10
+    je line_done
+
+    cmp byte [rsi], 0
+    je parsing_done
+
+    call read_token
+    test rax, rax
+    jz check_next
+
+    mov rdi, rax
+    call get_node_id
+    mov rdx, rax
+
+    mov r8, rbx
+    shl r8, 7
+    
+    movzx rcx, byte [adj_counts + rbx]
+    cmp rcx, 64
+    jge check_next
+
+    mov word [adj_matrix + r8 + rcx * 2], dx
+    add byte [adj_counts + rbx], 1
+
+check_next:
+    cmp byte [rsi], ' '
+    je skip_space_continue
+    cmp byte [rsi], 10
+    je line_done
+    jmp read_neighbors
+
+skip_space_continue:
+    inc rsi
+    jmp read_neighbors
+
+line_done:
+    inc rsi
+    jmp reader
+
+parsing_done:
+    mov r10, 1
+    mov r11, 1
+
+    ; svr -> dac
+    mov rdi, 0x727673
+    mov rsi, 0x636164
+    call solve_path
+
+    mul r10
+    mov r10, rax
+
+    ; dac -> fft
+    mov rdi, 0x636164
+    mov rsi, 0x746666
+    call solve_path
+
+    mul r10
+    mov r10, rax
+
+    ; fft -> out
+    mov rdi, 0x746666
+    mov rsi, 0x74756f
+    call solve_path
+
+    mul r10
+    mov r10, rax
+
+    ; svr -> fft
+    mov rdi, 0x727673
+    mov rsi, 0x746666
+    call solve_path
+
+    mul r11
+    mov r11, rax
+
+    ; fft -> dac
+    mov rdi, 0x746666
+    mov rsi, 0x636164
+    call solve_path
+
+    mul r11
+    mov r11, rax
+
+    ; dac -> out
+    mov rdi, 0x636164
+    mov rsi, 0x74756f
+    call solve_path
+
+    mul r11
+    mov r11, rax
+
+    add r10, r11 
+    
+    ; Print result to stdout
+    mov rdi, r10
+    call print_int
+
+    ; Exit the program
+    mov rax, 60
+    xor rdi, rdi
+    syscall
+
+; ----------------------------------------------------------------------
+; Component: Solve path
+; Args: rdi, rsi
+; Ret: count_path(rdi -> rsi)
+
+solve_path:
+    call find_id
+    mov [id_start], rax
+
+    mov rdi, rsi
+    call find_id
+    mov [id_end], rax
+
+    mov rcx, 2000
+    mov rdi, cache
+    mov rax, -1
+    rep stosq
+
+    mov rdi, [id_start]
+    call count_paths
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Read Token/Read Node Name
+; Args: rsi
+; Ret: Return alphanumeric tokens from rsi to rsi + 2 inclusive
+
+read_token:
+    xor rax, rax
+    xor rcx, rcx
+
+.read_token_loop:
+    movzx rdx, byte [rsi]
+    shl rdx, cl
+    or rax, rdx
+    
+    add rcx, 8
+    inc rsi
+    cmp rcx, 24
+    jl .read_token_loop
+
+.read_token_done:
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Skip token
+; Args: rsi
+; Ret: Skip some tokens (:, space)
+
+skip_token:
+.skip_token_loop:
+    cmp byte [rsi], ' '
+    je .skip_token_next
+    cmp byte [rsi], ':'
+    je .skip_token_next
+    ret
+
+.skip_token_next:
+    inc rsi
+    jmp .skip_token_loop
+
+; ----------------------------------------------------------------------
+; Component: Get node ID
+; Args: rdi
+; Ret: Find existing node/Append new node -> Return corresponding index
+
+get_node_id:
+    xor rcx, rcx
+    mov rdx, [node_count]
+
+.search:
+    cmp rcx, rdx
+    je .add_new
+
+    cmp [node_names + rcx*8], rdi
+    je .found
+
+    inc rcx
+    jmp .search
+
+.add_new:
+    mov [node_names + rcx*8], rdi
+    inc qword [node_count]
+    mov rax, rcx
+    ret
+
+.found:
+    mov rax, rcx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Find ID by hex value
+; Args: rdi
+; Ret: index of the input node (in hex)
+
+find_id:
+    xor rcx, rcx
+    mov rdx, [node_count]
+
+.find_id_search:
+    cmp [node_names + rcx*8], rdi
+    je .done_find_id
+    inc rcx
+    jmp .find_id_search
+
+.done_find_id:
+    mov rax, rcx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Count Paths
+; Args: rdi
+; Ret: 1 if current = "out"; 0 otherwise. total_parent += count_path(children)
+
+count_paths:
+    push rbx
+    push r12
+    push r13
+
+    mov rax, [cache + rdi*8]
+    cmp rax, -1
+    jne .return_cache
+
+    cmp rdi, [id_end]
+    jne .start_recursion
+
+    mov rax, 1
+    jmp .save_cache
+
+.start_recursion:
+    xor r12, r12
+    
+    movzx rcx, byte [adj_counts + rdi]
+    test rcx, rcx
+    jz .dead_end
+
+    mov rbx, rdi
+    shl rbx, 7
+    lea r13, [adj_matrix + rbx]
+
+.loop_neighbors:
+    push rcx
+    push rdi
+    
+    movzx rdi, word [r13]
+    add r13, 2
+    
+    call count_paths
+    add r12, rax
+
+    pop rdi
+    pop rcx
+    dec rcx
+    jnz .loop_neighbors
+
+    mov rax, r12
+    jmp .save_cache
+
+.dead_end:
+    mov rax, 0
+
+.save_cache:
+    mov [cache + rdi*8], rax
+
+.return_cache:
+    pop r13
+    pop r12
+    pop rbx
+    ret
+
+; ----------------------------------------------------------------------
+; Component: Print Integer
+; Args: rdi
+
+print_int:
+    mov rax, rdi
+    mov rcx, output
+    add rcx, 19
+    mov byte [rcx], 10
+    mov rbx, 10
+
+.loop:
+    dec rcx
+    xor rdx, rdx
+    div rbx
+    add dl, '0'
+    mov [rcx], dl
+    test rax, rax
+    jnz .loop
+
+    ; Calculate length
+    mov rdx, output
+    add rdx, 20
+    sub rdx, rcx
+
+    ; Print
+    mov rax, 1
+    mov rdi, 1
+    mov rsi, rcx
+    syscall
+    ret 
+```
+
+There are a total of `502447498690860` paths that go from `svr` to `out`, while also come across `dac` and `fft`.
