@@ -23,7 +23,7 @@ const blog = (await getCollection('blog'))
 <Layout title="Home" description={SITE.DESCRIPTION}>
   <Container class="flex flex-col gap-y-6">
     <section>
-      <Card>
+      <Card className="border-primary/40 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.2)]">
         <CardHeader>
           <CardTitle className="text-3xl">blog</CardTitle>
           <CardDescription

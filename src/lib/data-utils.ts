@@ -1,5 +1,6 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content'
 import { readingTime, calculateWordCountFromHtml } from '@/lib/utils'
+import { getEntry } from 'astro:content'
 
 export async function getAllPostsAndSubposts(): Promise<
   CollectionEntry<'blog'>[]
@@ -9,7 +10,6 @@ export async function getAllPostsAndSubposts(): Promise<
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
-
 
 export async function getPostById(
   postId: string,
@@ -74,4 +74,60 @@ export async function getCombinedReadingTime(postId: string): Promise<string> {
   }
 
   return readingTime(totalWords)
+}
+
+export async function parseAuthors(authors: string[]) {
+  if (!authors || authors.length === 0) return []
+
+  const parseAuthor = async (id: string) => {
+    try {
+      const author = await getEntry('authors', id)
+      return {
+        id,
+        name: author?.data?.name || id,
+        avatar: author?.data?.avatar || '/static/ayaka.jpg',
+        isRegistered: !!author,
+      }
+    } catch (error) {
+      console.error(`Error fetching author with id ${id}:`, error)
+      return {
+        id,
+        name: id,
+        avatar: '/static/ayaka.jpg',
+        isRegistered: false,
+      }
+    }
+  }
+
+  return await Promise.all(authors.map(parseAuthor))
+}
+
+export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
+  const posts = await getCollection('blog')
+  return posts
+    .filter((post) => !post.data.draft && !isSubpost(post.id))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
+export async function getAllTags(): Promise<Map<string, number>> {
+  const posts = await getAllPosts()
+  return posts.reduce((acc, post) => {
+    post.data.tags?.forEach((tag) => {
+      acc.set(tag, (acc.get(tag) || 0) + 1)
+    })
+    return acc
+  }, new Map<string, number>())
+}
+
+
+export async function getSortedTags(): Promise<
+  { tag: string; count: number }[]
+> {
+  const tagCounts = await getAllTags()
+  return [...tagCounts.entries()]
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => {
+      const countDiff = b.count - a.count
+      return countDiff !== 0 ? countDiff : a.tag.localeCompare(b.tag)
+    })
 }

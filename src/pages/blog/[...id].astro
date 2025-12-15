@@ -4,11 +4,11 @@ import Link from '@/components/Link.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import TableOfContentsPrebuilt from '@/components/TableOfContentsPrebuilt.astro'
-import { badgeVariants } from '@/components/ui/badge'
+import Badge from '@/components/Badge.astro'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
-import { parseAuthors } from '@/lib/server-utils'
+import { parseAuthors } from '@/lib/data-utils'
 import { formatDate } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
@@ -178,21 +178,15 @@ const subpostCount = await getSubpostCount(currentPostId)
               </div>
             </div>
             <div class="flex flex-wrap justify-center gap-2">
-              {post.data.tags?.length ? (
-                post.data.tags.map((tag: string) => (
-                  <a
-                    href={`/tags/${tag}`}
-                    class={badgeVariants({ variant: 'secondary' })}
-                  >
-                    <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
-                    {tag}
-                  </a>
-                ))
-              ) : (
-                <span class="text-sm text-muted-foreground">
-                  No tags available
-                </span>
-              )}
+              {
+                post.data.tags &&
+                  post.data.tags.length > 0 &&
+                  post.data.tags.map((tag) => (
+                    <Link href={`/tags/${tag}`}>
+                      <Badge text={tag} />
+                    </Link>
+                  ))
+              }
             </div>
           </div>
         )

@@ -1,12 +1,13 @@
 ---
+import Badge from '@/components/Badge.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
-import { badgeVariants } from '@/components/ui/badge'
 import Layout from '@/layouts/Layout.astro'
-import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
+import { getSortedTags } from '@/lib/data-utils'
 
+const sortedTags = await getSortedTags()
 const blog = (await getCollection('blog')).filter(
   (post) => !post.data.draft && !post.data.hidden,
 )
@@ -24,15 +25,14 @@ const tags = blog
       <h1 class="text-3xl font-semibold">Tags</h1>
       <div class="flex flex-wrap gap-2">
         {
-          tags.map((tag) => (
-            <Link
-              href={`/tags/${tag}`}
-              class={badgeVariants({ variant: 'secondary' })}
-            >
-              <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
+          sortedTags.map(({ tag, count }) => (
+          <Link href={`/tags/${tag}`}>
+            <Badge text={tag}>
               {tag}
-            </Link>
-          ))
+              <span class="text-muted-foreground ml-1.5">({count})</span>
+            </Badge>
+          </Link>
+        ))
         }
       </div>
     </div>
