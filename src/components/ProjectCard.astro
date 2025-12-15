@@ -1,6 +1,6 @@
 ---
 import Link from '@/components/Link.astro'
-import { Badge } from '@/components/ui/badge'
+import Badge from '@/components/Badge.astro'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 
@@ -43,9 +43,7 @@ const { project } = Astro.props
         project.data.tags && (
           <div class="flex flex-wrap gap-2">
             {project.data.tags.map((tag: string) => (
-              <Badge variant="secondary" showHash={false}>
-                {tag}
-              </Badge>
+              <Badge text={tag} />
             ))}
           </div>
         )
