@@ -62,10 +62,13 @@ const projects = defineCollection({
     z.object({
       name: z.string(),
       description: z.string(),
+      authors: z.array(z.string()).optional(),
       tags: z.array(z.string()),
-      image: image(),
-      link: z.string().url(),
+      image: image().optional(),
+      link: z.string().url().optional(),
       order: z.number().optional(),
+      draft: z.boolean().optional(),
+      hidden: z.boolean().optional(),
     }),
 })
 

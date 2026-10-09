@@ -2,23 +2,32 @@
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
 import Layout from '@/layouts/Layout.astro'
-import { Icon } from 'astro-icon/components'
 import { type CollectionEntry, getCollection } from 'astro:content'
 
 type BlogPost = CollectionEntry<'blog'>
+type Project = CollectionEntry<'projects'>
 
 type Props = {
   tag: string
   posts: BlogPost[]
+  projects: Project[]
 }
 
-const { tag, posts } = Astro.props
+const { tag, posts, projects } = Astro.props
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog')
+  const allProjects = await getCollection('projects')
   const posts = allPosts.filter((post) => !post.data.draft && !post.data.hidden)
-  const tags = posts.flatMap((post) => post.data.tags || [])
+  const projects = allProjects.filter(
+    (project) => !project.data.draft && !project.data.hidden,
+  )
+  const tags = [
+    ...posts.flatMap((post) => post.data.tags || []),
+    ...projects.flatMap((project) => project.data.tags || []),
+  ]
   const uniqueTags = Array.from(
     new Set(tags.filter((tag): tag is string => typeof tag === 'string')),
   )
@@ -28,14 +37,15 @@ export async function getStaticPaths() {
     props: {
       tag,
       posts: posts.filter((post) => post.data.tags?.includes(tag)),
+      projects: projects.filter((project) => project.data.tags?.includes(tag)),
     },
   }))
 }
 ---
 
 <Layout
-  title={`Posts tagged with "${tag}"`}
-  description={`A collection of posts tagged with ${tag}.`}
+  title={`Content tagged with "${tag}"`}
+  description={`A collection of posts and projects tagged with ${tag}.`}
 >
   <Container class="flex flex-col gap-y-6">
     <Breadcrumbs
@@ -46,17 +56,33 @@ export async function getStaticPaths() {
     />
     <div class="flex flex-col gap-y-4">
       {
-        posts.map((post) => (
+        posts.length > 0 && (
           <section class="flex flex-col gap-y-4">
-            <div>
-              <ul class="not-prose flex flex-col gap-4">
+            <h1 class="text-2xl font-semibold">Posts</h1>
+            <ul class="not-prose flex flex-col gap-4">
+              {posts.map((post) => (
                 <li>
                   <BlogCard entry={post} />
                 </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </section>
-        ))
+        )
+      }
+
+      {
+        projects.length > 0 && (
+          <section class="flex flex-col gap-y-4">
+            <h2 class="text-2xl font-semibold">Projects</h2>
+            <ul class="not-prose flex flex-col gap-4">
+              {projects.map((project) => (
+                <li>
+                  <ProjectCard entry={project} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
       }
     </div>
   </Container>

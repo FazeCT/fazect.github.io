@@ -1,0 +1,123 @@
+---
+import Badge from '@/components/Badge.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Link from '@/components/Link.astro'
+import TableOfContents from '@/components/TableOfContents.astro'
+import AvatarComponent from '@/components/ui/avatar'
+import { Separator } from '@/components/ui/separator'
+import Layout from '@/layouts/Layout.astro'
+import { parseAuthors } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+
+type Props = CollectionEntry<'projects'>
+
+export async function getStaticPaths() {
+  const projects = await getCollection(
+    'projects',
+    ({ data }) => !data.draft && !data.hidden,
+  )
+
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: project,
+  }))
+}
+
+const project = Astro.props
+const { Content, headings } = await render(project)
+const authors = await parseAuthors(project.data.authors ?? [])
+---
+
+<Layout
+  title={project.data.name}
+  description={project.data.description}
+  image={project.data.image?.src ?? '/static/twitter-card.png'}
+>
+  <section
+    class="grid grid-cols-[minmax(0px,1fr)_min(768px,100%)_minmax(0px,1fr)] gap-y-6 *:px-4"
+  >
+    <Breadcrumbs
+      items={[
+        { href: '/projects', label: 'Projects', icon: 'lucide:archive' },
+        { label: project.data.name, icon: 'lucide:file-text' },
+      ]}
+      class="col-start-2"
+    />
+
+    {
+      project.data.image && (
+        <div class="col-span-full mx-auto w-full max-w-[1000px]">
+          <Image
+            src={project.data.image}
+            alt={project.data.name}
+            width={1200}
+            height={630}
+            class="rounded-xl object-cover"
+          />
+        </div>
+      )
+    }
+
+    <section class="col-start-2 flex flex-col gap-y-6">
+      <div class="flex flex-col gap-y-4 text-center">
+        <h1 class="text-pretty text-3xl font-bold tracking-tight sm:text-4xl">
+          {project.data.name}
+        </h1>
+        <p class="text-muted-foreground">{project.data.description}</p>
+        <div
+          class="flex flex-wrap items-center justify-center gap-x-2 gap-y-2 text-sm text-muted-foreground"
+        >
+          {
+            authors.map((author) => (
+              <div class="flex items-center gap-x-1.5">
+                <AvatarComponent
+                  client:load
+                  src={author.avatar}
+                  alt={author.name}
+                  fallback={author.name[0]}
+                  className="size-5 rounded-full"
+                />
+                <span>{author.name}</span>
+              </div>
+            ))
+          }
+          {authors.length > 0 && project.data.link && (
+            <Separator orientation="vertical" className="h-4" />
+          )}
+          {
+            project.data.link && (
+              <Link
+                href={project.data.link}
+                class="flex items-center gap-1 hover:text-foreground"
+                external
+              >
+                <Icon name="lucide:external-link" class="size-4" />
+                Project link
+              </Link>
+            )
+          }
+        </div>
+        {
+          project.data.tags && (
+            <div class="flex flex-wrap justify-center gap-2">
+              {project.data.tags.map((tag) => (
+                <Badge text={tag} />
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+    </section>
+
+    {headings.length > 0 && <TableOfContents headings={headings} />}
+
+    <article
+      class="prose prose-neutral col-start-2 max-w-none dark:prose-invert [&>:first-child>*]:mt-0"
+    >
+      <Content />
+    </article>
+  </section>
+</Layout>

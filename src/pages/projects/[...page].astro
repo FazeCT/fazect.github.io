@@ -1,0 +1,63 @@
+---
+import ProjectCard from '@/components/ProjectCard.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+import Container from '@/components/Container.astro'
+import PaginationComponent from '@/components/ui/pagination'
+import { SITE } from '@/consts'
+import Layout from '@/layouts/Layout.astro'
+import type { PaginateFunction } from 'astro'
+import { type CollectionEntry, getCollection } from 'astro:content'
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction
+}) {
+  const allProjects = await getCollection(
+    'projects',
+    ({ data }) => !data.draft && !data.hidden,
+  )
+  return paginate(
+    allProjects.sort((a, b) => {
+      const orderDiff = (a.data.order ?? 0) - (b.data.order ?? 0)
+      if (orderDiff !== 0) return orderDiff
+
+      return a.data.name.localeCompare(b.data.name)
+    }),
+    { pageSize: SITE.POSTS_PER_PAGE },
+  )
+}
+
+const { page } = Astro.props
+const projects = page.data as CollectionEntry<'projects'>[]
+---
+
+<Layout title="Projects" description="Projects">
+  <Container class="flex grow flex-col gap-y-6">
+    <Breadcrumbs
+      items={[
+        { label: 'Projects', href: '/projects', icon: 'lucide:archive' },
+        { label: `Page ${page.currentPage}`, icon: 'lucide:folder-open' },
+      ]}
+    />
+
+    <div class="flex min-h-[calc(100vh-18rem)] flex-col gap-y-8">
+      <ul class="not-prose flex flex-col gap-4">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard entry={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <PaginationComponent
+      currentPage={page.currentPage}
+      totalPages={page.lastPage}
+      baseUrl="/projects/"
+      client:load
+    />
+  </Container>
+</Layout>

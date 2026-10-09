@@ -4,20 +4,12 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
 import Layout from '@/layouts/Layout.astro'
-import { getCollection } from 'astro:content'
 import { getSortedTags } from '@/lib/data-utils'
 
 const sortedTags = await getSortedTags()
-const blog = (await getCollection('blog')).filter(
-  (post) => !post.data.draft && !post.data.hidden,
-)
-
-const tags = blog
-  .flatMap((post) => post.data.tags)
-  .filter((tag, index, self) => self.indexOf(tag) === index)
 ---
 
-<Layout title="Tags" description="A list of all tags used in blog posts">
+<Layout title="Tags" description="A list of all tags used in posts and projects">
   <Container class="flex flex-col gap-y-6">
     <Breadcrumbs items={[{ label: 'Tags', icon: 'lucide:tags' }]} />
 

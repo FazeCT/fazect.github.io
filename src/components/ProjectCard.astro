@@ -1,30 +1,35 @@
 ---
-import Link from '@/components/Link.astro'
+import { Icon } from 'astro-icon/components'
+import AvatarComponent from '@/components/ui/avatar'
 import Badge from '@/components/Badge.astro'
+import { Separator } from '@/components/ui/separator'
+import { parseAuthors } from '@/lib/data-utils'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
+import Link from './Link.astro'
 
 type Props = {
-  project: CollectionEntry<'projects'>
+  entry: CollectionEntry<'projects'>
 }
 
-const { project } = Astro.props
+const { entry } = Astro.props as {
+  entry: CollectionEntry<'projects'>
+}
+
+const authors = await parseAuthors(entry.data.authors ?? [])
 ---
 
-<div
-  class="not-prose rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
->
+<div class="not-prose rounded-xl border p-4 transition-all duration-300 ease-in-out hover:bg-secondary/50 border-primary/40 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.2)]">
   <Link
-    href={project.data.link}
+    href={`/${entry.collection}/${entry.id}`}
     class="flex flex-col gap-4 sm:flex-row"
-    external
   >
     {
-      project.data.image && (
+      entry.data.image && (
         <div class="max-w-[200px] sm:flex-shrink-0">
           <Image
-            src={project.data.image}
-            alt={project.data.name}
+            src={entry.data.image}
+            alt={entry.data.name}
             width={1200}
             height={630}
             class="object-cover"
@@ -34,15 +39,42 @@ const { project } = Astro.props
     }
     <div class="flex-grow">
       <h3 class="mb-1 text-lg font-semibold">
-        {project.data.name}
+        {entry.data.name}
       </h3>
       <p class="mb-2 text-sm text-muted-foreground">
-        {project.data.description}
+        {entry.data.description}
       </p>
+      <div
+        class="mb-2 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"
+      >
+        {
+          authors.length > 0 && (
+            <>
+              {authors.map((author) => (
+                <div class="flex items-center gap-x-1.5">
+                  <AvatarComponent
+                    client:load
+                    src={author.avatar}
+                    alt={author.name}
+                    fallback={author.name[0]}
+                    className="size-5 rounded-full"
+                  />
+                  <span>{author.name}</span>
+                </div>
+              ))}
+              <Separator orientation="vertical" className="h-4" />
+            </>
+          )
+        }
+        <span class="flex items-center gap-1">
+          <Icon name="lucide:file-text" class="size-3" />
+          Details
+        </span>
+      </div>
       {
-        project.data.tags && (
+        entry.data.tags && (
           <div class="flex flex-wrap gap-2">
-            {project.data.tags.map((tag: string) => (
+            {entry.data.tags.map((tag) => (
               <Badge text={tag} />
             ))}
           </div>

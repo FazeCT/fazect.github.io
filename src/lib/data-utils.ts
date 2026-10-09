@@ -1,4 +1,4 @@
-import { getCollection, render, type CollectionEntry } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 import { readingTime, calculateWordCountFromHtml } from '@/lib/utils'
 import { getEntry } from 'astro:content'
 
@@ -105,14 +105,31 @@ export async function parseAuthors(authors: string[]) {
 export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog')
   return posts
-    .filter((post) => !post.data.draft && !isSubpost(post.id))
+    .filter(
+      (post) => !post.data.draft && !post.data.hidden && !isSubpost(post.id),
+    )
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+}
+
+export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
+  const projects = await getCollection('projects')
+  return projects
+    .filter((project) => !project.data.draft && !project.data.hidden)
+    .sort((a, b) => {
+      const orderDiff = (a.data.order ?? 0) - (b.data.order ?? 0)
+      if (orderDiff !== 0) return orderDiff
+
+      return a.data.name.localeCompare(b.data.name)
+    })
 }
 
 export async function getAllTags(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
-  return posts.reduce((acc, post) => {
-    post.data.tags?.forEach((tag) => {
+  const projects = await getAllProjects()
+  const entries = [...posts, ...projects]
+
+  return entries.reduce((acc, entry) => {
+    entry.data.tags?.forEach((tag) => {
       acc.set(tag, (acc.get(tag) || 0) + 1)
     })
     return acc
