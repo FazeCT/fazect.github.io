@@ -132,9 +132,10 @@ const subpostCount = await getSubpostCount(currentPostId)
                           height={24}
                           class="rounded-full"
                         />
-                        {author.isRegistered ? (
+                        {author.href ? (
                           <Link
-                            href={`/authors/${author.id}`}
+                            href={author.href}
+                            external={!author.isRegistered}
                             underline
                             class="text-foreground"
                           >

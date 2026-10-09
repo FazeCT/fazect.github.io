@@ -79,7 +79,18 @@ const authors = await parseAuthors(project.data.authors ?? [])
                   fallback={author.name[0]}
                   className="size-5 rounded-full"
                 />
-                <span>{author.name}</span>
+                {author.href ? (
+                  <Link
+                    href={author.href}
+                    external={!author.isRegistered}
+                    underline
+                    class="text-foreground"
+                  >
+                    <span>{author.name}</span>
+                  </Link>
+                ) : (
+                  <span>{author.name}</span>
+                )}
               </div>
             ))
           }

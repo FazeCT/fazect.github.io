@@ -79,21 +79,38 @@ export async function getCombinedReadingTime(postId: string): Promise<string> {
 export async function parseAuthors(authors: string[]) {
   if (!authors || authors.length === 0) return []
 
+  const externalAuthors: Record<
+    string,
+    { name: string; avatar: string; href: string }
+  > = {
+    nganhkhoa: {
+      name: 'nganhkhoa',
+      avatar: 'https://avatars.githubusercontent.com/u/29661303?s=256&v=4',
+      href: 'https://github.com/nganhkhoa',
+    },
+  }
+
   const parseAuthor = async (id: string) => {
     try {
       const author = await getEntry('authors', id)
+      const externalAuthor = externalAuthors[id]
+
       return {
         id,
-        name: author?.data?.name || id,
-        avatar: author?.data?.avatar || '/static/ayaka.jpg',
+        name: author?.data?.name || externalAuthor?.name || id,
+        avatar:
+          author?.data?.avatar || externalAuthor?.avatar || '/static/ayaka.jpg',
+        href: author ? `/authors/${id}` : externalAuthor?.href,
         isRegistered: !!author,
       }
     } catch (error) {
+      const externalAuthor = externalAuthors[id]
       console.error(`Error fetching author with id ${id}:`, error)
       return {
         id,
-        name: id,
-        avatar: '/static/ayaka.jpg',
+        name: externalAuthor?.name || id,
+        avatar: externalAuthor?.avatar || '/static/ayaka.jpg',
+        href: externalAuthor?.href,
         isRegistered: false,
       }
     }
