@@ -9,22 +9,21 @@ link: 'https://github.com/FazeCT/1-patch'
 
 ## Introduction
 
-This work introduces [1-patch](https://github.com/FazeCT/1-patch), a static binary patcher that demonstrates the usage of patches written in high-level programming languages in patching binaries. Currently, it supports C, and works with patching x86-64 ELF binaries. 
+This work introduces [1-patch](https://github.com/FazeCT/1-patch), a static binary patcher that demonstrates how high-level patch code can be used to modify binaries. It currently supports C patches for x86-64 ELF binaries.
 
 ## Methodology
 
-Normally, binary patches are made by either inline replacing with new code, or binary lifting to insert new instructions. This work aims to leverage a technique called *code insertion/injection* to insert user-written C code into the binary.
+This work uses *code insertion/injection* to insert user-written C code directly into an existing binary, instead of relying only on traditional binary patching techniques such as inline replacement or binary lifting.
 
-For a new item (global variable/function) to be added to the binary, sufficient regions in the binary are needed to contain them. Merging happens between components such as relocation table and GOT/PLT between the original code and the integrated code. New sections and segments could be created just in case.
+When a new element, such as a global variable or function, is added to the binary, the tool first identifies sufficient space to contain the inserted code and data. If existing regions are insufficient, new sections or segments may be created. The inserted object is then integrated with the original binary by merging relevant components, including relocation entries and GOT/PLT information.
 
-To completely replace a global variable or a function, **every reference** that points to the original element must be diverted to point to the new definition. The tool operates a linear scan to detect all read/write reference (in case of a global variable) and all `call/jmp` instructions (in case of a function).
+The tool supports patch code that references existing global variables and functions in the original binary. It also supports calls to functions from external libraries, allowing inserted C patches to interact naturally with both the original program and linked libraries.
 
-The tool also attempts to place a *trampoline* `jmp` (if possible) in place of the original function to redirect the flow to the fixed function. This is solely utilized for catching indirect calls that we cannot scan for.
+To completely replace an existing global variable or function, **every reference** to the original definition must be redirected to the new one. For global variables, the tool performs a linear scan to detect read and write references. For functions, it scans for direct `call` and `jmp` instructions and rewrites them to target the replacement function.
 
-**Then why don't we just install a trampoline and ignore the references change?** That is because, the rely-on-trampoline solution is not guaranteed to be always applicable. For instance, an *n*-byte `jmp` cannot be installed properly if the length of the original code
-is smaller than *n* - as an example, a `ret` stub function. 
+In addition to reference patching, the tool also attempts to install a *trampoline* `jmp` in place of the original function to redirect control flow to the fixed function when possible. This is used solely to catch indirect calls that cannot be discovered through linear scanning. **However, the tool cannot rely solely on trampolines and completely ignore reference patching.** A trampoline is not always installable because the original function may be too small to contain the required jump instruction. For example, a stub function consisting only of `ret` may not provide enough bytes for an `n`-byte `jmp`. Therefore, reference rewriting is still required even when trampoline insertion succeeds.
 
-The trampoline insertion also skips over `endbr64` to retain the usability of [CET](https://hacktricks.wiki/en/binary-exploitation/common-binary-protections-and-bypasses/cet-and-shadow-stack.html) in a binary, if the protection exists. And since `endbr64` is treated as a `nop` in a non-CET binary, `-fcf-protection=full` is safely enabled by default when compiling C patches.
+The trampoline insertion skips over `endbr64` to preserve the usability of [CET](https://hacktricks.wiki/en/binary-exploitation/common-binary-protections-and-bypasses/cet-and-shadow-stack.html) in a binary, if the protection exists. Because `endbr64` behaves as a `nop` when CET is not enabled, C patches are compiled with `-fcf-protection=full` by default.
 
 Consider the following case where the `main()` function at 0x11C6 needs to be replaced:
 
@@ -34,13 +33,140 @@ Consider the following case where the `main()` function at 0x11C6 needs to be re
 ![](images/target.png)
 </div>
 
-The diagrams illustrate **simplified** *reference graphs* of the compiled code from the C patch and the target binary, respectively (yes, dynamically linked functions/methods are also strongly supported by the tool).
+The diagrams illustrate **simplified** *reference graphs* of the compiled code from the C patch and the target binary, respectively.
 
 <div class="mx-auto w-1/2">
     ![](images/output.png)
 </div>
 
-In the final reference graph of the patched binary, the yellow node represents the new component (new `main()` definition) that was replaced from the patch binary. The dashed arrow lines indicate the references that were patched during the integration process, connecting the newly merged components with the existing symbols in the target binary.
+In the final reference graph of the patched binary, the yellow node represents the inserted component, namely the replacement `main()` definition from the patch binary. The dashed arrow lines indicate the references that were patched during the integration process, connecting the newly merged components with the existing symbols in the target binary.
+
+## Quick example
+
+This example patches [CVE-2025-3198](https://vuldb.com/submit/545773), a memory leak affecting GNU Binutils 2.43 and 2.44. The issue is located in `display_info()`, implemented in `binutils/bucomm.c` and used by the `objdump` component.
+
+To reproduce the vulnerable build, this example uses the source tree at commit `57f3676f3e5266829a91880d61143ab9ecd617bd`.
+
+```c caption="Vulnerable display_info() function of binutils/bucomm.c, decompiled" showLineNumbers{1} /apply/ /components/
+__int64 display_info()
+{
+  _BYTE v1[8]; // [rsp+0h] [rbp-30h] BYREF
+  unsigned int v2; // [rsp+8h] [rbp-28h]
+  unsigned __int64 v3; // [rsp+28h] [rbp-8h]
+
+  v3 = __readfsqword(0x28u);
+  printf("BFD header file version %s\n", "(GNU Binutils) 2.43");
+  display_target_list(v1);
+  if ( !v2 )
+    display_target_tables(v1);
+  return v2;
+}
+```
+
+```c caption="Vulnerable display_info() function of binutils/bucomm.c, source code" showLineNumbers{1} /apply/ /components/
+int display_info (void)
+{
+  struct display_target arg;
+  printf (_("BFD header file version %s\n"), BFD_VERSION_STRING);
+  display_target_list (&arg);
+  if (!arg.error) 
+    display_target_tables (&arg);
+  return arg.error;
+}
+```
+
+The leak can be confirmed with [Valgrind](https://valgrind.org) by running `objdump` through memcheck.
+
+```bash caption="" /apply/ /components/
+valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./objdump -a -Zi - > /dev/null
+```
+
+<div class="mx-auto">
+    ![](images/before.png)
+</div>
+
+Valgrind reports a *definitely lost* leak of 12,288 bytes originating from `display_info()`.
+
+The fix introduced in commit `ba6ad3a18cb26b79e0e3b84c39f707535bbc344d` releases the allocated target information by calling `free(arg.info)` before `display_info()` returns.
+
+```c caption="C patch for display_info()" showLineNumbers{1} /apply/ /components/
+#include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+enum { BFD_ARCH_LAST = 0x57, BFD_ARCH_OBSCURE = 0x1 };
+
+struct display_target {
+  char *filename;
+  int error;
+  int count;
+  size_t alloc;
+  struct {
+    const char *name;
+    unsigned char arch[BFD_ARCH_LAST - BFD_ARCH_OBSCURE - 1];
+  } *info;
+};
+
+const char ref_0x230A90_gnu_binutils_version[];
+const char ref_0x230AA4_bfd_version[];
+
+void ref_0xB4724_display_target_list(struct display_target *arg) {};
+void ref_0xB4971_display_target_tables(const struct display_target *arg) {};
+
+int fix_0xB4B0E_display_info() {
+    struct display_target arg;
+
+    printf(ref_0x230AA4_bfd_version, ref_0x230A90_gnu_binutils_version);
+
+    ref_0xB4724_display_target_list(&arg);
+    if (!arg.error)
+        ref_0xB4971_display_target_tables(&arg);
+    
+    // Patch: free the allocated target information
+    free(arg.info);
+    return arg.error;
+}
+```
+
+The patch reconstructs `display_info()` by referencing symbols that already exist in the target binary. It keeps the original behavior, then adds `free(arg.info)` so the heap allocation is released before returning.
+
+After applying the patch, the leak disappears from the Valgrind report.
+
+<div class="mx-auto">
+    ![](images/after.png)
+</div>
+
+```c caption="Fixed reference from main() to new display_info(), decompiled" showLineNumbers{1} /apply/ /components/
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  // ...
+  if ( formats_info )
+  {
+    exit_status = display_info_0();
+  }
+}
+```
+```c caption="Trampoline installed successfully in original display_info(), decompiled" showLineNumbers{1} /apply/ /components/
+__int64 display_info()
+{
+  return display_info_0();
+}
+```
+```c caption="Fixed display_info(), decompiled" showLineNumbers{1} /apply/ /components/
+__int64 display_info_0()
+{
+  _BYTE v1[8]; // [rsp+0h] [rbp-20h] BYREF
+  unsigned int v2; // [rsp+8h] [rbp-18h]
+  __int64 v3; // [rsp+18h] [rbp-8h]
+
+  sub_351010("BFD header file version %s\n", "(GNU Binutils) 2.43");
+  display_target_list(v1);
+  if ( !v2 )
+    display_target_tables(v1);
+  sub_351000(v3); // dynamically resolved to free()
+  return v2;
+}
+```
 
 ## Installation
 
@@ -106,13 +232,13 @@ and pass its containing directory as `-DLIEF_DIR=<dir_here>`.
 ./1-patch -p PATCH_CODE -i TARGET_BINARY -o OUTPUT_BINARY [OPTIONS]
 ```
 
-In which, `PATCH_CODE` is the path to the C patch, while `TARGET_BINARY` is the path to the binary that should be patched and `OUTPUT_BINARY` (optional) is the path to the output binary. 
+Here, `PATCH_CODE` is the path to the C patch, while `TARGET_BINARY` is the path to the binary that should be patched and `OUTPUT_BINARY` (optional) is the path to the output binary. 
 
 `-h/--help` and `-v/--verbose` are also available.
 
 ### Patch syntax
 
-Three prefixes are introduced to write patches: `add_`, `ref_` and `fix_`.
+Three prefixes are used to write patches: `add_`, `ref_` and `fix_`.
 
 ```c caption="" showLineNumbers{1} /apply/ /components/
 int add_var1 = 1;
@@ -126,7 +252,7 @@ volatile int fix_0x11C6 () {
 };
 ```
 
-`add_` (usage: `add_[identifier]`) is used in case a new global variable or a function needs to be added to the binary.
+`add_` (usage: `add_[identifier]`) is used when a new global variable or function needs to be added to the binary.
 
 `ref_` (usage: `ref_[virtual address]_[identifier]`) is used when an existing global variable or a function in the binary needs to be reused in the patch code.
 
@@ -138,7 +264,7 @@ For more details, patch examples can be accessed [here](https://github.com/FazeC
 
 ### External methods
 
-In case a dynamically linked method needs to be invoked in the patch (for example, `printf()`), there are two options:
+In case a dynamically linked function needs to be invoked in the patch (for example, `printf()`), there are two options:
 
 - Include the corresponding library and use the method.
 
@@ -150,7 +276,7 @@ int fix_0x11C6 () {
 };
 ```
 
-- Declare the method with `ref_` and their virtual address in the target binary, and use the method. This only works when the method is already imported in the binary (obviously).
+- Declare the function with `ref_` and its virtual address in the target binary, and use the method. This only works when the method is already imported in the binary.
 
 ```c caption="" showLineNumbers{1} /apply/ /components/
 int ref_0x5FEC0_printf(const char *format, ...) {};
@@ -164,12 +290,12 @@ int fix_0x11C6 () {
 
 Refer to [this example for patching objdump](https://github.com/FazeCT/1-patch/tree/main/examples/objdump/objdump_patch.c) for more information.
 
-## Licenses
+## License
 
 This work is protected under [MIT License](https://github.com/FazeCT/1-patch/blob/main/LICENSE).
 
 ## Extra Information
 
-This work was my Computer Science Bachelor's thesis in Ho Chi Minh City University of Technology (late 2024).
+This work was developed as my Computer Science Bachelor's thesis at Ho Chi Minh City University of Technology in late 2024.
 
-This work was based on [CRISPR](https://www.politesi.polimi.it/handle/10589/177822) by Filippo Cremonese @ Politecnico di Milano and [Redback](https://groundx.io/redback/) by Quynh Nguyen Anh @ Blackhat Asia 2020.
+This work builds on ideas from [CRISPR](https://www.politesi.polimi.it/handle/10589/177822) by Filippo Cremonese @ Politecnico di Milano and [Redback](https://groundx.io/redback/) by Quynh Nguyen Anh @ Blackhat Asia 2020.
