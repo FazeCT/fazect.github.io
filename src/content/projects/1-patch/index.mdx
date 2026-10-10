@@ -14,13 +14,15 @@ This work introduces [1-patch](https://github.com/FazeCT/1-patch), a static bina
 
 ## Methodology
 
-This work uses *code insertion/injection* to insert user-written C code directly into an existing binary, instead of relying only on traditional binary patching techniques such as inline replacement or binary lifting.
+This work uses *code insertion/injection* to insert user-written C code directly into an existing binary.
 
 When a new element, such as a global variable or function, is added to the binary, the tool first identifies sufficient space to contain the inserted code and data. If existing regions are insufficient, new sections or segments may be created. The inserted object is then integrated with the original binary by merging relevant components, including relocation entries and GOT/PLT information.
 
 The tool supports patch code that references existing global variables and functions in the original binary. It also supports calls to functions from external libraries, allowing inserted C patches to interact naturally with both the original program and linked libraries.
 
-To completely replace an existing global variable or function, **every reference** to the original definition must be redirected to the new one. For global variables, the tool performs a linear scan to detect read and write references. For functions, it scans for direct `call` and `jmp` instructions and rewrites them to target the replacement function.
+In case the new implementation of a global variable or function could be safely installed in place of the original element in respect of the size constraint, the tool operates in-place patching to directly replace the original code.
+
+If in-place patching cannot be used, to completely replace an existing global variable or function, **every reference** to the original definition must be redirected to the new one being placed in new sections/segments. For global variables, the tool performs a linear scan to detect read and write references. For functions, it scans for direct `call` and `jmp` instructions and rewrites them to target the replacement function.
 
 In addition to reference patching, the tool also attempts to install a *trampoline* `jmp` in place of the original function to redirect control flow to the fixed function when possible. This is used solely to catch indirect calls that cannot be discovered through linear scanning. **However, the tool cannot rely solely on trampolines and completely ignore reference patching.** A trampoline is not always installable because the original function may be too small to contain the required jump instruction. For example, a stub function consisting only of `ret` may not provide enough bytes for an `n`-byte `jmp`. Therefore, reference rewriting is still required even when trampoline insertion succeeds.
 
