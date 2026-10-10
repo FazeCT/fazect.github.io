@@ -16,7 +16,7 @@ This work introduces [1-patch](https://github.com/FazeCT/1-patch), a static bina
 
 This work uses *code insertion/injection* to insert user-written C code directly into an existing binary.
 
-When a new element, such as a global variable or function, is added to the binary, the tool first identifies sufficient space to contain the inserted code and data. If existing regions are insufficient, new sections or segments may be created. The inserted object is then integrated with the original binary by merging relevant components, including relocation entries and GOT/PLT information.
+When a new element, such as a global variable or function, is added to the binary, the tool first identifies sufficient space to contain the inserted code and data. If existing regions are insufficient, new sections or segments may be created. The inserted object is then integrated with the original binary by merging relevant components, including relocation entries and GOT/PLT information. GOT entries in the original binary are automatically reused by the patched function if semantics match.
 
 The tool supports patch code that references existing global variables and functions in the original binary. It also supports calls to functions from external libraries, allowing inserted C patches to interact naturally with both the original program and linked libraries.
 
@@ -162,7 +162,7 @@ __int64 display_info_0()
   unsigned int v2; // [rsp+8h] [rbp-18h]
   __int64 v3; // [rsp+18h] [rbp-8h]
 
-  sub_351010("BFD header file version %s\n", "(GNU Binutils) 2.43"); // dynamically resolved to printf()
+  printf("BFD header file version %s\n", "(GNU Binutils) 2.43"); // reused printf@GOT
   display_target_list(v1);
   if ( !v2 )
     display_target_tables(v1);
