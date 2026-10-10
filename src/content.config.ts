@@ -62,6 +62,7 @@ const projects = defineCollection({
     z.object({
       name: z.string(),
       description: z.string(),
+      keywords: z.array(z.string()).optional(),
       authors: z.array(z.string()).optional(),
       tags: z.array(z.string()),
       image: image().optional(),

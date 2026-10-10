@@ -15,64 +15,239 @@ const { entry } = Astro.props as {
 }
 
 const authors = await parseAuthors(entry.data.authors ?? [])
+
+const getGithubLanguagesUrl = (link?: string) => {
+  if (!link) return undefined
+
+  try {
+    const url = new URL(link)
+    if (!['github.com', 'www.github.com'].includes(url.hostname)) {
+      return undefined
+    }
+
+    const [owner, repo] = url.pathname.split('/').filter(Boolean)
+    if (!owner || !repo) return undefined
+
+    return `https://api.github.com/repos/${owner}/${repo.replace(/\.git$/, '')}/languages`
+  } catch {
+    return undefined
+  }
+}
+
+const githubLanguagesUrl = getGithubLanguagesUrl(entry.data.link)
 ---
 
 <div class="not-prose rounded-xl border p-4 transition-all duration-300 ease-in-out hover:bg-secondary/50 border-primary/40 shadow-[0_0_15px_-3px_hsl(var(--primary)/0.2)]">
   <Link
     href={`/${entry.collection}/${entry.id}`}
-    class="flex flex-col gap-4 sm:flex-row"
+    class="block"
   >
-    {
-      entry.data.image && (
-        <div class="max-w-[200px] sm:flex-shrink-0">
-          <Image
-            src={entry.data.image}
-            alt={entry.data.name}
-            width={1200}
-            height={630}
-            class="object-cover"
-          />
-        </div>
-      )
-    }
-    <div class="flex-grow">
-      <h3 class="mb-1 text-lg font-semibold">
-        {entry.data.name}
-      </h3>
-      <p class="mb-2 text-sm text-muted-foreground">
-        {entry.data.description}
-      </p>
-      <div
-        class="mb-2 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"
-      >
-        {
-          authors.length > 0 && (
-            <>
-              {authors.map((author) => (
-                <div class="flex items-center gap-x-1.5">
-                  <AvatarComponent
-                    client:load
-                    src={author.avatar}
-                    alt={author.name}
-                    fallback={author.name[0]}
-                    className="size-5 rounded-full"
-                  />
-                  <span>{author.name}</span>
-                </div>
-              ))}
-            </>
-          )
-        }
-      </div>
+    <div class="flex flex-col gap-4 sm:flex-row">
       {
-        entry.data.tags && (
-          <div class="flex flex-wrap gap-2">
-            {entry.data.tags.map((tag) => (
-              <Badge text={tag} />
-            ))}
+        entry.data.image && (
+          <div class="flex max-w-[200px] flex-col gap-2 sm:flex-shrink-0">
+            <Image
+              src={entry.data.image}
+              alt={entry.data.name}
+              width={1200}
+              height={630}
+              class="object-cover"
+            />
+            {
+              entry.data.keywords && (
+                <div class="flex flex-col items-end gap-1">
+                  {entry.data.keywords.map((keyword) => (
+                    <Badge
+                      showIcon={false}
+                      className="bg-muted text-muted-foreground dark:bg-muted dark:text-muted-foreground"
+                    >
+                      # {keyword}
+                    </Badge>
+                  ))}
+                </div>
+              )
+            }
           </div>
         )
       }
+      <div class="flex-grow">
+        <h3 class="mb-1 text-lg font-semibold">
+          {entry.data.name}
+        </h3>
+        <p class="mb-2 text-sm text-muted-foreground">
+          {entry.data.description}
+        </p>
+        <div
+          class="mb-2 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"
+        >
+          {
+            authors.length > 0 && (
+              <>
+                {authors.map((author) => (
+                  <div class="flex items-center gap-x-1.5">
+                    <AvatarComponent
+                      client:load
+                      src={author.avatar}
+                      alt={author.name}
+                      fallback={author.name[0]}
+                      className="size-5 rounded-full"
+                    />
+                    <span>{author.name}</span>
+                  </div>
+                ))}
+              </>
+            )
+          }
+        </div>
+        {
+          entry.data.tags && (
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.map((tag) => (
+                <Badge text={tag} />
+              ))}
+            </div>
+          )
+        }
+        {
+          githubLanguagesUrl && (
+            <div
+              class="mt-3 hidden flex-col gap-2"
+              data-github-languages
+              data-languages-url={githubLanguagesUrl}
+            >
+              <div
+                class="flex h-2 overflow-hidden rounded-full bg-muted"
+                data-language-bar
+              />
+              <div
+                class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground"
+                data-language-list
+              />
+            </div>
+          )
+        }
+      </div>
     </div>
   </Link>
 </div>
+
+<script>
+  const LANGUAGE_COLORS: Record<string, string> = {
+    'C++': '#f34b7d',
+    C: '#555555',
+    CMake: '#da3434',
+    CSS: '#563d7c',
+    Go: '#00add8',
+    HTML: '#e34c26',
+    Java: '#b07219',
+    JavaScript: '#f1e05a',
+    Python: '#3572a5',
+    Rust: '#dea584',
+    Shell: '#89e051',
+    TypeScript: '#3178c6',
+  }
+
+  const fallbackColor = '#6b7280'
+
+  function formatPercent(value: number) {
+    return `${value.toFixed(1)}%`
+  }
+
+  function renderLanguages(
+    container: HTMLElement,
+    languages: Record<string, number>,
+  ) {
+    const entries = Object.entries(languages).sort((a, b) => b[1] - a[1])
+    const total = entries.reduce((sum, [, bytes]) => sum + bytes, 0)
+
+    if (!total) return
+
+    const bar = container.querySelector('[data-language-bar]')
+    const list = container.querySelector('[data-language-list]')
+    if (!bar || !list) return
+
+    const visibleEntries = entries.slice(0, 4)
+    bar.replaceChildren()
+    list.replaceChildren()
+
+    visibleEntries.forEach(([language, bytes]) => {
+      const percent = (bytes / total) * 100
+      const color = LANGUAGE_COLORS[language] || fallbackColor
+
+      const segment = document.createElement('span')
+      segment.style.width = `${percent}%`
+      segment.style.backgroundColor = color
+      bar.append(segment)
+
+      const item = document.createElement('span')
+      item.className = 'flex items-center gap-1.5'
+
+      const dot = document.createElement('span')
+      dot.className = 'size-2 rounded-full'
+      dot.style.backgroundColor = color
+
+      const name = document.createElement('span')
+      name.className = 'font-medium text-foreground'
+      name.textContent = language
+
+      const percentage = document.createElement('span')
+      percentage.textContent = formatPercent(percent)
+
+      item.append(dot, name, percentage)
+      list.append(item)
+    })
+
+    container.classList.remove('hidden')
+    container.classList.add('flex')
+  }
+
+  async function setupGithubLanguages() {
+    const containers = document.querySelectorAll<HTMLElement>(
+      '[data-github-languages]',
+    )
+
+    await Promise.all(
+      [...containers].map(async (container) => {
+        if (container.dataset.loaded === 'true') return
+
+        const url = container.dataset.languagesUrl
+        if (!url) return
+
+        container.dataset.loaded = 'true'
+        const cacheKey = `github-languages:${url}`
+
+        try {
+          const cached = localStorage.getItem(cacheKey)
+          if (cached) {
+            const { savedAt, languages } = JSON.parse(cached) as {
+              savedAt: number
+              languages: Record<string, number>
+            }
+            if (Date.now() - savedAt < 1000 * 60 * 60 * 24) {
+              renderLanguages(container, languages)
+              return
+            }
+          }
+
+          const response = await fetch(url, {
+            headers: { Accept: 'application/vnd.github+json' },
+          })
+          if (!response.ok) return
+
+          const languages = (await response.json()) as Record<string, number>
+          localStorage.setItem(
+            cacheKey,
+            JSON.stringify({ savedAt: Date.now(), languages }),
+          )
+          renderLanguages(container, languages)
+        } catch {
+          container.classList.add('hidden')
+        }
+      }),
+    )
+  }
+
+  document.addEventListener('astro:page-load', setupGithubLanguages)
+  document.addEventListener('astro:after-swap', setupGithubLanguages)
+  setupGithubLanguages()
+</script>
