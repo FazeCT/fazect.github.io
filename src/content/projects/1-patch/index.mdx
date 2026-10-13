@@ -243,13 +243,13 @@ Here, `PATCH_CODE` is the path to the C patch, while `TARGET_BINARY` is the path
 
 Three prefixes are used to write patches: `add_`, `ref_` and `fix_`.
 
-```c caption="" showLineNumbers{1} /apply/ /components/
+```c caption="Patch syntax for C" showLineNumbers{1} /apply/ /components/
 int add_var1 = 1;
 volatile int add_var2 = 2;
 
 void ref_0x12A1 () {};
 
-volatile int fix_0x11C6 () {
+__attribute__((used)) int fix_0x11C6 () {
     ref_0x12A1 ();
     return add_var1;
 };
@@ -261,7 +261,7 @@ volatile int fix_0x11C6 () {
 
 `fix_` (usage: `fix_[virtual address]_[identifier]`) is used for completely replacing a global variable or a function with the new definition.
 
-`volatile` keyword must be used in case a global variable or a function is added but never used in the patch code to avoid compiler optimization. This is usually used for declaring elements with `add_` or `fix_` prefixes.
+`volatile` and `__attribute__((used))` keywords must be used in case a global variable or a function is added but never used in the patch code to avoid compiler optimization. This is usually used for declaring elements with `add_` or `fix_` prefixes.
 
 For more details, patch examples can be accessed [here](https://github.com/FazeCT/1-patch/tree/main/examples).
 
